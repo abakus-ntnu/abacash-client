@@ -1,0 +1,27 @@
+.tabBar {
+    display: flex;
+    flex-direction: row;
+    height: 85px;
+    border-bottom: 1px solid #ddd;
+    justify-content: space-around;
+}
+
+.tabBarItem {
+    width: 100%;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #535358;
+
+    &:hover {
+        color: black;
+        cursor: pointer;
+    }
+
+}
+
+.tabBarItemActive {
+    color: #EC7171;
+}

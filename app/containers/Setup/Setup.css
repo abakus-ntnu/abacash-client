@@ -1,0 +1,44 @@
+@import '../../variables.css';
+
+.setupContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  > * {
+    margin: 10px 0;
+  }
+}
+
+.header {
+  font-size: 86px;
+  text-transform: uppercase;
+  font-weight: 100;
+  color: var(--abacash-dark-gray);
+  letter-spacing: 16px;
+}
+
+.subHeader {
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+.errorMessage {
+  font-size: 22px;
+  color: var(--abacash-orange);
+}
+
+.inputContainer{
+  width: 440px;
+
+  input {
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    font-size: 26px;
+  }
+}

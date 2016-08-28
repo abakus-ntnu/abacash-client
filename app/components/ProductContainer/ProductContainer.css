@@ -1,0 +1,9 @@
+.productContainer {
+    padding: 10px 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    max-height: calc(100vh - 85px);
+}

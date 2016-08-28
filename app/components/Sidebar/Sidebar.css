@@ -1,0 +1,110 @@
+.hoverable {
+    transition: background-color 0.5s;
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+}
+
+.iconPadding {
+    padding-right: 10px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 280px;
+    height: 100vh;
+    background-color: #e9e9e9;
+    border-left: 1px solid #ddd;
+}
+
+.sidebarRow {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 85px;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.sidebarBox {
+    border-bottom: 1px solid #ddd;
+
+    h3, h4 {
+        margin: 0;
+    }
+}
+
+.brand {
+    justify-content: center;
+    > img {
+        max-width: 70%;
+    }
+}
+
+.person {
+    inherit: .hoverable;
+    flex-direction: column;
+    justify-content: center;
+
+    i {
+        inherit: .iconPadding;
+    }
+}
+
+.personName {
+    width: 100%;
+    justify-content: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.personActions {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.transactions {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.empty {
+    background-color: transparent;
+}
+
+.transaction {
+    border-bottom: 1px solid #ddd;
+    height: 70px;
+    font-size: 16px;
+    font-weight: 500;
+    inherit: .hoverable;
+}
+
+.transactionLeft {
+    display: flex;
+    flex-direction: row;
+}
+
+.transactionAmount {
+    color: #f79579;
+    width: 35px;
+}
+
+.actions > div {
+    font-weight: 500;
+    font-size: 18px;
+    border-top: 1px solid #ddd;
+    inherit: .hoverable;
+}
