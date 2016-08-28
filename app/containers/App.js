@@ -1,0 +1,18 @@
+import React from 'react';
+
+type Props = {
+  children: any
+};
+
+export default class App extends React.Component {
+
+  props: Props;
+
+  render() {
+    return (
+      <div>
+        {this.props.children}
+      </div>
+    );
+  }
+}

@@ -1,0 +1,12 @@
+export const AUTH = {
+  LOGIN: 'AUTH/LOGIN',
+  LOGOUT: 'AUTH/LOGOUT',
+};
+
+export const SYSTEM = {
+  FETCH_SYSTEM: 'SYSTEM/FETCH_SYSTEM',
+};
+
+export const CUSTOMER = {
+  FETCH_CUSTOMER: 'CUSTOMER/FETCH_CUSTOMER'
+};

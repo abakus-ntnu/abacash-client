@@ -1,0 +1,6 @@
+setup_tasks:
+  - npm install
+
+tasks:
+  - npm run lint
+  - npm run test
