@@ -3,4 +3,3 @@ setup_tasks:
 
 tasks:
   - npm run lint
-  - npm run test

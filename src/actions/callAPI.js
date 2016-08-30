@@ -32,7 +32,6 @@ export default function callAPI({
     if (requiresAuthentication && authToken) {
       headers.Authorization = `Token ${authToken}`;
     }
-
     const options = {
       method,
       body,
