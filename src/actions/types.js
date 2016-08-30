@@ -3,6 +3,11 @@ export const AUTH = {
   LOGOUT: 'AUTH/LOGOUT',
 };
 
+export const TOKEN = {
+  LOGIN: 'TOKEN/SET',
+  LOGOUT: 'TOKEN/GET',
+};
+
 export const SYSTEM = {
   FETCH_SYSTEM: 'SYSTEM/FETCH_SYSTEM',
 };

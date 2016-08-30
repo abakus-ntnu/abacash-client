@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 type Props = {
   children: any
 };
 
-export default class App extends React.Component {
+export default class App extends Component {
 
   props: Props;
 
