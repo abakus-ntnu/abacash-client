@@ -17,9 +17,15 @@ class NewCardContainer extends Component {
 
   handleSelect(user) {
     this.setState({
-      nerd: user,
-      step: 'REVIEW'
-    }, () => fetchCustomer(user.username, 'rfid'));
+      nerd: user
+    }, () => this.props.fetchCustomer(user.get('username'), 'username')
+      .then(() => this.setState({ customer: this.props.customer, step: 'REVIEW' }))
+      .catch(err => {
+        if (err.response.status === 404) {
+          this.setState({ step: 'REVIEW' });
+        }
+      })
+    );
   }
 
   navigate(step) {
@@ -51,8 +57,18 @@ class NewCardContainer extends Component {
   }
 }
 
+const mapStateToProps = store => ({
+  customer: store.customer.get('customer')
+});
+
+const mapDispatchToProps = {
+  fetchCustomer
+};
+
 NewCardContainer.propTypes = {
+  customer: PropTypes.object.isRequired,
+  fetchCustomer: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired
 };
 
-export default connect()(NewCardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(NewCardContainer);

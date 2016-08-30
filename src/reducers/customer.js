@@ -10,7 +10,7 @@ export default function auth(state = initialState, action) {
 
     case CUSTOMER.FETCH_CUSTOMER_SUCCESS: {
       return state.merge({
-        customer: action.payload.customer
+        customer: action.payload.json
       });
     }
 
