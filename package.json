@@ -96,6 +96,7 @@
     "webpack-merge": "0.14.1"
   },
   "dependencies": {
+    "boron": "^0.2.3",
     "css-modules-require-hook": "4.0.2",
     "electron-debug": "1.0.1",
     "font-awesome": "4.6.3",

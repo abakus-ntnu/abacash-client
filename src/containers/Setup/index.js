@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux'
+import { push } from 'react-router-redux';
 import Style from './Setup.css';
 import AppStyle from '../../app.css';
 import { login } from '../../actions/auth';
@@ -16,7 +16,7 @@ class SetupContainer extends Component {
     this.props.login(this.state.token);
     this.props.fetchSystem()
       .then(() => {
-        this.props.push('/sales');
+        this.props.push('/new-card?rfid=2okmsok2eokdko');
       });
   }
 
@@ -32,6 +32,7 @@ class SetupContainer extends Component {
 
         <div className={Style.inputContainer}>
           <input
+            className={AppStyle.inputClass}
             type='text'
             placeholder='API token'
             value={this.state.token}
