@@ -7,14 +7,16 @@ class ReviewComponent extends Component {
       <div>
         {!this.props.customer &&
           <p className={Style.searchBody}>
-            Hei <span className={Style.userName}>{this.props.user.displayName}</span>!
+            Hei <span className={Style.userName}>
+              {`${this.props.nerd.get('name')} ${this.props.nerd.get('surname')}`}
+            </span>!
             Er du sikker på at du vil opprette en ny bruker?
           </p>
         }
 
         {this.props.customer &&
           <p className={Style.searchBody}>
-            Hei <span className={Style.userName}>{this.props.customer.displayName}</span>!
+            Hei <span className={Style.userName}>{this.props.customer.get('displayName')}</span>!
             Vi fant en tidligere bruker på ditt brukernavn,
             har du lyst til å overføre infoen til dette kortet?
           </p>
@@ -22,10 +24,10 @@ class ReviewComponent extends Component {
         {this.props.customer &&
           <p className={Style.searchBody}>
             <span>Saldo: <span className={Style.userName}>
-              {this.props.customer.balance} Kr
+              {this.props.customer.get('balance')} Kr
             </span></span>
             <span>Brukernavn: <span className={Style.userName}>
-              {this.props.customer.username}
+              {this.props.customer.get('username')}
             </span></span>
           </p>
         }
@@ -35,9 +37,9 @@ class ReviewComponent extends Component {
 }
 
 ReviewComponent.propTypes = {
-  user: PropTypes.obj,
-  customer: PropTypes.obj,
-  nerd: PropTypes.obj
+  user: PropTypes.object,
+  customer: PropTypes.object,
+  nerd: PropTypes.object
 };
 
 export default ReviewComponent;
