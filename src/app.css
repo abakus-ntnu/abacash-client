@@ -58,3 +58,13 @@
         color: #2ecc71;
     }
 }
+
+.inputClass {
+  outline: 0;
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  font-size: 26px;
+}
