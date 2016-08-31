@@ -1,0 +1,26 @@
+@import '../../variables.css';
+
+.setupContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  z-index: 200;
+  display: none;
+
+  > * {
+    margin: 10px 0;
+  }
+}
+
+.active {
+  display: flex;
+}
+
+.inputContainer{
+  width: 480px;
+}
