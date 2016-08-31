@@ -3,6 +3,10 @@ export const AUTH = {
   LOGOUT: 'AUTH/LOGOUT'
 };
 
+export const RFID = {
+  SET_DEVICE: 'RFID/SET_DEVICE',
+};
+
 export const TOKEN = {
   LOGIN: 'TOKEN/SET',
   LOGOUT: 'TOKEN/GET'
