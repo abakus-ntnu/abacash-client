@@ -2,7 +2,7 @@ import { Map } from 'immutable';
 import { SYSTEM } from '../actions/types';
 
 const initialState = Map({
-  system: {},
+  system: null,
 });
 
 export default function auth(state = initialState, action) {
@@ -10,7 +10,7 @@ export default function auth(state = initialState, action) {
 
     case SYSTEM.FETCH_SYSTEM_SUCCESS: {
       return state.merge({
-        system: action.payload.system
+        system: action.payload.json
       });
     }
 

@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { queryNerd } from '../../actions/nerd';
 import { debounce } from '../../utils/debounce';
+import Input from '../../components/Input';
 import Style from './NewCard.css';
-import AppStyle from '../../app.css';
 
 class SearchComponent extends Component {
   constructor(props) {
@@ -24,19 +24,15 @@ class SearchComponent extends Component {
       <div>
         <div className={Style.searchForm}>
           <div className={Style.SearchComponent}>
-            <input
+            <Input
               placeholder='Fornavn'
-              className={AppStyle.inputClass}
-              type='text'
               onChange={e => this.onChange('firstname', e)}
               value={this.state.firstname}
             />
           </div>
           <div className={Style.SearchComponent}>
-            <input
+            <Input
               placeholder='Etternavn'
-              className={AppStyle.inputClass}
-              type='text'
               onChange={e => this.onChange('surname', e)}
               value={this.state.surname}
             />

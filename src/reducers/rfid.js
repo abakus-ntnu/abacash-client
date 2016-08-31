@@ -1,16 +1,16 @@
 import { Map } from 'immutable';
-import { AUTH } from '../actions/types';
+import { RFID } from '../actions/types';
 
 const initialState = Map({
-  token: '',
+  device: null,
 });
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
 
-    case AUTH.LOGIN: {
+    case RFID.SET_DEVICE: {
       return state.merge({
-        token: action.payload.token
+        device: action.payload.device
       });
     }
 

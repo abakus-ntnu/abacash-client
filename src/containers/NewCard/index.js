@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Style from './NewCard.css';
+import { push } from 'react-router-redux';
 import { fetchCustomer } from '../../actions/customer';
+import Style from './NewCard.css';
 import TabMenu, { TabItem } from '../../components/TabMenu';
+import Button, { Buttons } from '../../components/Button';
 import SearchComponent from './SearchComponent';
 import ReviewComponent from './ReviewComponent';
 
@@ -28,16 +30,16 @@ class NewCardContainer extends Component {
     );
   }
 
-  navigate(step) {
-    console.log(step);
+  handleCancel() {
+    this.props.push('/sales');
   }
 
   render() {
     return (
       <div className={Style.newCardContainer}>
         <TabMenu>
-          <TabItem name='Search' onClick={() => this.navigate('SEARCH')} />
-          <TabItem name='Review' onClick={() => this.navigate('REVIEW')} />
+          <TabItem name='Search' />
+          <TabItem name='Review' />
         </TabMenu>
 
         {this.state.step === 'SEARCH' &&
@@ -52,6 +54,10 @@ class NewCardContainer extends Component {
             nerd={this.state.nerd}
           />
         }
+        <Buttons>
+          <Button onClick={() => this.handleCancel()} cancel label='Avbryt' />
+          <Button confirm disabled={this.state.step !== 'REVIEW'} label='OK' />
+        </Buttons>
       </div>
     );
   }
@@ -62,12 +68,14 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = {
-  fetchCustomer
+  fetchCustomer,
+  push
 };
 
 NewCardContainer.propTypes = {
   customer: PropTypes.object.isRequired,
   fetchCustomer: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired
 };
 

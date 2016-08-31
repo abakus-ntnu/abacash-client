@@ -7,7 +7,29 @@ export function fetchCustomer(param, lookupParam = 'rfid') {
 
     return dispatch(callAPI({
       type: CUSTOMER.FETCH_CUSTOMER,
-      endpoint: `2/customers/${param}?lookupParam=${lookupParam}`,
+      endpoint: `${system.get('id')}/customers/${param}?lookupParam=${lookupParam}`,
+    }));
+  };
+}
+
+export function updateCustomer(customer) {
+  return (dispatch, getState) => {
+    const system = getState().system.get('system');
+
+    return dispatch(callAPI({
+      type: CUSTOMER.UPDATE_CUSTOMER,
+      endpoint: `${system.get('id')}/customers/${customer.get('id')}`,
+    }));
+  };
+}
+
+export function createCustomer(customer) {
+  return (dispatch, getState) => {
+    const system = getState().system.get('system');
+
+    return dispatch(callAPI({
+      type: CUSTOMER.CREATE_CUSTOMER,
+      endpoint: `${system.get('id')}/customers`,
     }));
   };
 }
