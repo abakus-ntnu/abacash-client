@@ -8,11 +8,23 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
 import rootReducer from '../reducers';
 import { PERSISTENCE_ENABLED } from '../env';
+import * as AuthActions from '../actions/auth';
+import * as CustomerActions from '../actions/customer';
+import * as NerdActions from '../actions/nerd';
 import * as NotificationActions from '../actions/notification';
+import * as RFIDActions from '../actions/rfid';
+import * as SystemActions from '../actions/system';
+import * as TransactionActions from '../actions/transaction';
 
 const actionCreators = {
   push,
-  ...NotificationActions
+  ...AuthActions,
+  ...CustomerActions,
+  ...NerdActions,
+  ...NotificationActions,
+  ...RFIDActions,
+  ...SystemActions,
+  ...TransactionActions
 };
 
 const logger = createLogger({
