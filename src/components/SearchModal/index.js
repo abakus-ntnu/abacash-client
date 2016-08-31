@@ -36,9 +36,8 @@ class SearchModal extends Component {
   }
 
   render() {
-    return (
-      <div className={classNames(Style.setupContainer, { [Style.active]: this.props.active })}>
-
+    return this.props.active ? (
+      <div className={Style.modalContainer}>
         <div className={Style.inputContainer}>
           <Input
             placeholder='brukernavn' // This identifier should be set in the system object
@@ -52,7 +51,7 @@ class SearchModal extends Component {
           <Button confirm onClick={() => this.onFetch()} label='Ok' />
         </Buttons>
       </div>
-    );
+    ) : null;
   }
 }
 
