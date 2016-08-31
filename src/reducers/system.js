@@ -1,16 +1,16 @@
 import { Map } from 'immutable';
-import { AUTH } from '../actions/types';
+import { SYSTEM } from '../actions/types';
 
 const initialState = Map({
-  token: '',
+  system: null,
 });
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
 
-    case AUTH.LOGIN: {
+    case SYSTEM.FETCH_SYSTEM_SUCCESS: {
       return state.merge({
-        token: action.payload.token
+        system: action.payload.json
       });
     }
 

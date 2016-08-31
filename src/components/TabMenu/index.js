@@ -1,21 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Style from './TabMenu.css';
 
-class TabMenu extends React.Component {
+const TabMenu = (props) => (
+  <div className={Style.tabBar}>
+    {props.children}
+  </div>
+);
 
-  render() {
-    return (
-      <div className={Style.tabBar}>
-        <div className={`${Style.tabBarItem} ${Style.tabBarItemActive}`}>
-          Test 1
-        </div>
-        <div className={Style.tabBarItem}>
-          Test 2
-        </div>
-      </div>
-    );
-  }
-
-}
+TabMenu.propTypes = {
+  children: PropTypes.array
+};
 
 export default TabMenu;
+export TabItem from './Item';
