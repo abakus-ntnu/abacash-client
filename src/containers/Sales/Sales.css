@@ -13,9 +13,5 @@
 }
 
 .blur {
-    display: flex;
-}
-
-.blur.active {
     -webkit-filter: blur(10px);
 }
