@@ -11,3 +11,11 @@
     width: 100%;
     height: 100vh;
 }
+
+.blur {
+    display: flex;
+}
+
+.blur.active {
+    -webkit-filter: blur(10px);
+}
