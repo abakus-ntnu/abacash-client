@@ -1,16 +1,15 @@
 import { Map } from 'immutable';
-import { AUTH } from '../actions/types';
+import { NERD } from '../actions/types';
 
 const initialState = Map({
-  token: '',
+  users: []
 });
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
-
-    case AUTH.LOGIN: {
+    case NERD.QUERY_NERD_SUCCESS: {
       return state.merge({
-        token: action.payload.token
+        users: action.payload.json
       });
     }
 
