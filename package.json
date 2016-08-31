@@ -1,8 +1,8 @@
 {
   "name": "abacash-client",
-  "productName": "Abacash Client",
+  "productName": "AbaCash Client",
+  "description": "AbaCash Client",
   "version": "0.0.1",
-  "description": "Abacash Client",
   "main": "main.js",
   "scripts": {
     "lint": "eslint app test *.js",
@@ -35,7 +35,7 @@
   },
   "keywords": [
     "Abakus",
-    "Abacash"
+    "AbaCash"
   ],
   "homepage": "https://github.com/abakusbackup/abacash-client#readme",
   "devDependencies": {
