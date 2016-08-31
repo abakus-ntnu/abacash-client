@@ -8,9 +8,11 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
 import rootReducer from '../reducers';
 import { PERSISTENCE_ENABLED } from '../env';
+import * as NotificationActions from '../actions/notification';
 
 const actionCreators = {
   push,
+  ...NotificationActions
 };
 
 const logger = createLogger({

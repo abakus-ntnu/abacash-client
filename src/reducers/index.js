@@ -4,10 +4,12 @@ import { routerReducer as routing } from 'react-router-redux';
 import { AUTH } from '../actions/types';
 
 import auth from './auth';
+import notification from './notification';
 
 const appReducer = combineReducers({
   routing,
-  auth
+  auth,
+  notification
 });
 
 export default function rootReducer(state, action) {
