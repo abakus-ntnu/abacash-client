@@ -6,7 +6,8 @@ import promiseMiddleware from 'redux-promise-middleware';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
 import rootReducer from '../reducers';
-import { PERSISTENCE_ENABLED } from '../env';
+
+const PERSISTENCE_ENABLED = process.env.PERSISTENCE_ENABLED;
 
 const router = routerMiddleware(hashHistory);
 

@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import merge from 'webpack-merge';
 import baseConfig from './webpack.config.base';
+import packageJSON from '../package.json';
 
 const config = merge(baseConfig, {
   devtool: 'cheap-module-source-map',
@@ -37,7 +38,11 @@ const config = merge(baseConfig, {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.PERSISTENCE_ENABLED': true,
+      'process.env.APPLICATION_VERSION': JSON.stringify(packageJSON.version),
+      'process.env.RAVEN_DSN': JSON.stringify(process.env.RAVEN_DSN),
+      'process.env.API_URL': JSON.stringify(process.env.API_URL)
     }),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
