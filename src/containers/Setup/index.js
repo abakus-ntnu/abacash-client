@@ -8,15 +8,14 @@ import Input from '../../components/Input';
 import { setDevice } from '../../actions/rfid';
 import { login } from '../../actions/auth';
 import { fetchSystem } from '../../actions/system';
+import { addNotification } from '../../actions/notification';
 
 class SetupContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      token: this.props.token || '',
-      rfid: null
-    };
-  }
+
+  state = {
+    token: this.props.token || '',
+    rfid: null
+  };
 
   componentDidMount() {
     if (this.props.token.length > 0 && !this.props.location.query.presist) {
@@ -30,6 +29,13 @@ class SetupContainer extends Component {
     this.props.fetchSystem()
       .then(() => {
         this.props.push('/launch');
+      })
+      .catch(() => {
+        this.props.addNotification({
+          title: 'Not found!',
+          level: 'warning',
+          message: 'Could not find the specified user'
+        });
       });
   }
 
@@ -48,6 +54,7 @@ class SetupContainer extends Component {
             placeholder='API token'
             value={this.state.token}
             onChange={event => this.handleChange('token', event.target.value)}
+            onSubmit={() => this.onSave()}
           />
         </div>
 
@@ -55,6 +62,7 @@ class SetupContainer extends Component {
           <Dropdown
             placeholder='Select RFID device'
             nullValue='No RFID device'
+            value={this.state.rfid}
             options={[]}
             onChange={value => this.handleChange('rfid', value)}
           />
@@ -74,6 +82,7 @@ const mapDispatchToProps = {
   login,
   fetchSystem,
   setDevice,
+  addNotification,
   push
 };
 
@@ -83,6 +92,7 @@ SetupContainer.propTypes = {
   location: PropTypes.object,
   setDevice: PropTypes.func.isRequired,
   fetchSystem: PropTypes.func.isRequired,
+  addNotification: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired
 };
 
