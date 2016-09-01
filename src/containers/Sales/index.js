@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { push } from 'react-router-redux';
 import TabMenu, { TabItem } from '../../components/TabMenu';
 import Product, { Products } from '../../components/Product';
 import SearchModal from '../../components/SearchModal';
 import Sidebar from '../../components/Sidebar';
 import { fetchProducts } from '../../actions/product';
+import { fetchSystem } from '../../actions/system';
 import Style from './Sales.css';
 
 type Props = {
   customer?: Object,
   products: Object,
   productTypes: Object,
+  fetchSystem: () => void,
+  push: () => void,
   fetchProducts: () => void
 };
 
@@ -24,6 +28,19 @@ class SalesContainer extends Component {
 
   componentDidMount() {
     this.props.fetchProducts();
+    this.updateInterval = setInterval(() => this.updateData(), 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.updateInterval);
+  }
+
+  updateData() {
+    this.props.fetchSystem()
+      .then(() => this.props.fetchProducts())
+      .catch(() => {
+        this.props.push('launch');
+      });
   }
 
   props: Props;
@@ -81,7 +98,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetchProducts
+  fetchProducts,
+  fetchSystem,
+  push
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SalesContainer);
