@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import NotificationSystem from 'react-notification-system';
 
-class Notifications extends React.Component {
+class Notifications extends Component {
 
   componentWillReceiveProps = (nextProps) => {
-    const event = nextProps.notifcation;
+    const event = nextProps.notification;
     if (event) {
       this.addNotification(event);
     }
@@ -25,7 +26,12 @@ class Notifications extends React.Component {
 
 }
 
-export default Notifications;
+const mapStateToProps = (state) => ({
+  notification: state.notification
+});
+
+export default connect(mapStateToProps)(Notifications);
+
 
 const colours = {
   success: '97, 184, 50',
