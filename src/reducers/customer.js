@@ -1,9 +1,7 @@
 import { Map } from 'immutable';
 import { CUSTOMER } from '../actions/types';
 
-const initialState = Map({
-  customer: {}
-});
+const initialState = Map({});
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
@@ -13,6 +11,11 @@ export default function auth(state = initialState, action) {
         customer: action.payload.json
       });
     }
+
+    case CUSTOMER.CLEAR_CUSTOMER:
+      return state.merge({
+        customer: null
+      });
 
     default:
       return state;
