@@ -33,3 +33,11 @@ export function createCustomer(customer) {
     }));
   };
 }
+
+export function clearCustomer() {
+  return (dispatch) => {
+    return dispatch({
+      type: CUSTOMER.CLEAR_CUSTOMER,
+    });
+  };
+}

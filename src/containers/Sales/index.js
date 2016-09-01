@@ -8,22 +8,25 @@ import Product from '../../components/Product';
 import Sidebar from '../../components/Sidebar';
 import Style from './Sales.css';
 
+type Props = {
+  customer?: Object
+};
+
 class SalesContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: true
-    };
-  }
+
+  state = {
+    search: false
+  };
+
+  props: Props;
 
   render() {
     return (
       <div>
-        <SearchModal
-          active={this.state.search}
+        {this.state.search ? <SearchModal
           onDismiss={() => { this.setState({ search: false }); }}
           onSuccess={() => { this.setState({ search: false }); }}
-        />
+        /> : null }
         <div className={classNames(Style.salesContainer, { [Style.blur]: this.state.search })}>
           <div className={Style.main}>
             <TabMenu />
@@ -38,11 +41,20 @@ class SalesContainer extends Component {
             </ProductContainer>
 
           </div>
-          <Sidebar />
+          <Sidebar
+            customer={this.props.customer}
+            findUser={() => this.setState({
+              search: true
+            })}
+          />
         </div>
       </div>
     );
   }
 }
 
-export default connect()(SalesContainer);
+const mapStateToProps = (state) => ({
+  customer: state.customer.get('customer')
+});
+
+export default connect(mapStateToProps)(SalesContainer);

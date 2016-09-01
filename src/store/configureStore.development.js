@@ -38,10 +38,10 @@ const router = routerMiddleware(hashHistory);
 const enhancer = compose(
   PERSISTENCE_ENABLED ? autoRehydrate() : f => f,
   applyMiddleware(
-    promiseMiddleware({ promiseTypeSuffixes: ['PENDING', 'SUCCESS', 'FAILURE'] }),
-    thunk,
     router,
-    logger
+    thunk,
+    promiseMiddleware({ promiseTypeSuffixes: ['PENDING', 'SUCCESS', 'FAILURE'] }),
+    logger,
   ),
   window.devToolsExtension ? window.devToolsExtension({ actionCreators }) : f => f
 );
