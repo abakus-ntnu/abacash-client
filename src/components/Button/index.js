@@ -1,15 +1,16 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import Style from './Button.css';
 
-const classes = (props) => {
-  let className = '';
-  if (props.confirm) className += `${Style.buttonConfirm} `;
-  if (props.cancel) className += `${Style.buttonCancel} `;
-  return className;
-};
-
 const Button = (props) => (
-  <button className={classes(props)} disabled={props.disabled} onClick={props.onClick}>
+  <button
+    className={classNames({
+      [Style.buttonConfirm]: props.confirm,
+      [Style.buttonCancel]: props.cancel
+    })}
+    disabled={props.disabled}
+    onClick={props.onClick}
+  >
     {props.label}
   </button>
 );

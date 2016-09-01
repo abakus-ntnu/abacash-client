@@ -20,7 +20,7 @@ class SetupContainer extends Component {
 
   componentDidMount() {
     if (this.props.token.length > 0 && !this.props.location.query.presist) {
-      this.props.push('launch');
+      this.props.push('/launch');
     }
   }
 

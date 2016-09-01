@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import classNames from 'classnames';
 import Style from './Dropdown.css';
 
 class Dropdown extends Component {
@@ -8,12 +9,6 @@ class Dropdown extends Component {
       active: false,
       option: null
     };
-  }
-
-  classes() {
-    let className = `${Style.dropdown} `;
-    if (this.state.active) className += `${Style.active} `;
-    return className;
   }
 
   toggle() {
@@ -29,7 +24,7 @@ class Dropdown extends Component {
   }
 
   render() {
-    return (<div className={this.classes()}>
+    return (<div className={classNames(Style.dropdown, { [Style.active]: this.state.active })} >
 
       {!this.state.option && <span
         onClick={() => this.toggle()}
