@@ -12,4 +12,4 @@ TabMenu.propTypes = {
 };
 
 export default TabMenu;
-export TabItem from './Item';
+export TabItem from './TabItem';

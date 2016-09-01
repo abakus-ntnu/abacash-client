@@ -2,24 +2,16 @@ import React from 'react';
 import Style from './Product.css';
 
 type Props = {
-  name: string,
-  price: string,
-  onClick: () => void
+  product: Object,
+  select: () => Object
 };
 
-class Product extends React.Component {
-
-  props: Props;
-
-  render() {
-    return (
-      <div className={Style.product} onClick={this.props.onClick}>
-        <span className={Style.productName}>{this.props.name}</span>
-        <span className={Style.productPrice}>{this.props.price}kr</span>
-      </div>
-    );
-  }
-
-}
+const Product = (props: Props) => (
+  <div className={Style.product} onClick={() => props.select(props.product)}>
+    <span className={Style.productName}>{props.product.get('name')}</span>
+    <span className={Style.productPrice}>{props.product.get('price')}kr</span>
+  </div>
+);
 
 export default Product;
+export Products from './Products';

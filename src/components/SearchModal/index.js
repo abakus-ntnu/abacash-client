@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 import Style from './SearchModal.css';
 import Button, { Buttons } from '../Button';
 import Input from '../Input';

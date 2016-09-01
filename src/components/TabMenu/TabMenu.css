@@ -9,6 +9,9 @@
 .tabBarItem {
     width: 100%;
     font-weight: 500;
+    min-width: 100px;
+    text-align: center;
+    padding: 30px 0px;
     font-size: 20px;
     display: flex;
     text-decoration: none;
