@@ -1,10 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import classNames from 'classnames';
 import Style from './Sidebar.css';
 import AbakusLogo from '../../assets/abakus_logo_dark.png';
+import { clearCustomer } from '../../actions/customer';
+
+type Props ={
+  customer?: Object,
+  clearCustomer: () => void,
+  findUser: () => void
+};
 
 class Sidebar extends React.Component {
 
+  props: Props;
+
   render() {
+    const loggedIn = !!this.props.customer;
+
     return (
       <div className={Style.sidebar}>
 
@@ -12,25 +25,33 @@ class Sidebar extends React.Component {
           <img src={AbakusLogo} alt='logo' />
         </div>
 
-        <div className={`${Style.sidebarRow} ${Style.sidebarBox} ${Style.person}`}>
-          <h3 className={Style.personName}>Eirik Martiniussen Sylliaas</h3>
-          <div className={Style.personActions}>
-            <h4>
-              <i className='fa fa-eject' /> Bytt bruker
-            </h4>
-            <div>
-              <h4 className={Style.balance}>
-                <i className='fa fa-credit-card' />
-                1937 kr
+        {loggedIn ?
+          <div
+            className={`${Style.sidebarRow} ${Style.sidebarBox} ${Style.person}`}
+            onClick={this.props.clearCustomer}
+          >
+            <h3 className={Style.personName}>{this.props.customer.get('displayName')}</h3>
+            <div className={Style.personActions}>
+              <h4>
+                <i className='fa fa-eject' /> Logg ut
               </h4>
+              <div>
+                <h4 className={Style.balance}>
+                  <i className='fa fa-credit-card' />
+                  {this.props.customer.get('balance')} kr
+                </h4>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className={`${Style.sidebarRow} ${Style.sidebarBox}`}>
-          <i className='fa fa-credit-card' />
-          <h3>Scan et kort</h3>
-        </div>
+        :
+          <div
+            className={classNames(Style.sidebarRow, Style.sidebarBox, Style.hoverable)}
+            onClick={this.props.findUser}
+          >
+            <i className='fa fa-user' />
+            <h3>Finn bruker</h3>
+          </div>
+        }
 
         <div className={`${Style.transactions}`}>
           <div className={`${Style.sidebarRow} ${Style.transaction}`}>
@@ -60,4 +81,8 @@ class Sidebar extends React.Component {
 
 }
 
-export default Sidebar;
+const mapDispatchToProps = {
+  clearCustomer
+};
+
+export default connect(null, mapDispatchToProps)(Sidebar);
