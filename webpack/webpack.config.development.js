@@ -2,6 +2,7 @@
 import webpack from 'webpack';
 import merge from 'webpack-merge';
 import baseConfig from './webpack.config.base';
+import packageJSON from '../package.json';
 
 const port = process.env.PORT || 3000;
 
@@ -45,7 +46,10 @@ export default merge(baseConfig, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      'process.env.PERSISTENCE_ENABLED': true,
+      'process.env.APPLICATION_VERSION': JSON.stringify(packageJSON.version),
+      'process.env.API_URL': JSON.stringify('http://127.0.0.1:9000')
     })
   ],
 
