@@ -1,7 +1,8 @@
 import { normalize } from 'normalizr';
 import fetchJSON from '../utils/http';
-import { API_URL } from '../env';
 import { getToken } from '../selectors/auth';
+
+const API_URL = process.env.API_URL;
 
 const normalizePayload = (payload, schema) => {
   if (!schema) return payload;
