@@ -1,21 +1,33 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
 import Style from './Input.css';
 
-const Input = (props) => (
-  <input
-    className={Style.inputClass}
-    type={props.type || 'text'}
-    placeholder={props.placeholder}
-    value={props.value}
-    onChange={props.onChange}
-  />
-);
 
-Input.propTypes = {
-  type: PropTypes.string,
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func,
-  value: PropTypes.string
+type Props = {
+  type: String,
+  placeholder: String,
+  value: String,
+  onChange: () => void,
+  onSubmit?: () => void
 };
+
+class Input extends Component {
+
+  props: Props;
+
+  handleKeyPress(event) {
+    if (event.key === 'Enter' && this.props.onSubmit) this.props.onSubmit();
+  }
+
+  render() {
+    return (<input
+      className={Style.inputClass}
+      type={this.props.type || 'text'}
+      placeholder={this.props.placeholder}
+      value={this.props.value}
+      onChange={this.props.onChange}
+      onKeyPress={event => this.handleKeyPress(event)}
+    />);
+  }
+}
 
 export default Input;

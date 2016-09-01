@@ -3,13 +3,11 @@ import classNames from 'classnames';
 import Style from './Dropdown.css';
 
 class Dropdown extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: false,
-      option: null
-    };
-  }
+
+  state = {
+    active: false,
+    option: { label: this.props.nullValue, value: null } || {} // enable intialVlaue=null
+  };
 
   toggle() {
     this.setState({ active: !this.state.active });
