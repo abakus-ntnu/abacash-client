@@ -1,4 +1,4 @@
-import { applicationVersion } from '../env';
+const APPLICATION_VERSION = process.env.APPLICATION_VERSION;
 
 export class HTTPError extends Error {
   name = 'HTTPError';
@@ -62,7 +62,7 @@ export default function fetchJSON(path, options = {}) {
     ...options,
     body: options.body,
     headers: new Headers({
-      'X-ABACASH-APPLICATION-VERSION': applicationVersion,
+      'X-ABACASH-APPLICATION-VERSION': APPLICATION_VERSION,
       ...options.headers,
     }),
   });
