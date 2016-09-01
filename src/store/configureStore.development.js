@@ -14,6 +14,7 @@ import * as NerdActions from '../actions/nerd';
 import * as NotificationActions from '../actions/notification';
 import * as RFIDActions from '../actions/rfid';
 import * as SystemActions from '../actions/system';
+import * as ProductActions from '../actions/product';
 import * as TransactionActions from '../actions/transaction';
 
 const actionCreators = {
@@ -21,6 +22,7 @@ const actionCreators = {
   ...AuthActions,
   ...CustomerActions,
   ...NerdActions,
+  ...ProductActions,
   ...NotificationActions,
   ...RFIDActions,
   ...SystemActions,
