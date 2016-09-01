@@ -7,12 +7,10 @@ import { fetchCustomer } from '../../actions/customer';
 import { addNotification } from '../../actions/notification';
 
 class SearchModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: ''
-    };
-  }
+
+  state = {
+    search: ''
+  };
 
   onDismiss() {
     this.props.onDismiss();
@@ -35,7 +33,7 @@ class SearchModal extends Component {
   }
 
   render() {
-    return this.props.active ? (
+    return (
       <div className={Style.modalContainer}>
         <div className={Style.inputContainer}>
           <Input
@@ -50,7 +48,7 @@ class SearchModal extends Component {
           <Button confirm onClick={() => this.onFetch()} label='Ok' />
         </Buttons>
       </div>
-    ) : null;
+    );
   }
 }
 
@@ -60,7 +58,6 @@ const mapDispatchToProps = {
 };
 
 SearchModal.propTypes = {
-  active: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
   fetchCustomer: PropTypes.func.isRequired,

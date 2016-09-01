@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import TabMenu, { TabItem } from '../../components/TabMenu';
@@ -8,27 +8,33 @@ import Sidebar from '../../components/Sidebar';
 import { fetchProducts } from '../../actions/product';
 import Style from './Sales.css';
 
+type Props = {
+  customer?: Object,
+  products: Object,
+  productTypes: Object,
+  fetchProducts: () => void
+};
+
 class SalesContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: false,
-      type: this.props.productTypes.first()
-    };
-  }
+
+  state = {
+    search: false,
+    type: this.props.productTypes.first()
+  };
 
   componentDidMount() {
     this.props.fetchProducts();
   }
 
+  props: Props;
+
   render() {
     return (
       <div>
-        <SearchModal
-          active={this.state.search}
+        {this.state.search ? <SearchModal
           onDismiss={() => { this.setState({ search: false }); }}
           onSuccess={() => { this.setState({ search: false }); }}
-        />
+        /> : null }
         <div className={classNames(Style.salesContainer, { [Style.blur]: this.state.search })}>
           <div className={Style.main}>
 
@@ -56,7 +62,12 @@ class SalesContainer extends Component {
             </Products>
 
           </div>
-          <Sidebar />
+          <Sidebar
+            customer={this.props.customer}
+            findUser={() => this.setState({
+              search: true
+            })}
+          />
         </div>
       </div>
     );
@@ -65,17 +76,12 @@ class SalesContainer extends Component {
 
 const mapStateToProps = state => ({
   products: state.product.get('products'),
+  customer: state.customer.get('customer'),
   productTypes: state.system.get('system').get('productTypes')
 });
 
 const mapDispatchToProps = {
   fetchProducts
-};
-
-SalesContainer.propTypes = {
-  products: PropTypes.object.isRequired,
-  productTypes: PropTypes.object.isRequired,
-  fetchProducts: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SalesContainer);
