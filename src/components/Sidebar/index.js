@@ -112,21 +112,23 @@ class Sidebar extends React.Component {
             Tøm handlekurv
           </div> : null }
 
-          <div
-            onClick={() => this.createTransaction()}
-            className={classNames(Style.sidebarRow,
-              { [Style.hoverable]: !this.props.processing, [Style.hidden]: emptyCart }
-            )}
-          >
-            {!this.props.processing ?
-              <i className='fa fa-credit-card' /> :
-              <i className='fa fa-spin fa-circle-o-notch' />
-            }
-            {!this.props.processing ?
-              <span>KJøøøp!!</span> :
-              <span>Belaster kortet</span>
-            }
-          </div>
+          {emptyCart ?
+            (<div
+              onClick={() => this.createTransaction()}
+              className={classNames(Style.sidebarRow,
+                { [Style.hoverable]: !this.props.processing }
+              )}
+            >
+              {!this.props.processing ?
+                <i className='fa fa-credit-card' /> :
+                <i className='fa fa-spin fa-circle-o-notch' />
+              }
+              {!this.props.processing ?
+                <span>KJøøøp!!</span> :
+                <span>Belaster kortet</span>
+              }
+            </div>) : null
+          }
 
         </div>
       </div>
