@@ -8,6 +8,7 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
 import rootReducer from '../reducers';
 import * as AuthActions from '../actions/auth';
+import * as CartActions from '../actions/cart';
 import * as CustomerActions from '../actions/customer';
 import * as NerdActions from '../actions/nerd';
 import * as NotificationActions from '../actions/notification';
@@ -21,6 +22,7 @@ const PERSISTENCE_ENABLED = process.env.PERSISTENCE_ENABLED;
 const actionCreators = {
   push,
   ...AuthActions,
+  ...CartActions,
   ...CustomerActions,
   ...NerdActions,
   ...ProductActions,

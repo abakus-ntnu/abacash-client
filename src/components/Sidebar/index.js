@@ -1,14 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { Map } from 'immutable';
 import Style from './Sidebar.css';
 import AbakusLogo from '../../assets/abakus_logo_dark.png';
+import { clearCart, removeProduct } from '../../actions/cart';
 import { clearCustomer } from '../../actions/customer';
 
 type Props ={
   customer?: Object,
   clearCustomer: () => void,
-  findUser: () => void
+  findUser: () => void,
+  clearCart: () => void,
+  removeProduct: () => void,
+  cartItems: Map,
+  products: Map
 };
 
 class Sidebar extends React.Component {
@@ -17,6 +23,15 @@ class Sidebar extends React.Component {
 
   render() {
     const loggedIn = !!this.props.customer;
+    const emptyCart = this.props.cartItems.size === 0;
+
+    const products = this.props.cartItems.map((productCount, productId) => {
+      const product = this.props.products.get(productId);
+      return {
+        ...product.toJS(),
+        cartCount: productCount
+      };
+    });
 
     return (
       <div className={Style.sidebar}>
@@ -53,23 +68,32 @@ class Sidebar extends React.Component {
           </div>
         }
 
-        <div className={`${Style.transactions}`}>
-          <div className={`${Style.sidebarRow} ${Style.transaction}`}>
-            <div className={Style.transactionLeft}>
-              <div className={Style.transactionAmount}>10</div>
-              <div className={Style.transactionProduct}>Cola</div>
+        <div className={classNames(Style.transactions, { [Style.empty]: emptyCart })}>
+          {products.map((product) => (
+            <div
+              className={classNames(Style.sidebarRow, Style.transaction)}
+              onClick={() => this.props.removeProduct(product.id)}
+              key={product.id}
+            >
+              <div className={Style.transactionLeft}>
+                <div className={Style.transactionAmount}>{product.cartCount}</div>
+                <div className={Style.transactionProduct}>{product.name}</div>
+              </div>
+              <div>
+                <div className={Style.transactionPrice}>{product.price} kr</div>
+              </div>
             </div>
-            <div>
-              <div className={Style.transactionPrice}>40 kr</div>
-            </div>
-          </div>
+          ))}
         </div>
 
         <div className={Style.actions}>
-          <div className={Style.sidebarRow}>
+          {loggedIn && !emptyCart ? <div
+            className={classNames(Style.sidebarRow, Style.hoverable)}
+            onClick={this.props.clearCart}
+          >
             <i className='fa fa-times' />
             Tøm handlekurv
-          </div>
+          </div> : null }
           <div className={Style.sidebarRow}>
             <i className='fa fa-spin fa-circle-o-notch' />
             <span>Belaster kortet</span>
@@ -82,7 +106,9 @@ class Sidebar extends React.Component {
 }
 
 const mapDispatchToProps = {
-  clearCustomer
+  clearCustomer,
+  clearCart,
+  removeProduct
 };
 
 export default connect(null, mapDispatchToProps)(Sidebar);
