@@ -5,6 +5,7 @@ import { AUTH } from '../actions/types';
 
 import nerd from './nerd';
 import auth from './auth';
+import cart from './cart';
 import rfid from './rfid';
 import product from './product';
 import system from './system';
@@ -14,6 +15,7 @@ import notification from './notification';
 const appReducer = combineReducers({
   routing,
   auth,
+  cart,
   rfid,
   product,
   system,
