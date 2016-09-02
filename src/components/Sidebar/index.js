@@ -29,6 +29,14 @@ class Sidebar extends React.Component {
 
   createTransaction() {
     this.props.createTransaction()
+      .then(() => {
+        this.props.addNotification({
+          title: 'Ditt kjøp ble gjennomført!',
+          level: 'success',
+          message: this.props.error
+        });
+        this.props.clearCustomer();
+      })
       .catch(() => {
         this.props.addNotification({
           title: 'Something went wrong!',
@@ -104,7 +112,7 @@ class Sidebar extends React.Component {
         </div>
 
         <div className={Style.actions}>
-          {loggedIn && !emptyCart ? <div
+          {!emptyCart && loggedIn ? <div
             className={classNames(Style.sidebarRow, Style.hoverable)}
             onClick={this.props.clearCart}
           >
@@ -112,7 +120,7 @@ class Sidebar extends React.Component {
             Tøm handlekurv
           </div> : null }
 
-          {emptyCart ?
+          {!emptyCart && loggedIn ?
             (<div
               onClick={() => this.createTransaction()}
               className={classNames(Style.sidebarRow,
@@ -124,7 +132,7 @@ class Sidebar extends React.Component {
                 <i className='fa fa-spin fa-circle-o-notch' />
               }
               {!this.props.processing ?
-                <span>KJøøøp!!</span> :
+                <span>Kjøp</span> :
                 <span>Belaster kortet</span>
               }
             </div>) : null
