@@ -36,6 +36,7 @@ class SearchModal extends Component {
   }
 
   render() {
+    const disabled = !this.state.search.length;
     return (
       <div className={Style.modalContainer}>
         <div className={Style.inputContainer}>
@@ -44,13 +45,21 @@ class SearchModal extends Component {
             value={this.state.search}
             autoFocus
             onChange={event => this.handleChange(event.target.value)}
-            onSubmit={() => this.onFetch()}
+            onSubmit={() => {
+              if (!disabled) {
+                this.onFetch();
+              }
+            }}
           />
         </div>
 
         <Buttons>
           <Button cancel onClick={() => this.onDismiss()} label='Tilbake' />
-          <Button confirm loading={this.state.loading} onClick={() => this.onFetch()} label='Ok' />
+          <Button
+            confirm loading={this.state.loading}
+            onClick={() => this.onFetch()} label='Ok'
+            disabled={disabled}
+          />
         </Buttons>
       </div>
     );
