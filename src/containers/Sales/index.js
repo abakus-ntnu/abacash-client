@@ -70,6 +70,15 @@ class SalesContainer extends Component {
     }
   }
 
+  cartPrice = () => {
+    const productPrices = this.props.cartItems.map((productCount, productId) => {
+      const product = this.props.products.get(productId);
+      return productCount * product.get('price');
+    });
+
+    return productPrices.reduce((previous, current) => (previous + current), 0);
+  }
+
   props: Props;
 
   render() {
@@ -120,6 +129,7 @@ class SalesContainer extends Component {
             error={this.props.error}
             products={this.props.products}
             processing={this.props.processing}
+            totalPrice={this.cartPrice()}
           />
         </div>
       </div>
