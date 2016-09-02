@@ -1,12 +1,17 @@
+import { Map } from 'immutable';
 import { NOTIFICATION } from '../actions/types';
 
-const initialState = null;
+const initialState = Map({
+  notification: null
+});
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
 
     case NOTIFICATION.ADD_NOTIFICATION: {
-      return action.payload;
+      return state.merge({
+        notification: action.payload
+      });
     }
 
     default:
