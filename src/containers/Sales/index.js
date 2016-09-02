@@ -7,6 +7,7 @@ import TabMenu, { TabItem } from '../../components/TabMenu';
 import Product, { Products } from '../../components/Product';
 import SearchModal from '../../components/SearchModal';
 import Sidebar from '../../components/Sidebar';
+import { clearCustomer } from '../../actions/customer';
 import { fetchProducts } from '../../actions/product';
 import { fetchSystem } from '../../actions/system';
 import { addProduct } from '../../actions/cart';
@@ -22,7 +23,8 @@ type Props = {
   push: () => void,
   fetchProducts: () => void,
   cartItems: Map,
-  addProduct: () => void
+  addProduct: () => void,
+  clearCustomer: () => void,
 };
 
 class SalesContainer extends Component {
@@ -37,6 +39,14 @@ class SalesContainer extends Component {
     this.updateInterval = setInterval(() => this.updateData(), 30000);
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.customer && newProps.customer !== this.props.customer) {
+      this.inactiveTimeout = setTimeout(() => this.userInactive(), 20000);
+    } else if (!newProps.customer && newProps.customer !== this.props.customer) {
+      clearTimeout(this.inactiveTimeout);
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.updateInterval);
   }
@@ -49,6 +59,17 @@ class SalesContainer extends Component {
       });
   }
 
+  userInactive = () => {
+    this.props.clearCustomer();
+  }
+
+  userInteracted = () => {
+    if (this.props.customer) {
+      clearTimeout(this.inactiveTimeout);
+      this.inactiveTimeout = setTimeout(() => this.userInactive(), 20000);
+    }
+  }
+
   props: Props;
 
   render() {
@@ -59,7 +80,7 @@ class SalesContainer extends Component {
           onSuccess={() => { this.setState({ search: false }); }}
         /> : null }
         <div className={classNames(Style.salesContainer, { [Style.blur]: this.state.search })}>
-          <div className={Style.main}>
+          <div className={Style.main} onClick={this.userInteracted}>
 
             <TabMenu>
               {this.props.productTypes.valueSeq().map(type => (
@@ -111,6 +132,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  clearCustomer,
   fetchProducts,
   fetchSystem,
   push,
