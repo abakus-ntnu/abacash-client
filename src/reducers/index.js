@@ -7,6 +7,7 @@ import nerd from './nerd';
 import auth from './auth';
 import cart from './cart';
 import rfid from './rfid';
+import transaction from './transaction';
 import product from './product';
 import system from './system';
 import customer from './customer';
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   cart,
   rfid,
   product,
+  transaction,
   system,
   nerd,
   customer,

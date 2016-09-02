@@ -6,11 +6,17 @@ import Style from './Sidebar.css';
 import AbakusLogo from '../../assets/abakus_logo_dark.png';
 import { clearCart, removeProduct } from '../../actions/cart';
 import { clearCustomer } from '../../actions/customer';
+import { addNotification } from '../../actions/notification';
+import { createTransaction } from '../../actions/transaction';
 
 type Props ={
   customer?: Object,
+  processing: Boolean,
+  error: String,
+  createTransaction: () => void,
   clearCustomer: () => void,
   findUser: () => void,
+  addNotification: () => void,
   clearCart: () => void,
   removeProduct: () => void,
   cartItems: Map,
@@ -20,6 +26,17 @@ type Props ={
 class Sidebar extends React.Component {
 
   props: Props;
+
+  createTransaction() {
+    this.props.createTransaction()
+      .catch(() => {
+        this.props.addNotification({
+          title: 'Something went wrong!',
+          level: 'error',
+          message: this.props.error
+        });
+      });
+  }
 
   render() {
     const loggedIn = !!this.props.customer;
@@ -94,10 +111,25 @@ class Sidebar extends React.Component {
             <i className='fa fa-times' />
             Tøm handlekurv
           </div> : null }
-          <div className={Style.sidebarRow}>
-            <i className='fa fa-spin fa-circle-o-notch' />
-            <span>Belaster kortet</span>
-          </div>
+
+          {emptyCart ?
+            (<div
+              onClick={() => this.createTransaction()}
+              className={classNames(Style.sidebarRow,
+                { [Style.hoverable]: !this.props.processing }
+              )}
+            >
+              {!this.props.processing ?
+                <i className='fa fa-credit-card' /> :
+                <i className='fa fa-spin fa-circle-o-notch' />
+              }
+              {!this.props.processing ?
+                <span>KJøøøp!!</span> :
+                <span>Belaster kortet</span>
+              }
+            </div>) : null
+          }
+
         </div>
       </div>
     );
@@ -107,7 +139,9 @@ class Sidebar extends React.Component {
 
 const mapDispatchToProps = {
   clearCustomer,
+  addNotification,
   clearCart,
+  createTransaction,
   removeProduct
 };
 

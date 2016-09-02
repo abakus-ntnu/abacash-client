@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NotificationSystem from 'react-notification-system';
 
+type Props = {
+    notification: Object
+};
+
 class Notifications extends Component {
 
   componentWillReceiveProps = (nextProps) => {
-    const event = nextProps.notification;
-    if (event) {
-      this.addNotification(event);
-    }
+    const notification = { nextProps };
+    if (notification) this.addNotification(notification);
   }
+
+  props: Props;
 
   addNotification = (event) => {
     this.notificationSystem.addNotification(event);
