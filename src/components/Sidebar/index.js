@@ -94,21 +94,23 @@ class Sidebar extends React.Component {
         }
 
         <div className={classNames(Style.transactions, { [Style.empty]: emptyCart })}>
-          {products.map((product) => (
-            <div
-              className={classNames(Style.sidebarRow, Style.transaction)}
-              onClick={() => this.props.removeProduct(product.id)}
-              key={product.id}
-            >
-              <div className={Style.transactionLeft}>
-                <div className={Style.transactionAmount}>{product.cartCount}</div>
-                <div className={Style.transactionProduct}>{product.name}</div>
+          {products.size ?
+            products.map((product, index) => (
+              <div
+                className={classNames(Style.sidebarRow, Style.transaction)}
+                onClick={() => this.props.removeProduct(product.id)}
+                key={index}
+              >
+                <div className={Style.transactionLeft}>
+                  <div className={Style.transactionAmount}>{product.cartCount}</div>
+                  <div className={Style.transactionProduct}>{product.name}</div>
+                </div>
+                <div>
+                  <div className={Style.transactionPrice}>{product.price} kr</div>
+                </div>
               </div>
-              <div>
-                <div className={Style.transactionPrice}>{product.price} kr</div>
-              </div>
-            </div>
-          ))}
+            )) : null
+          }
         </div>
 
         <div className={Style.actions}>

@@ -1,7 +1,7 @@
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 import { PRODUCT } from '../actions/types';
 
-const initialState = Map({
+const initialState = fromJS({
   products: {}
 });
 
