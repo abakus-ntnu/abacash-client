@@ -9,7 +9,8 @@ import { addNotification } from '../../actions/notification';
 class SearchModal extends Component {
 
   state = {
-    search: ''
+    search: '',
+    loading: false
   };
 
   onDismiss() {
@@ -17,9 +18,11 @@ class SearchModal extends Component {
   }
 
   onFetch() {
+    this.setState({ loading: true });
     this.props.fetchCustomer(this.state.search, 'username') // lookupParam should be prop on system
       .then(() => this.props.onSuccess())
       .catch(() => {
+        this.setState({ loading: false });
         this.props.addNotification({
           title: 'Not found!',
           level: 'warning',
@@ -47,7 +50,7 @@ class SearchModal extends Component {
 
         <Buttons>
           <Button cancel onClick={() => this.onDismiss()} label='Tilbake' />
-          <Button confirm onClick={() => this.onFetch()} label='Ok' />
+          <Button confirm loading={this.state.loading} onClick={() => this.onFetch()} label='Ok' />
         </Buttons>
       </div>
     );

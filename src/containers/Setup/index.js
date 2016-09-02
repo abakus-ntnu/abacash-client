@@ -14,6 +14,7 @@ class SetupContainer extends Component {
 
   state = {
     token: this.props.token || '',
+    loading: false,
     rfid: null
   };
 
@@ -24,17 +25,20 @@ class SetupContainer extends Component {
   }
 
   onSave() {
+    this.setState({ loading: true });
     this.props.setDevice(this.state.rfid);
     this.props.login(this.state.token);
     this.props.fetchSystem()
       .then(() => {
         this.props.push('/launch');
+        this.setState({ loading: false });
       })
       .catch(() => {
+        this.setState({ loading: false });
         this.props.addNotification({
-          title: 'Not found!',
+          title: 'Invalid token!',
           level: 'warning',
-          message: 'Could not find the specified user'
+          message: 'The specified token was either expired or invalid.'
         });
       });
   }
@@ -68,7 +72,7 @@ class SetupContainer extends Component {
           />
         </div>
 
-        <Button confirm onClick={() => this.onSave()} label='Lagre' />
+        <Button loading={this.state.loading} confirm onClick={() => this.onSave()} label='Lagre' />
       </div>
     );
   }

@@ -6,12 +6,13 @@ const Button = (props) => (
   <button
     className={classNames({
       [Style.buttonConfirm]: props.confirm,
-      [Style.buttonCancel]: props.cancel
+      [Style.buttonCancel]: props.cancel,
+      [Style.buttonLoading]: props.loading
     })}
     disabled={props.disabled}
     onClick={props.onClick}
   >
-    {props.label}
+    {props.loading ? <i className='fa fa-spin fa-circle-o-notch' /> : props.label}
   </button>
 );
 
@@ -19,6 +20,7 @@ Button.propTypes = {
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
+  loading: PropTypes.bool,
   confirm: PropTypes.bool,
   cancel: PropTypes.bool
 };
