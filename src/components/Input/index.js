@@ -5,6 +5,7 @@ import Style from './Input.css';
 type Props = {
   type: String,
   placeholder: String,
+  autoFocus: Boolean,
   value: String,
   onChange: () => void,
   onSubmit?: () => void
@@ -22,6 +23,7 @@ class Input extends Component {
     return (<input
       className={Style.inputClass}
       type={this.props.type || 'text'}
+      autoFocus
       placeholder={this.props.placeholder}
       value={this.props.value}
       onChange={this.props.onChange}

@@ -3,12 +3,13 @@
 .salesContainer {
     display: flex;
     flex-direction: row;
+    min-width: 600px;
 }
 
 .main {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: calc(100% - 280px);
     height: 100vh;
 }
 
