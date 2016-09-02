@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import RavenMiddleware from 'redux-raven-middleware';
 import { hashHistory } from 'react-router';
 import { routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
@@ -14,6 +15,7 @@ const router = routerMiddleware(hashHistory);
 const enhancer = compose(
   PERSISTENCE_ENABLED ? autoRehydrate() : f => f,
   applyMiddleware(
+    RavenMiddleware(process.env.RAVEN_DSN),
     router,
     thunk,
     promiseMiddleware({ promiseTypeSuffixes: ['PENDING', 'SUCCESS', 'FAILURE'] }),
