@@ -20,6 +20,11 @@ button {
   color: #2ecc71;
 }
 
+.buttonLoading {
+  color: #bbb;
+  font-size: 26px;
+}
+
 .buttonGroup {
   display: flex;
 }
