@@ -9,6 +9,10 @@ const config = merge(baseConfig, {
 
   entry: './src/index',
 
+  output: {
+    publicPath: '../dist/',
+  },
+
   module: {
     loaders: [
       {

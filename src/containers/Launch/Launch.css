@@ -6,10 +6,10 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
 
-  > * {
-    margin: 10px 0;
-  }
+.launchContainer > * {
+  margin: 10px 0;
 }
 
 .header {

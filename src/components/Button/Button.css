@@ -10,11 +10,12 @@ button {
   background-color: transparent;
   text-transform: uppercase;
   border: 2px solid #bbb;
-
-  &:disabled {
-    color: #bbb;
-  }
 }
+
+button &:disabled {
+  color: #bbb;
+}
+
 
 .buttonCancel {
   color: #e74c3c;

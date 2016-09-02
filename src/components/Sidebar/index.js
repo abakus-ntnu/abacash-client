@@ -67,7 +67,7 @@ class Sidebar extends React.Component {
 
         {loggedIn ?
           <div
-            className={`${Style.sidebarRow} ${Style.sidebarBox} ${Style.person}`}
+            className={classNames(Style.sidebarRow, Style.sidebarBox, Style.person)}
             onClick={this.props.clearCustomer}
           >
             <h3 className={Style.personName}>{this.props.customer.get('displayName')}</h3>

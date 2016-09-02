@@ -18,13 +18,13 @@
     justify-content: center;
     align-items: center;
     color: #535358;
-
-    &:hover {
-        color: black;
-        cursor: pointer;
-    }
-
 }
+
+.tabBarItem:hover {
+    color: black;
+    cursor: pointer;
+}
+
 
 .tabBarItemActive {
     color: #EC7171;
