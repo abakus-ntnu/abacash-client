@@ -20,7 +20,8 @@ type Props ={
   clearCart: () => void,
   removeProduct: () => void,
   cartItems: Map,
-  products: Map
+  products: Map,
+  totalPrice: number
 };
 
 class Sidebar extends React.Component {
@@ -134,7 +135,12 @@ class Sidebar extends React.Component {
                 <i className='fa fa-spin fa-circle-o-notch' />
               }
               {!this.props.processing ?
-                <span>Kjøp</span> :
+                <span>
+                  {this.props.totalPrice >= 0 ? 'Belast' : 'Sett inn'} {
+                    Math.abs(this.props.totalPrice)
+                  } kr
+                </span>
+                :
                 <span>Belaster kortet</span>
               }
             </div>) : null
