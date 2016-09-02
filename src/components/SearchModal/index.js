@@ -39,6 +39,7 @@ class SearchModal extends Component {
           <Input
             placeholder='brukernavn' // This identifier should be set in the system object
             value={this.state.search}
+            autoFocus
             onChange={event => this.handleChange(event.target.value)}
             onSubmit={() => this.onFetch()}
           />

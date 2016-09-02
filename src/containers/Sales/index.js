@@ -14,8 +14,10 @@ import Style from './Sales.css';
 
 type Props = {
   customer?: Object,
+  error: String,
   products: Object,
   productTypes: Object,
+  processing: Boolean,
   fetchSystem: () => void,
   push: () => void,
   fetchProducts: () => void,
@@ -89,7 +91,9 @@ class SalesContainer extends Component {
               search: true
             })}
             cartItems={this.props.cartItems}
+            error={this.props.error}
             products={this.props.products}
+            processing={this.props.processing}
           />
         </div>
       </div>
@@ -100,6 +104,8 @@ class SalesContainer extends Component {
 const mapStateToProps = state => ({
   products: state.product.get('products'),
   customer: state.customer.get('customer'),
+  processing: state.transaction.get('processing'),
+  error: state.transaction.get('error'),
   productTypes: state.system.get('system').get('productTypes'),
   cartItems: state.cart
 });
