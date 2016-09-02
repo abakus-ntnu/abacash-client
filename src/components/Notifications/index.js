@@ -9,8 +9,8 @@ type Props = {
 class Notifications extends Component {
 
   componentWillReceiveProps = (nextProps) => {
-    const notification = { nextProps };
-    if (notification) this.addNotification(notification);
+    const { notification } = nextProps;
+    if (notification) this.addNotification(notification.toJS());
   }
 
   props: Props;
@@ -31,7 +31,7 @@ class Notifications extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  notification: state.notification
+  notification: state.notification.get('notification')
 });
 
 export default connect(mapStateToProps)(Notifications);
@@ -62,7 +62,7 @@ const style = {
       borderRadius: '0px',
       fontSize: '18px',
       margin: '0px',
-      padding: '40px 20px',
+      padding: '20px 10px',
       opacity: '0.95',
       minHeight: '63px'
     },
