@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { push } from 'react-router-redux';
+import { Map } from 'immutable';
 import TabMenu, { TabItem } from '../../components/TabMenu';
 import Product, { Products } from '../../components/Product';
 import SearchModal from '../../components/SearchModal';
 import Sidebar from '../../components/Sidebar';
 import { fetchProducts } from '../../actions/product';
 import { fetchSystem } from '../../actions/system';
+import { addProduct } from '../../actions/cart';
 import Style from './Sales.css';
 
 type Props = {
@@ -16,7 +18,9 @@ type Props = {
   productTypes: Object,
   fetchSystem: () => void,
   push: () => void,
-  fetchProducts: () => void
+  fetchProducts: () => void,
+  cartItems: Map,
+  addProduct: () => void
 };
 
 class SalesContainer extends Component {
@@ -72,7 +76,7 @@ class SalesContainer extends Component {
                   <Product
                     key={product.get('id')}
                     product={product}
-                    select={item => { console.log(item); }}
+                    select={item => { this.props.addProduct(item.get('id')); }}
                   />
                 )
               )}
@@ -84,6 +88,8 @@ class SalesContainer extends Component {
             findUser={() => this.setState({
               search: true
             })}
+            cartItems={this.props.cartItems}
+            products={this.props.products}
           />
         </div>
       </div>
@@ -94,13 +100,15 @@ class SalesContainer extends Component {
 const mapStateToProps = state => ({
   products: state.product.get('products'),
   customer: state.customer.get('customer'),
-  productTypes: state.system.get('system').get('productTypes')
+  productTypes: state.system.get('system').get('productTypes'),
+  cartItems: state.cart
 });
 
 const mapDispatchToProps = {
   fetchProducts,
   fetchSystem,
-  push
+  push,
+  addProduct
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SalesContainer);

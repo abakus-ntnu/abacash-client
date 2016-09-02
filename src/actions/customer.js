@@ -1,5 +1,6 @@
 import callAPI from './callAPI';
 import { CUSTOMER } from './types';
+import { clearCart } from './cart';
 
 export function fetchCustomer(param, lookupParam = 'rfid') {
   return (dispatch, getState) => {
@@ -36,6 +37,7 @@ export function createCustomer(customer) {
 
 export function clearCustomer() {
   return (dispatch) => {
+    dispatch(clearCart());
     return dispatch({
       type: CUSTOMER.CLEAR_CUSTOMER,
     });
