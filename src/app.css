@@ -1,36 +1,10 @@
 @import './variables.css';
 
-@font-face {
-    font-family: abacash;
-    font-weight: 300;
-    src: url('./assets/fonts/abacash-ultralight.otf') format('opentype');
-}
-
-@font-face {
-    font-family: abacash;
-    src: url('./assets/fonts/abacash-regular.otf') format('opentype');
-}
-
-@font-face {
-    font-family: abacash;
-    font-weight: 500;
-    src: url('./assets/fonts/abacash-medium.otf') format('opentype');
-}
-
-@font-face {
-    font-family: abacash;
-    font-weight: 600;
-    src: url('./assets/fonts/abacash-bold.otf') format('opentype');
-}
-
-:root {
-    html, body {
-        font-family: abacash;
-        height: 100vh;
-        width: 100vw;
-        margin: 0;
-        color: var(--abacash-dark-gray);
-        background-color: var(--abacash-whitesmoke);
-        -webkit-font-smoothing: antialiased;
-    }
+body {
+    font-family: 'Open Sans', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    color: var(--abacash-dark-gray);
+    background-color: var(--abacash-whitesmoke);
 }
