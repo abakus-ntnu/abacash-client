@@ -83,26 +83,31 @@ class SalesContainer extends Component {
           <div className={Style.main} onClick={this.userInteracted}>
 
             <TabMenu>
-              {this.props.productTypes.valueSeq().map(type => (
+              {this.props.productTypes.valueSeq().map((type, index) => (
                 <TabItem
                   onClick={() => { this.setState({ type }); }}
                   active={this.state.type === type}
                   name={type}
+                  key={index}
                 />
               ))}
             </TabMenu>
 
             <Products>
-              {this.props.products.valueSeq()
-                .filter(product => product.get('type') === this.state.type)
-                .map(product => (
-                  <Product
-                    key={product.get('id')}
-                    product={product}
-                    select={item => { this.props.addProduct(item.get('id')); }}
-                  />
-                )
-              )}
+                {this.props.products.size ?
+                  this.props.products
+                    .filter(product => product.get('type') === this.state.type)
+                    .map((product, productID) => (
+                      <Product
+                        product={{
+                          id: productID,
+                          ...product.toJS()
+                        }}
+                        select={item => { this.props.addProduct(item.id); }}
+                      />
+                    )
+                  ) : null
+                }
             </Products>
 
           </div>
