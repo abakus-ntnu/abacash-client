@@ -32,7 +32,8 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    kiosk: true
+    width: 1024,
+    height: 728
   });
 
   mainWindow.loadURL(`file://${__dirname}/src/app.html`);
@@ -46,17 +47,15 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
-  if (process.env.NODE_ENV === 'development') {
-    mainWindow.openDevTools();
-    mainWindow.webContents.on('context-menu', (e, props) => {
-      const { x, y } = props;
+  mainWindow.openDevTools();
+  mainWindow.webContents.on('context-menu', (e, props) => {
+    const { x, y } = props;
 
-      Menu.buildFromTemplate([{
-        label: 'Inspect element',
-        click() {
-          mainWindow.inspectElement(x, y);
-        }
-      }]).popup(mainWindow);
-    });
-  }
+    Menu.buildFromTemplate([{
+      label: 'Inspect element',
+      click() {
+        mainWindow.inspectElement(x, y);
+      }
+    }]).popup(mainWindow);
+  });
 });

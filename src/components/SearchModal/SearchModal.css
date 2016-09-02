@@ -11,10 +11,10 @@
   justify-content: center;
   z-index: 200;
   display: flex;
+}
 
-  > * {
-    margin: 10px 0;
-  }
+.modalContainer > * {
+  margin: 10px 0;
 }
 
 .inputContainer{

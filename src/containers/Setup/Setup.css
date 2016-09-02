@@ -6,11 +6,11 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-
-  > * {
-    margin: 10px 0;
-  }
 }
+.setupContainer  > * {
+  margin: 10px 0;
+}
+
 
 .header {
   font-size: 86px;

@@ -14,15 +14,14 @@
     font-size: 18px;
     padding: 15px;
     transition: background-color 0.5s;
+}
+.product:hover {
+    background-color: var(--abacash-orange);
+    cursor: pointer;
+}
 
-    &:hover {
-        background-color: var(--abacash-orange);
-        cursor: pointer;
-
-        > span {
-            color: var(--abacash-white);
-        }
-    }
+.product:hover > span {
+    color: var(--abacash-white);
 }
 
 .productName {
