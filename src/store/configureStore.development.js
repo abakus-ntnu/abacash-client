@@ -54,7 +54,7 @@ const enhancer = compose(
 export function configureStore(initialState: Object, onComplete: ?() => void) {
   const store = createStore(rootReducer, initialState, enhancer);
 
-  if (PERSISTENCE_ENABLED) {
+  if (false) {
     persistStore(store, {
       transforms: [immutableTransform({})],
       whitelist: ['auth'],

@@ -1,5 +1,6 @@
 /* eslint global-require: 0 */
 import path from 'path';
+import webpack from 'webpack';
 
 export default {
   module: {
@@ -52,12 +53,13 @@ export default {
     packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
   },
   plugins: [
-
+    new webpack.IgnorePlugin(/vertx/)
   ],
-  externals: [
-
-  ],
-  postcss: (webpack) => [
+  externals: {
+    bindings: true,
+    serialport: true
+  },
+  postcss: webpack => [
     require('postcss-import')({ addDependencyTo: webpack }),
     require('postcss-cssnext'),
     require('postcss-nested'),

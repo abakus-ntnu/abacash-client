@@ -1,6 +1,7 @@
 // @flow
 import { RFID } from './types';
 import type { Action } from './types';
+import { list } from '../utils/rfid';
 
 export function setDevice(device: string): Action {
   return {
@@ -9,4 +10,11 @@ export function setDevice(device: string): Action {
       device,
     }
   };
+}
+
+export function listDevices() {
+  return (dispatch) => dispatch({
+    type: RFID.LIST_DEVICES,
+    payload: list()
+  });
 }

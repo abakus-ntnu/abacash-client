@@ -29,6 +29,8 @@ export const AUTH = {
 
 export const RFID = {
   SET_DEVICE: 'RFID/SET_DEVICE',
+  LIST_DEVICES: 'RFID/LIST_DEVICES',
+  LIST_DEVICES_SUCCESS: 'RFID/LIST_DEVICES_SUCCESS',
 };
 
 export const SYSTEM = {

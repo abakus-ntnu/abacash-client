@@ -118,7 +118,8 @@
     "redux-promise-middleware": "4.0.0",
     "redux-raven-middleware": "1.1.0",
     "redux-thunk": "2.1.0",
-    "source-map-support": "0.4.3"
+    "source-map-support": "0.4.3",
+    "serialport": "4.0.1"
   },
   "devEngines": {
     "node": "4.x || 5.x || 6.x",

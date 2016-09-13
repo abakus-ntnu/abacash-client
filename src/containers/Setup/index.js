@@ -7,7 +7,7 @@ import Style from './Setup.css';
 import Button from '../../components/Button';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
-import { setDevice } from '../../actions/rfid';
+import { setDevice, listDevices } from '../../actions/rfid';
 import { login } from '../../actions/auth';
 import { fetchSystem } from '../../actions/system';
 import { addNotification } from '../../actions/notification';
@@ -25,6 +25,9 @@ type Props = {
   setDevice: () => void,
   fetchSystem: () => Promise<*>,
   addNotification: () => void,
+  devices: Map<string, string>,
+  listDevices: () => void,
+  setDevice: () => void,
   login: () => void
 };
 
@@ -37,6 +40,7 @@ class SetupContainer extends React.Component {
   };
 
   componentDidMount() {
+    this.props.listDevices();
     if (this.props.token.length > 0 && !this.props.location.query.presist) {
       this.props.push('/launch');
     }
@@ -82,8 +86,10 @@ class SetupContainer extends React.Component {
           <Dropdown
             placeholder='Select RFID device'
             nullValue='No RFID device'
-            options={fromJS([])}
-            onChange={(rfid) => this.setState({ rfid })}
+            valueLabel='comName'
+            value={this.state.rfid}
+            options={this.props.devices.toJS()}
+            onChange={value => this.handleChange('rfid', value)}
           />
         </div>
 
@@ -93,8 +99,9 @@ class SetupContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (store) => ({
-  token: store.auth.get('token')
+const mapStateToProps = store => ({
+  token: store.auth.get('token'),
+  devices: store.rfid.get('devices')
 });
 
 const mapDispatchToProps = {
@@ -102,7 +109,8 @@ const mapDispatchToProps = {
   fetchSystem,
   setDevice,
   addNotification,
-  push
+  push,
+  listDevices
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupContainer);

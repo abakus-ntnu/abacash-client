@@ -12,6 +12,7 @@ type Props = {
   onChange: (value: any) => void,
   options: Array<{ label: string, value: string }>,
   placeholder: string,
+  valueLabel: string,
   nullValue: string
 };
 
@@ -59,15 +60,25 @@ class Dropdown extends React.Component {
         <ul>
           {this.props.nullValue &&
             (<li
-              onClick={() => this.handleSelect({ label: this.props.nullValue })}
+              onClick={() => this.handleSelect({
+                label: this.props.nullValue,
+                [this.props.valueLabel]: null
+              })}
               className={Style.dropdownItem}
             >
               <span>{this.props.nullValue}</span>
             </li>)
           }
-          {this.props.options.map((option: { label: string, value: string }) => (
-            <li onClick={() => this.handleSelect(option)} className={Style.dropdownItem}>
-              <span>{option.label}</span>
+          {this.props.options.map(option => (
+            <li
+              onClick={() => this.handleSelect({
+                [this.props.valueLabel]: option[this.props.valueLabel],
+                label: option[this.props.valueLabel]
+              })}
+              key={option[this.props.valueLabel]}
+              className={Style.dropdownItem}
+            >
+              <span>{option[this.props.valueLabel]}</span>
             </li>
           ))}
         </ul>
