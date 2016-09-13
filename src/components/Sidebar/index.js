@@ -33,8 +33,7 @@ class Sidebar extends React.Component {
       .then(() => {
         this.props.addNotification({
           title: 'Ditt kjøp ble gjennomført!',
-          level: 'success',
-          message: this.props.error
+          level: 'success'
         });
         this.props.clearCustomer();
       })
