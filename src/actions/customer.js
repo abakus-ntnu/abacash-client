@@ -24,7 +24,7 @@ export function updateCustomer(customer) {
   };
 }
 
-export function createCustomer(customer) {
+export function createCustomer() {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
 

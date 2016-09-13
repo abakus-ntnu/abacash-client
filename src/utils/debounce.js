@@ -1,10 +1,9 @@
-export function debounce(fn, delay) {
-  var timer = null;
-  return function () {
-    var context = this, args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      fn.apply(context, args);
-    }, delay);
+/* eslint-disable prefer-rest-params */
+
+export function debounce(fn, wait) {
+  let timeout;
+  return function internalDebounce() {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn.apply(this, arguments), (wait || 1));
   };
 }
