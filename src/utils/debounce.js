@@ -1,9 +1,7 @@
-/* eslint-disable prefer-rest-params */
-
-export function debounce(fn, wait) {
+export function debounce(fn, wait = 0) {
   let timeout;
-  return function internalDebounce() {
+  return (...args) => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => fn.apply(this, arguments), (wait || 1));
+    timeout = setTimeout(() => fn(...args), wait);
   };
 }
