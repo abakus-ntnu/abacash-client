@@ -13,7 +13,7 @@ const PERSISTENCE_ENABLED = process.env.PERSISTENCE_ENABLED;
 const router = routerMiddleware(hashHistory);
 
 const enhancer = compose(
-  PERSISTENCE_ENABLED ? autoRehydrate() : f => f,
+  PERSISTENCE_ENABLED ? autoRehydrate() : (f) => f,
   applyMiddleware(
     RavenMiddleware(process.env.RAVEN_DSN),
     router,

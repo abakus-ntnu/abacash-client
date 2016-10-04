@@ -23,11 +23,11 @@ class Input extends Component {
     return (<input
       className={Style.inputClass}
       type={this.props.type || 'text'}
-      autoFocus
+      autoFocus={this.props.autoFocus}
       placeholder={this.props.placeholder}
       value={this.props.value}
       onChange={this.props.onChange}
-      onKeyPress={event => this.handleKeyPress(event)}
+      onKeyPress={(event) => this.handleKeyPress(event)}
     />);
   }
 }

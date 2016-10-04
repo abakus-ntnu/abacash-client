@@ -39,7 +39,7 @@ export default function fetchJSON(path, options = {}) {
 
   if (filesToUpload.length) {
     const formBody = new FormData();
-    body.map(prop => {
+    body.map((prop) => {
       if (body[prop]) {
         let payload = body[prop];
         if (typeof payload === 'object') {

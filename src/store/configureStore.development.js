@@ -40,14 +40,14 @@ const logger = createLogger({
 const router = routerMiddleware(hashHistory);
 
 const enhancer = compose(
-  PERSISTENCE_ENABLED ? autoRehydrate() : f => f,
+  PERSISTENCE_ENABLED ? autoRehydrate() : (f) => f,
   applyMiddleware(
     router,
     thunk,
     promiseMiddleware({ promiseTypeSuffixes: ['PENDING', 'SUCCESS', 'FAILURE'] }),
     logger,
   ),
-  window.devToolsExtension ? window.devToolsExtension({ actionCreators }) : f => f
+  window.devToolsExtension ? window.devToolsExtension({ actionCreators }) : (f) => f
 );
 
 export default function configureStore(initialState, onComplete) {

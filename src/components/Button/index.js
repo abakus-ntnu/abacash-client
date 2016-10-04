@@ -1,8 +1,17 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import Style from './Button.css';
 
-const Button = (props) => (
+type Props = {
+  label: String,
+  onClick: () => void,
+  disabled: Boolean,
+  loading: Boolean,
+  confirm: Boolean,
+  cancel: Boolean
+};
+
+const Button = (props: Props) => (
   <button
     className={classNames({
       [Style.buttonConfirm]: props.confirm,
@@ -15,15 +24,6 @@ const Button = (props) => (
     {props.loading ? <i className='fa fa-spin fa-circle-o-notch' /> : props.label}
   </button>
 );
-
-Button.propTypes = {
-  label: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-  disabled: PropTypes.bool,
-  loading: PropTypes.bool,
-  confirm: PropTypes.bool,
-  cancel: PropTypes.bool
-};
 
 export default Button;
 export Buttons from './Buttons';

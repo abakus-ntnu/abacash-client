@@ -1,14 +1,14 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Style from './Button.css';
 
-const Buttons = (props) => (
+type Props = {
+  children: Array
+};
+
+const Buttons = (props: Props) => (
   <div className={Style.buttonGroup}>
     {props.children}
   </div>
 );
-
-Buttons.propTypes = {
-  children: PropTypes.array,
-};
 
 export default Buttons;
