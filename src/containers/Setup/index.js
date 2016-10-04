@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Style from './Setup.css';
@@ -10,7 +10,17 @@ import { login } from '../../actions/auth';
 import { fetchSystem } from '../../actions/system';
 import { addNotification } from '../../actions/notification';
 
-class SetupContainer extends Component {
+type Props = {
+  token: String,
+  push: () => void,
+  location: Object,
+  setDevice: () => void,
+  fetchSystem: () => void,
+  addNotification: () => void,
+  login: () => void
+};
+
+class SetupContainer extends React.Component {
 
   state = {
     token: this.props.token || '',
@@ -47,6 +57,8 @@ class SetupContainer extends Component {
     this.setState({ [field]: value });
   }
 
+  props: Props;
+
   render() {
     return (
       <div className={Style.setupContainer}>
@@ -57,7 +69,7 @@ class SetupContainer extends Component {
           <Input
             placeholder='API token'
             value={this.state.token}
-            onChange={event => this.handleChange('token', event.target.value)}
+            onChange={(event) => this.handleChange('token', event.target.value)}
             onSubmit={() => this.onSave()}
           />
         </div>
@@ -68,7 +80,7 @@ class SetupContainer extends Component {
             nullValue='No RFID device'
             value={this.state.rfid}
             options={[]}
-            onChange={value => this.handleChange('rfid', value)}
+            onChange={(value) => this.handleChange('rfid', value)}
           />
         </div>
 
@@ -78,7 +90,7 @@ class SetupContainer extends Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   token: store.auth.get('token')
 });
 
@@ -88,16 +100,6 @@ const mapDispatchToProps = {
   setDevice,
   addNotification,
   push
-};
-
-SetupContainer.propTypes = {
-  token: PropTypes.string,
-  push: PropTypes.func.isRequired,
-  location: PropTypes.object,
-  setDevice: PropTypes.func.isRequired,
-  fetchSystem: PropTypes.func.isRequired,
-  addNotification: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupContainer);

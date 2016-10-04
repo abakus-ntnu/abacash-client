@@ -22,7 +22,7 @@ class Notifications extends Component {
   render() {
     return (
       <NotificationSystem
-        ref={ref => (this.notificationSystem = ref)}
+        ref={(ref) => (this.notificationSystem = ref)}
         style={style}
       />
     );

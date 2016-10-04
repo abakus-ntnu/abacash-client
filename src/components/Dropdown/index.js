@@ -1,13 +1,22 @@
-import React, { PropTypes, Component } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import Style from './Dropdown.css';
 
-class Dropdown extends Component {
+type Props = {
+  onChange: () => void,
+  options: Array,
+  placeholder: String,
+  nullValue: String
+};
+
+class Dropdown extends React.Component {
 
   state = {
     active: false,
     option: { label: this.props.nullValue, value: null } || {} // enable intialVlaue=null
   };
+
+  props: Props;
 
   toggle() {
     this.setState({ active: !this.state.active });
@@ -48,7 +57,7 @@ class Dropdown extends Component {
               <span>{this.props.nullValue}</span>
             </li>)
           }
-          {this.props.options.map(option => (
+          {this.props.options.map((option) => (
             <li onClick={() => this.handleSelect(option)} className={Style.dropdownItem}>
               <span>{option.label}</span>
             </li>
@@ -59,12 +68,5 @@ class Dropdown extends Component {
     </div>);
   }
 }
-
-Dropdown.propTypes = {
-  onChange: PropTypes.func,
-  options: PropTypes.array,
-  placeholder: PropTypes.string,
-  nullValue: PropTypes.string
-};
 
 export default Dropdown;

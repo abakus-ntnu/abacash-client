@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { fetchCustomer } from '../../actions/customer';
@@ -8,21 +8,32 @@ import Button, { Buttons } from '../../components/Button';
 import SearchComponent from './SearchComponent';
 import ReviewComponent from './ReviewComponent';
 
-class NewCardContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      step: 'SEARCH',
-      rfid: '3ijd3ijkd3'
-    };
-  }
+type State = {
+  step: String,
+  rfid: String
+};
+
+type Props = {
+  customer: Object,
+  fetchCustomer: () => void,
+  push: () => void,
+};
+
+class NewCardContainer extends React.Component {
+
+  state: State = {
+    step: 'SEARCH',
+    rfid: '3ijd3ijkd3'
+  };
+
+  props: Props;
 
   handleSelect(user) {
     this.setState({
       nerd: user
     }, () => this.props.fetchCustomer(user.get('username'), 'username')
       .then(() => this.setState({ customer: this.props.customer, step: 'REVIEW' }))
-      .catch(err => {
+      .catch((err) => {
         if (err.response.status === 404) {
           this.setState({ step: 'REVIEW' });
         }
@@ -44,7 +55,7 @@ class NewCardContainer extends Component {
 
         {this.state.step === 'SEARCH' &&
           <SearchComponent
-            handleSelect={user => this.handleSelect(user)}
+            handleSelect={(user) => this.handleSelect(user)}
           />
         }
         {this.state.step === 'REVIEW' &&
@@ -63,20 +74,13 @@ class NewCardContainer extends Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   customer: store.customer.get('customer')
 });
 
 const mapDispatchToProps = {
   fetchCustomer,
   push
-};
-
-NewCardContainer.propTypes = {
-  customer: PropTypes.object.isRequired,
-  fetchCustomer: PropTypes.func.isRequired,
-  push: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewCardContainer);

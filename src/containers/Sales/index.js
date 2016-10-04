@@ -103,20 +103,20 @@ class SalesContainer extends Component {
             </TabMenu>
 
             <Products>
-                {this.props.products.size ?
-                  this.props.products
-                    .filter(product => product.get('type') === this.state.type)
-                    .map((product, productID) => (
-                      <Product
-                        product={{
-                          id: productID,
-                          ...product.toJS()
-                        }}
-                        select={item => { this.props.addProduct(item.id); }}
-                      />
-                    )
-                  ) : null
-                }
+              {this.props.products.size ?
+                this.props.products
+                  .filter((product) => product.get('type') === this.state.type)
+                  .map((product, productID) => (
+                    <Product
+                      product={{
+                        id: productID,
+                        ...product.toJS()
+                      }}
+                      select={(item) => { this.props.addProduct(item.id); }}
+                    />
+                  )
+                ) : null
+              }
             </Products>
 
           </div>
@@ -137,7 +137,7 @@ class SalesContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   products: state.product.get('products'),
   customer: state.customer.get('customer'),
   processing: state.transaction.get('processing'),
