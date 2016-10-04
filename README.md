@@ -1,4 +1,4 @@
-# AbaCash Client [![Build status](https://ci.frigg.io/badges/abakusbackup/abacash-client-electron/)](https://ci.frigg.io/abakusbackup/abacash-client-electron/last/)
+# AbaCash Client [![CircleCI](https://circleci.com/gh/abakusbackup/abacash-client.svg?style=svg&circle-token=809d350562eff94f9ebe5a690cc86e17d30112be)](https://circleci.com/gh/abakusbackup/abacash-client)
 
 > React frontend for AbaCash
 
