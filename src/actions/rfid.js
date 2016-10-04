@@ -8,3 +8,12 @@ export function setDevice(device) {
     }
   };
 }
+
+export function cardScanned(rfid) {
+  return {
+    type: RFID.CARD_SCANNED,
+    payload: {
+      rfid
+    }
+  };
+}

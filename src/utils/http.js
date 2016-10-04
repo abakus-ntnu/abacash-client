@@ -89,6 +89,7 @@ export default function fetchJSON(path, options = {}) {
       }
 
       const error = new HTTPError(`${response.status} ${response.statusText}`);
+      error.status = response.status;
       error.response = response;
       error.json = json;
       error.text = text;
