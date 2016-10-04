@@ -6,6 +6,7 @@ import { Map } from 'immutable';
 import TabMenu, { TabItem } from '../../components/TabMenu';
 import Product, { Products } from '../../components/Product';
 import SearchModal from '../../components/SearchModal';
+import MenuModal from '../../components/MenuModal';
 import Sidebar from '../../components/Sidebar';
 import { clearCustomer } from '../../actions/customer';
 import { fetchProducts } from '../../actions/product';
@@ -31,6 +32,7 @@ class SalesContainer extends Component {
 
   state = {
     search: false,
+    menu: false,
     type: this.props.productTypes.first()
   };
 
@@ -63,6 +65,10 @@ class SalesContainer extends Component {
     this.props.clearCustomer();
   }
 
+  showMenu = () => {
+    this.setState({ menu: true });
+  }
+
   userInteracted = () => {
     if (this.props.customer) {
       clearTimeout(this.inactiveTimeout);
@@ -84,11 +90,21 @@ class SalesContainer extends Component {
   render() {
     return (
       <div>
+
+        {this.state.menu ? <MenuModal
+          onDismiss={() => { this.setState({ menu: false }); }}
+        /> : null }
+
         {this.state.search ? <SearchModal
           onDismiss={() => { this.setState({ search: false }); }}
           onSuccess={() => { this.setState({ search: false }); }}
         /> : null }
-        <div className={classNames(Style.salesContainer, { [Style.blur]: this.state.search })}>
+
+        <div
+          className={classNames(Style.salesContainer, {
+            [Style.blur]: this.state.search || this.state.menu
+          })}
+        >
           <div className={Style.main} onClick={this.userInteracted}>
 
             <TabMenu>
@@ -127,6 +143,7 @@ class SalesContainer extends Component {
             })}
             cartItems={this.props.cartItems}
             error={this.props.error}
+            showMenu={this.showMenu}
             products={this.props.products}
             processing={this.props.processing}
             totalPrice={this.cartPrice()}
