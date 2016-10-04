@@ -32,7 +32,7 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    kiosk: true
+    kiosk: process.env.NODE_ENV === 'production'
   });
 
   mainWindow.loadURL(`file://${__dirname}/src/app.html`);

@@ -1,7 +1,7 @@
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 import { AUTH } from '../actions/types';
 
-const initialState = Map({
+const initialState = fromJS({
   token: '',
 });
 
