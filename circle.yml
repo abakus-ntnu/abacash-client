@@ -8,7 +8,7 @@ test:
     - npm run flow || true
 
 deployment:
-  release:
+  circle-release:
     commands:
       - go get github.com/aktau/github-release
       - sudo apt-get install zip
