@@ -23,6 +23,13 @@ export default function auth(state = initialState, action) {
       });
     }
 
+    case RFID.CLEAR_RFID: {
+      return state.merge({
+        currentRfid: null,
+        scanning: true
+      });
+    }
+
     default:
       return state;
   }

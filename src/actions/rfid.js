@@ -17,3 +17,9 @@ export function cardScanned(rfid) {
     }
   };
 }
+
+export function clearRfid() {
+  return {
+    type: RFID.CLEAR_RFID,
+  };
+}

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { fetchCustomer } from '../../actions/customer';
+import { clearCustomer, fetchCustomer } from '../../actions/customer';
 import Style from './NewCard.css';
 import TabMenu, { TabItem } from '../../components/TabMenu';
 import Button, { Buttons } from '../../components/Button';
@@ -31,6 +31,7 @@ class NewCardContainer extends Component {
   }
 
   handleCancel() {
+    this.props.clearCustomer();
     this.props.push('/sales');
   }
 
@@ -68,12 +69,14 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = {
+  clearCustomer,
   fetchCustomer,
   push
 };
 
 NewCardContainer.propTypes = {
   customer: PropTypes.object.isRequired,
+  clearCustomer: PropTypes.func.isRequired,
   fetchCustomer: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired
