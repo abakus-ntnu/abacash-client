@@ -11,9 +11,9 @@ deployment:
   release:
     branch: circle-release
     commands:
-      - sudo add-apt-repository ppa:ubuntu-wine/ppa
-      - sudo apt-get update
-      - sudo apt-get install wine1.8 winetricks
+      - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
+      - sudo apt-get update -y
+      - sudo apt-get install wine1.8 winetricks -y
       - go get github.com/aktau/github-release
       - npm run package-all
       - "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
