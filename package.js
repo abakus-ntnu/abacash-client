@@ -80,7 +80,7 @@ async function startPack() {
 
     if (shouldBuildAll) {
       const archs = ['x64'];
-      const platforms = ['linux', 'win32', 'darwin'];
+      const platforms = ['linux', 'darwin'];
 
       platforms.forEach((plat) => {
         archs.forEach((arch) => {

@@ -11,9 +11,6 @@ deployment:
   release:
     branch: circle-release
     commands:
-      - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
-      - sudo apt-get update -y
-      - sudo apt-get install wine1.8 winetricks -y
       - go get github.com/aktau/github-release
       - npm run package-all
       - "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
@@ -22,5 +19,3 @@ deployment:
       - github-release upload --file release/abacash-v$PACKAGE_VERSION-darwin-x64
       - zip -r release/abacash-v$PACKAGE_VERSION-linux-ia32 .zip release/linux-ia32
       - github-release upload --file release/abacash-v$PACKAGE_VERSION-linux-ia64
-      - zip -r release/abacash-v$PACKAGE_VERSION-win32-x64 .zip release/win32-x64
-      - github-release upload --file release/abacash-v$PACKAGE_VERSION-win32-x64
