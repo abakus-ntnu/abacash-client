@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import Style from './Rfid.css';
+import { Component } from 'react';
 
 type Props = {
   currentRfid: String | null,
@@ -9,13 +8,6 @@ type Props = {
 };
 
 class Rfid extends Component {
-
-  constructor() {
-    super();
-    this.state = {
-      currentRfid: null,
-    };
-  }
 
   componentWillReceiveProps = (nextProps) => {
     const {
@@ -36,7 +28,7 @@ class Rfid extends Component {
   props: Props;
 
   render() {
-    return <span id={Style.rfid} />;
+    return null;
   }
 
 }
