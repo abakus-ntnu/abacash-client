@@ -6,3 +6,27 @@ test:
   override:
     - npm run lint
     - npm run flow || true
+
+deployment:
+  release:
+    commands:
+      - go get github.com/aktau/github-release
+      - sudo apt-get install zip
+      - npm run package-all
+      - PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')
+      - github-release release \
+        --repo $GITHUB_REPO \
+        --tag $PACKAGE_VERSION \
+        --pre-release
+      - zip -r release/abacash-v$PACKAGE_VERSION-darwin-x64 .zip release/darwin-x64
+      - github-release upload \
+        --repo $GITHUB_REPO \
+        --file release/abacash-v$PACKAGE_VERSION-darwin-x64
+      - zip -r release/abacash-v$PACKAGE_VERSION-linux-ia32 .zip release/linux-ia32
+      - github-release upload \
+        --repo $GITHUB_REPO \
+        --file release/abacash-v$PACKAGE_VERSION-linux-ia64
+      - zip -r release/abacash-v$PACKAGE_VERSION-win32-x64 .zip release/win32-x64
+      - github-release upload \
+        --repo $GITHUB_REPO \
+        --file release/abacash-v$PACKAGE_VERSION-win32-x64

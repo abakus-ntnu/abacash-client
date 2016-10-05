@@ -79,9 +79,8 @@ async function startPack() {
     const paths = await del('release');
 
     if (shouldBuildAll) {
-      // build for all platforms
-      const archs = ['ia32', 'x64'];
-      const platforms = ['linux', 'darwin'];
+      const archs = ['x64'];
+      const platforms = ['linux', 'win-32', 'darwin'];
 
       platforms.forEach((plat) => {
         archs.forEach((arch) => {
