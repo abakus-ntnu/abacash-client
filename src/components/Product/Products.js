@@ -3,7 +3,7 @@ import React from 'react';
 import Style from './Product.css';
 
 type Props = {
-    children: any
+    children?: Array<*>
 };
 
 const ProductContainer = (props: Props) => (

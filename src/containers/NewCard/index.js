@@ -10,13 +10,16 @@ import SearchComponent from './SearchComponent';
 import ReviewComponent from './ReviewComponent';
 
 type State = {
-  step: String,
-  rfid: String
+  step: string,
+  rfid: string,
+  nerd: Map<string, string>,
+  customer: Map<string, string>,
+  user: Map<string, string>
 };
 
 type Props = {
   customer: Object,
-  fetchCustomer: () => void,
+  fetchCustomer: () => Promise<*>,
   push: () => void,
 };
 
@@ -24,7 +27,7 @@ class NewCardContainer extends React.Component {
 
   state: State = {
     step: 'SEARCH',
-    rfid: '3ijd3ijkd3'
+    rfid: ''
   };
 
   props: Props;
@@ -68,7 +71,7 @@ class NewCardContainer extends React.Component {
         }
         <Buttons>
           <Button onClick={() => this.handleCancel()} cancel label='Avbryt' />
-          <Button confirm disabled={this.state.step !== 'REVIEW'} label='OK' />
+          <Button onClick={() => null} confirm disabled={this.state.step !== 'REVIEW'} label='OK' />
         </Buttons>
       </div>
     );

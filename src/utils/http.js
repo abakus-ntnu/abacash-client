@@ -30,7 +30,7 @@ type Options = {
   headers: { [key: string]: string }
 };
 
-export default function fetchJSON(path: string, options: Options = { method: 'GET', headers: {} }) {
+export default function fetchJSON(path: string, options: Options = { method: 'GET', headers: {} }): Promise<*> {
   const body = options.body;
 
   if (typeof body === 'object') {
@@ -96,7 +96,7 @@ export default function fetchJSON(path: string, options: Options = { method: 'GE
       }
 
       if (response.ok && json !== undefined) {
-        return { json, response };
+        return { json, text: null, response };
       }
 
       const error = new HTTPError(`${response.status} ${response.statusText}`);

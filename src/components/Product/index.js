@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
 import Style from './Product.css';
+import Products from './Products';
 
 type Props = {
   product: Object,
-  select: () => Object,
+  select: (product: Object) => void,
 };
 
 const Product = (props: Props) => (
@@ -18,4 +19,4 @@ const Product = (props: Props) => (
 );
 
 export default Product;
-export Products from './Products';
+export { Products };

@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { fromJS } from 'immutable';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Style from './Setup.css';
@@ -11,22 +12,28 @@ import { login } from '../../actions/auth';
 import { fetchSystem } from '../../actions/system';
 import { addNotification } from '../../actions/notification';
 
+type State = {
+  token: string,
+  loading: boolean,
+  rfid: string
+};
+
 type Props = {
-  token: String,
+  token: string,
   push: () => void,
   location: Object,
   setDevice: () => void,
-  fetchSystem: () => void,
+  fetchSystem: () => Promise<*>,
   addNotification: () => void,
   login: () => void
 };
 
 class SetupContainer extends React.Component {
 
-  state = {
-    token: this.props.token || '',
+  state: State = {
+    token: '',
     loading: false,
-    rfid: null
+    rfid: ''
   };
 
   componentDidMount() {
@@ -54,10 +61,6 @@ class SetupContainer extends React.Component {
       });
   }
 
-  handleChange(field, value) {
-    this.setState({ [field]: value });
-  }
-
   props: Props;
 
   render() {
@@ -69,9 +72,9 @@ class SetupContainer extends React.Component {
         <div className={Style.inputContainer}>
           <Input
             placeholder='API token'
-            value={this.state.token}
-            onChange={(event) => this.handleChange('token', event.target.value)}
             onSubmit={() => this.onSave()}
+            value={this.state.token}
+            onChange={(token) => this.setState({ token })}
           />
         </div>
 
@@ -79,9 +82,8 @@ class SetupContainer extends React.Component {
           <Dropdown
             placeholder='Select RFID device'
             nullValue='No RFID device'
-            value={this.state.rfid}
-            options={[]}
-            onChange={(value) => this.handleChange('rfid', value)}
+            options={fromJS([])}
+            onChange={(rfid) => this.setState({ rfid })}
           />
         </div>
 

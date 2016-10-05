@@ -16,8 +16,11 @@ export type PromisedAction = {
   payload: Promise<*>;
 };
 
-export type Thunk = (dispatch: Dispatch, getState: () => Object) => any;
-export type Dispatch = (action: Action | Thunk | PromisedAction | Object) => Promise<*>;
+type DispatchCall = (action: Dispatch) => Dispatch;
+export type Thunk = (dispatch: (dispatch: Dispatch) => any, getState: () => Object)
+ => ?DispatchCall | Promise<*>;
+export type Dispatch = Action | Thunk | PromisedAction | ActionWithoutPayload;
+
 
 export const AUTH = {
   LOGIN: 'AUTH/LOGIN',
@@ -41,6 +44,8 @@ export const TRANSACTION = {
 };
 
 export const CUSTOMER = {
+  CREATE_CUSTOMER: 'CUSTOMER/CREATE_CUSTOMER',
+  UPDATE_CUSTOMER: 'CUSTOMER/UPDATE_CUSTOMER',
   FETCH_CUSTOMER: 'CUSTOMER/FETCH_CUSTOMER',
   FETCH_CUSTOMER_SUCCESS: 'CUSTOMER/FETCH_CUSTOMER_SUCCESS',
   CLEAR_CUSTOMER: 'CUSTOMER/CLEAR_CUSTOMER'
@@ -52,6 +57,7 @@ export const PRODUCT = {
 };
 
 export const NERD = {
+  FETCH_NERD: 'NERD/FETCH_NERD',
   QUERY_NERD: 'NERD/QUERY_NERD',
   QUERY_NERD_SUCCESS: 'NERD/QUERY_NERD_SUCCESS'
 };

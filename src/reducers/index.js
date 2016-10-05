@@ -1,6 +1,7 @@
 // @flow
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
+import type { Action, ActionWithoutPayload } from '../actions/types';
 
 import { AUTH } from '../actions/types';
 
@@ -27,7 +28,7 @@ const appReducer = combineReducers({
   notification
 });
 
-export default function rootReducer(state, action) {
+export default function rootReducer(state: Object, action: Action | ActionWithoutPayload) {
   if (action.type === AUTH.LOGOUT) {
     state = {};
   }

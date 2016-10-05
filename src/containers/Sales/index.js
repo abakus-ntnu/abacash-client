@@ -14,23 +14,28 @@ import { fetchSystem } from '../../actions/system';
 import { addProduct } from '../../actions/cart';
 import Style from './Sales.css';
 
+type State = {
+  search: boolean,
+  type: string
+};
+
 type Props = {
   customer?: Object,
-  error: String,
+  error: string,
   products: Object,
   productTypes: Object,
-  processing: Boolean,
-  fetchSystem: () => void,
+  processing: boolean,
+  fetchSystem: () => Promise<*>,
   push: () => void,
   fetchProducts: () => void,
-  cartItems: Map,
+  cartItems: Map<number, number>,
   addProduct: () => void,
   clearCustomer: () => void,
 };
 
 class SalesContainer extends Component {
 
-  state = {
+  state: State = {
     search: false,
     type: this.props.productTypes.first()
   };
@@ -51,6 +56,9 @@ class SalesContainer extends Component {
   componentWillUnmount() {
     clearInterval(this.updateInterval);
   }
+
+  inactiveTimeout: any = undefined;
+  updateInterval: any = undefined;
 
   updateData() {
     this.props.fetchSystem()

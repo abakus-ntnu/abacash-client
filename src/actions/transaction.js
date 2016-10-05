@@ -2,9 +2,9 @@
 import callAPI from './callAPI';
 import { TRANSACTION } from './types';
 import { mapCartToTransaction } from '../selectors/cart';
-import type { Dispatch } from './types';
+import type { Thunk } from './types';
 
-export function createTransaction(): Dispatch {
+export function createTransaction(): Thunk {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
     const customer = getState().customer.get('customer');
@@ -16,7 +16,7 @@ export function createTransaction(): Dispatch {
         products: mapCartToTransaction(cart),
         customerId: customer.get('id')
       },
-      method: 'post',
+      method: 'POST',
       endpoint: `${system.get('id')}/transactions`
     }));
   };

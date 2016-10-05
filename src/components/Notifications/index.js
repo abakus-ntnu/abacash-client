@@ -16,8 +16,12 @@ class Notifications extends Component {
 
   props: Props;
 
+  notificationSystem = null;
+
   addNotification = (event) => {
-    this.notificationSystem.addNotification(event);
+    if (this.notificationSystem) {
+      this.notificationSystem.addNotification(event);
+    }
   }
 
   render() {

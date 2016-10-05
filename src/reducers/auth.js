@@ -1,12 +1,13 @@
 // @flow
 import { fromJS } from 'immutable';
 import { AUTH } from '../actions/types';
+import type { Reducer } from './types';
 
 const initialState = fromJS({
   token: '',
 });
 
-export default function auth(state = initialState, action) {
+const auth: Reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case AUTH.LOGIN: {
@@ -18,4 +19,6 @@ export default function auth(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default auth;

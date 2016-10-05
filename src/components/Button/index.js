@@ -2,14 +2,15 @@
 import React from 'react';
 import classNames from 'classnames';
 import Style from './Button.css';
+import Buttons from './Buttons';
 
 type Props = {
-  label: String,
-  onClick: () => void,
-  disabled: Boolean,
-  loading: Boolean,
-  confirm: Boolean,
-  cancel: Boolean
+  label: string,
+  onClick: () => any,
+  disabled?: boolean,
+  loading?: boolean,
+  confirm?: boolean,
+  cancel?: boolean
 };
 
 const Button = (props: Props) => (
@@ -27,4 +28,4 @@ const Button = (props: Props) => (
 );
 
 export default Button;
-export Buttons from './Buttons';
+export { Buttons };

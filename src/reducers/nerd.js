@@ -1,12 +1,13 @@
 // @flow
 import { Map } from 'immutable';
 import { NERD } from '../actions/types';
+import type { Reducer } from './types';
 
 const initialState = Map({
   users: []
 });
 
-export default function auth(state = initialState, action) {
+const nerd: Reducer = (state = initialState, action) => {
   switch (action.type) {
     case NERD.QUERY_NERD_SUCCESS: {
       return state.merge({
@@ -17,4 +18,6 @@ export default function auth(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default nerd;

@@ -7,12 +7,12 @@ import Input from '../../components/Input';
 import Style from './NewCard.css';
 
 type State = {
-  firstName: String,
-  lastName: String
+  firstName: string,
+  lastName: string
 };
 
 type Props = {
-  users: Array<Object>,
+  users: Array<Map<string, string>>,
   queryNerd: () => void,
   handleSelect: () => void
 };
@@ -24,8 +24,8 @@ class SearchComponent extends React.Component {
     lastName: ''
   };
 
-  onChange(field, event) {
-    this.setState({ [field]: event.target.value }, () => this.queryNerd(this.state));
+  onChange(field, value) {
+    this.setState({ [field]: value }, () => this.queryNerd(this.state));
   }
 
   queryNerd = () => debounce(this.props.queryNerd, 300)
@@ -39,26 +39,24 @@ class SearchComponent extends React.Component {
           <div className={Style.SearchComponent}>
             <Input
               placeholder='Fornavn'
-              onChange={(e) => this.onChange('firstname', e)}
-              value={this.state.firstname}
+              onChange={(value) => this.onChange('firstName', value)}
             />
           </div>
           <div className={Style.SearchComponent}>
             <Input
               placeholder='Etternavn'
-              onChange={(e) => this.onChange('surname', e)}
-              value={this.state.surname}
+              onChange={(value) => this.onChange('lastName', value)}
             />
           </div>
         </div>
         <ul className={Style.usersList} >
-          {this.props.users.map((user) => (
+          {this.props.users.map((user, index) => (
             <li
               className={Style.usersRow}
-              key={user.id}
+              key={index}
               onClick={() => this.props.handleSelect(user)}
             >
-              {`${user.get('name')} ${user.get('surname')}`}
+              {`${user.get('firstName')} ${user.get('lastName')}`}
             </li>)
           )}
         </ul>

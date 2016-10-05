@@ -1,12 +1,13 @@
 // @flow
 import { Map } from 'immutable';
 import { RFID } from '../actions/types';
+import type { Reducer } from './types';
 
 const initialState = Map({
   device: null,
 });
 
-export default function auth(state = initialState, action) {
+const rfid: Reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case RFID.SET_DEVICE: {
@@ -18,4 +19,6 @@ export default function auth(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default rfid;
