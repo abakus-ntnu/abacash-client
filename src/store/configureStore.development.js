@@ -1,3 +1,4 @@
+// @flow
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
@@ -50,7 +51,7 @@ const enhancer = compose(
   window.devToolsExtension ? window.devToolsExtension({ actionCreators }) : (f) => f
 );
 
-export default function configureStore(initialState, onComplete) {
+export function configureStore(initialState: Object, onComplete: ?() => void) {
   const store = createStore(rootReducer, initialState, enhancer);
 
   if (PERSISTENCE_ENABLED) {

@@ -1,3 +1,4 @@
+// @flow
 import { NOTIFICATION } from './types';
 
 export function addNotification(event) {

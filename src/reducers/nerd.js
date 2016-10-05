@@ -1,3 +1,4 @@
+// @flow
 import { Map } from 'immutable';
 import { NERD } from '../actions/types';
 

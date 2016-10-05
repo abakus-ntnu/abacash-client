@@ -1,3 +1,4 @@
+// @flow
 import { normalize } from 'normalizr';
 import fetchJSON from '../utils/http';
 import { getToken } from '../selectors/auth';

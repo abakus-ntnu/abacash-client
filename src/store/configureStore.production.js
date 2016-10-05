@@ -1,3 +1,4 @@
+// @flow
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import RavenMiddleware from 'redux-raven-middleware';
@@ -22,7 +23,7 @@ const enhancer = compose(
   )
 );
 
-export default function configureStore(initialState, onComplete) {
+export function configureStore(initialState: ?Object, onComplete: ?() => void) {
   const store = createStore(rootReducer, initialState, enhancer);
 
   if (PERSISTENCE_ENABLED) {

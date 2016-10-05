@@ -1,3 +1,4 @@
+// @flow
 import { Map } from 'immutable';
 import { SYSTEM } from '../actions/types';
 

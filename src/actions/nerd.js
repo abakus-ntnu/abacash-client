@@ -1,3 +1,4 @@
+// @flow
 import callAPI from './callAPI';
 import { NERD } from './types';
 

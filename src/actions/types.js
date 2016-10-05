@@ -1,3 +1,24 @@
+// @flow
+
+export type Action = {
+  type: string;
+  payload: Object;
+  meta?: Object;
+  error?: Error;
+};
+
+export type ActionWithoutPayload = {
+  type: string;
+};
+
+export type PromisedAction = {
+  type: string;
+  payload: Promise<*>;
+};
+
+export type Thunk = (dispatch: Dispatch, getState: () => Object) => any;
+export type Dispatch = (action: Action | Thunk | PromisedAction | Object) => Promise<*>;
+
 export const AUTH = {
   LOGIN: 'AUTH/LOGIN',
   LOGOUT: 'AUTH/LOGOUT'

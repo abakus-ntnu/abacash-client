@@ -1,8 +1,10 @@
+// @flow
 import callAPI from './callAPI';
 import { TRANSACTION } from './types';
 import { mapCartToTransaction } from '../selectors/cart';
+import type { Dispatch } from './types';
 
-export function createTransaction() {
+export function createTransaction(): Dispatch {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
     const customer = getState().customer.get('customer');

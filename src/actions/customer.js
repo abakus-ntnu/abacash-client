@@ -1,8 +1,11 @@
+// @flow
+import { Map } from 'immutable';
 import callAPI from './callAPI';
 import { CUSTOMER } from './types';
 import { clearCart } from './cart';
+import type { Dispatch } from './types';
 
-export function fetchCustomer(param, lookupParam = 'rfid') {
+export function fetchCustomer(param: string, lookupParam: string = 'rfid'): Dispatch {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
 
@@ -13,7 +16,7 @@ export function fetchCustomer(param, lookupParam = 'rfid') {
   };
 }
 
-export function updateCustomer(customer) {
+export function updateCustomer(customer: Map<string, string>): Dispatch {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
 
@@ -24,7 +27,7 @@ export function updateCustomer(customer) {
   };
 }
 
-export function createCustomer() {
+export function createCustomer(): Dispatch {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
 
@@ -35,7 +38,7 @@ export function createCustomer() {
   };
 }
 
-export function clearCustomer() {
+export function clearCustomer(): Dispatch {
   return (dispatch) => {
     dispatch(clearCart());
     return dispatch({

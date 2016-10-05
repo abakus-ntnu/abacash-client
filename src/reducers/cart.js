@@ -1,3 +1,4 @@
+// @flow
 import { fromJS } from 'immutable';
 import { CART } from '../actions/types';
 

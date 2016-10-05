@@ -1,6 +1,8 @@
+// @flow
 import { CART } from './types';
+import type { Action, ActionWithoutPayload, Dispatch } from './types';
 
-export function addProduct(productId) {
+export function addProduct(productId: number): Dispatch {
   return (dispatch, getState) => {
     const customerState = getState().customer;
     if (customerState.get('customer')) {
@@ -14,7 +16,7 @@ export function addProduct(productId) {
   };
 }
 
-export function removeProduct(productId) {
+export function removeProduct(productId: number): Action {
   return {
     type: CART.REMOVE_PRODUCT,
     payload: {
@@ -23,7 +25,7 @@ export function removeProduct(productId) {
   };
 }
 
-export function clearCart() {
+export function clearCart(): ActionWithoutPayload {
   return {
     type: CART.CLEAR_CART
   };

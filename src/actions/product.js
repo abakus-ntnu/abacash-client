@@ -1,3 +1,4 @@
+// @flow
 import { arrayOf } from 'normalizr';
 import { products } from '../schemas/product';
 import callAPI from './callAPI';

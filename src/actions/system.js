@@ -1,3 +1,4 @@
+// @flow
 import callAPI from './callAPI';
 import { SYSTEM } from './types';
 
