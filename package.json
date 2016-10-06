@@ -2,7 +2,7 @@
   "name": "abacash-client",
   "productName": "AbaCash Client",
   "description": "AbaCash Client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "main.js",
   "scripts": {
     "lint": "eslint . --ignore-path .gitignore",
