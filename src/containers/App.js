@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Notifications from '../components/Notifications';
 
 type Props = {
-  children: any
+  children: Array<*>
 };
 
 class App extends Component {

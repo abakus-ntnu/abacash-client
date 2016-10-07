@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import Style from './TabMenu.css';
 
 type Props = {
-  name: String,
-  uri: String,
-  active: Boolean,
-  onClick: () => void
+  name: string,
+  uri?: string,
+  active?: boolean,
+  onClick?: () => void
 };
 
 const TabItem = (props: Props) => (

@@ -3,9 +3,9 @@ import { Map } from 'immutable';
 import callAPI from './callAPI';
 import { CUSTOMER } from './types';
 import { clearCart } from './cart';
-import type { Dispatch } from './types';
+import type { Thunk } from './types';
 
-export function fetchCustomer(param: string, lookupParam: string = 'rfid'): Dispatch {
+export function fetchCustomer(param: string, lookupParam: string = 'rfid'): Thunk {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
 
@@ -16,7 +16,7 @@ export function fetchCustomer(param: string, lookupParam: string = 'rfid'): Disp
   };
 }
 
-export function updateCustomer(customer: Map<string, string>): Dispatch {
+export function updateCustomer(customer: Map<string, string>): Thunk {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
 
@@ -27,7 +27,7 @@ export function updateCustomer(customer: Map<string, string>): Dispatch {
   };
 }
 
-export function createCustomer(): Dispatch {
+export function createCustomer(): Thunk {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
 
@@ -38,7 +38,7 @@ export function createCustomer(): Dispatch {
   };
 }
 
-export function clearCustomer(): Dispatch {
+export function clearCustomer(): Thunk {
   return (dispatch) => {
     dispatch(clearCart());
     return dispatch({

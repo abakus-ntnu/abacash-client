@@ -1,18 +1,34 @@
 // @flow
-import { normalize } from 'normalizr';
+import { normalize, Schema } from 'normalizr';
 import fetchJSON from '../utils/http';
 import { getToken } from '../selectors/auth';
+import type { Thunk, PromisedAction } from './types';
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.API_URL || 'http://127.0.0.1:9000';
 
-const normalizePayload = (payload, schema) => {
+const normalizePayload: (payload: Object, schema: Schema) => Object = (payload, schema) => {
   if (!schema) return payload;
   return normalize(payload, schema);
 };
 
+type Options = {
+  type: string,
+  method?: MethodType,
+  endpoint: string,
+  body?: Object,
+  files?: Array<File>,
+  schema?: Schema,
+  meta?: Object,
+  isRequestNeeded?: () => boolean,
+  headers?: Object,
+  timeout?: number,
+  requiresAuthentication?: boolean,
+  token?: string
+};
+
 export default function callAPI({
   type,
-  method = 'get',
+  method = 'GET',
   endpoint,
   body,
   files,
@@ -21,10 +37,9 @@ export default function callAPI({
   isRequestNeeded = () => true,
   headers = {},
   timeout,
-  json,
   requiresAuthentication = true,
   token
-}) {
+}: Options): Thunk {
   return (dispatch, getState) => {
     if (isRequestNeeded && isRequestNeeded(getState()) === false) {
       return Promise.resolve();
@@ -37,7 +52,6 @@ export default function callAPI({
     const options = {
       method,
       body,
-      json,
       files,
       timeout,
       headers,
@@ -64,7 +78,7 @@ export default function callAPI({
     const fullUrl = (~endpoint.indexOf('https://') || ~endpoint.indexOf('http://'));
     const apiUrl = fullUrl ? endpoint : `${API_URL}/${endpoint}`;
 
-    return dispatch(({
+    const promiseAction: PromisedAction = {
       type,
       meta: {
         ...meta,
@@ -72,11 +86,14 @@ export default function callAPI({
         body,
       },
       payload: fetchJSON(apiUrl, options)
-        .then(({ json, response }) => ({
+        .then(({ json, text, response }) => ({
           response,
-          json: normalizePayload(json, schema),
+          json: json ? normalizePayload(json, schema) : json,
+          text,
           originalJson: json,
         })),
-    }));
+    };
+
+    return dispatch(promiseAction);
   };
 }

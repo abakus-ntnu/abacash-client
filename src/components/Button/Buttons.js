@@ -3,7 +3,7 @@ import React from 'react';
 import Style from './Button.css';
 
 type Props = {
-  children: Array
+  children?: Array<*>,
 };
 
 const Buttons = (props: Props) => (

@@ -1,12 +1,13 @@
 // @flow
 import { Map } from 'immutable';
 import { SYSTEM } from '../actions/types';
+import type { Reducer } from './types';
 
 const initialState = Map({
   system: null,
 });
 
-export default function auth(state = initialState, action) {
+const system: Reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case SYSTEM.FETCH_SYSTEM_SUCCESS: {
@@ -18,4 +19,6 @@ export default function auth(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default system;
