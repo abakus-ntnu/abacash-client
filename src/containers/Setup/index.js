@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Style from './Setup.css';
@@ -14,7 +15,7 @@ import { addNotification } from '../../actions/notification';
 type State = {
   token: string,
   loading: boolean,
-  rfid: string
+  rfid: ?string
 };
 
 type Props = {
@@ -24,7 +25,7 @@ type Props = {
   setDevice: () => void,
   fetchSystem: () => Promise<*>,
   addNotification: () => void,
-  devices: Map<string, string>,
+  devices: List<Map<string, string>>,
   listDevices: () => void,
   setDevice: () => void,
   login: () => void
@@ -35,7 +36,7 @@ class SetupContainer extends React.Component {
   state: State = {
     token: '',
     loading: false,
-    rfid: ''
+    rfid: null
   };
 
   componentDidMount() {
@@ -85,10 +86,10 @@ class SetupContainer extends React.Component {
           <Dropdown
             placeholder='Select RFID device'
             nullValue='No RFID device'
-            valueLabel='comName'
+            displayValue='comName'
             value={this.state.rfid}
-            options={this.props.devices.toJS()}
-            onChange={(value) => this.handleChange('rfid', value)}
+            options={this.props.devices}
+            onChange={(item) => (this.setState({ rfid: item.get('comName') }))}
           />
         </div>
 

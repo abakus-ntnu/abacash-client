@@ -1,18 +1,19 @@
 // @flow
 import React from 'react';
+import { List, Map } from 'immutable';
 import classNames from 'classnames';
 import Style from './Dropdown.css';
 
 type State = {
   active: boolean,
-  option: { label: string, value?: string }
+  option: ?Map<string, string>
 };
 
 type Props = {
-  onChange: (value: any) => void,
-  options: Array<{ label: string, value: string }>,
+  onChange: (value: Map<string, string>) => void,
+  options: List<Map<string, string>>,
   placeholder: string,
-  valueLabel: string,
+  displayValue: string,
   nullValue: string
 };
 
@@ -20,7 +21,7 @@ class Dropdown extends React.Component {
 
   state: State = {
     active: false,
-    option: { label: this.props.nullValue }
+    option: null
   };
 
   props: Props;
@@ -29,14 +30,12 @@ class Dropdown extends React.Component {
     this.setState({ active: !this.state.active });
   }
 
-  handleSelect(option: { label: string, value?: string }) {
+  handleSelect(option: Map<string, string>) {
     this.setState({
       option,
       active: !this.state.active
     });
-    if (option.value) {
-      this.props.onChange(option.value);
-    }
+    this.props.onChange(option);
   }
 
   render() {
@@ -53,32 +52,26 @@ class Dropdown extends React.Component {
         onClick={() => this.toggle()}
         className={Style.option}
       >
-        {this.state.option.label}
+        {this.state.option.get(this.props.displayValue)}
       </span>}
 
       <div className={Style.options}>
         <ul>
           {this.props.nullValue &&
             (<li
-              onClick={() => this.handleSelect({
-                label: this.props.nullValue,
-                [this.props.valueLabel]: null
-              })}
+              onClick={() => this.handleSelect(Map())}
               className={Style.dropdownItem}
             >
               <span>{this.props.nullValue}</span>
             </li>)
           }
-          {this.props.options.map((option) => (
+          {this.props.options.map((option, key) => (
             <li
-              onClick={() => this.handleSelect({
-                [this.props.valueLabel]: option[this.props.valueLabel],
-                label: option[this.props.valueLabel]
-              })}
-              key={option[this.props.valueLabel]}
+              onClick={() => this.handleSelect(option)}
+              key={key}
               className={Style.dropdownItem}
             >
-              <span>{option[this.props.valueLabel]}</span>
+              <span>{option.get(this.props.displayValue)}</span>
             </li>
           ))}
         </ul>
