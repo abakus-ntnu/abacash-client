@@ -26,7 +26,7 @@ const replies = {
 };
 
 function validate(data, checksum) {
-  const dataDecimal = data.map(item => parseInt(item, 16));
+  const dataDecimal = data.map((item) => parseInt(item, 16));
   const calculatedChecksum = dataDecimal
   .reduce((previousValue, currentValue) => previousValue ^ currentValue);
   return Math.abs(calculatedChecksum % 255) === parseInt(checksum, 16);
@@ -57,7 +57,7 @@ function scan(predicate, data) {
 }
 
 export function connect(device) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     PORT = new SerialPort(device, {
       parser: SerialPort.parsers.byteDelimiter(0xBB)
     }, resolve);
@@ -73,7 +73,7 @@ export function mifareUID() {
   SCANNING = true;
   return new Promise((resolve) => {
     PORT.on('data', (response) => {
-      const hexValues = response.map(decimal => decimal.toString(16));
+      const hexValues = response.map((decimal) => decimal.toString(16));
       const stationId = hexValues[1];
       const length = hexValues[2];
       const status = hexValues[3];
@@ -85,7 +85,7 @@ export function mifareUID() {
       if (replies[status] === 'OK' && valid) {
         SCANNING = false;
         PORT.removeAllListeners();
-        const mifareUidString = data.map(value => value.toString(16));
+        const mifareUidString = data.map((value) => value.toString(16));
         resolve(mifareUidString.join(':'));
       }
     });

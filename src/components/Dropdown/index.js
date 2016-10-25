@@ -69,7 +69,7 @@ class Dropdown extends React.Component {
               <span>{this.props.nullValue}</span>
             </li>)
           }
-          {this.props.options.map(option => (
+          {this.props.options.map((option) => (
             <li
               onClick={() => this.handleSelect({
                 [this.props.valueLabel]: option[this.props.valueLabel],

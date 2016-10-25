@@ -16,7 +16,8 @@
     "package": "cross-env NODE_ENV=production node -r babel-register -r babel-polyfill package.js",
     "package-all": "npm run package -- --all",
     "postinstall": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
-    "dev": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\""
+    "dev": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\"",
+    "rebuild": "electron-rebuild"
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"
@@ -60,10 +61,10 @@
     "css-loader": "0.25.0",
     "del": "2.2.2",
     "devtron": "1.3.0",
-    "electron": "1.4.2",
+    "electron": "1.4.4",
     "electron-devtools-installer": "2.0.1",
     "electron-packager": "8.1.0",
-    "electron-rebuild": "1.2.1",
+    "electron-rebuild": "1.3.0",
     "eslint": "3.7.1",
     "eslint-config-airbnb": "12.0.0",
     "eslint-import-resolver-webpack": "0.6.0",

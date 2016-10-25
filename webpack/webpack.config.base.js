@@ -59,7 +59,7 @@ export default {
     bindings: true,
     serialport: true
   },
-  postcss: webpack => [
+  postcss: (webpack) => [
     require('postcss-import')({ addDependencyTo: webpack }),
     require('postcss-cssnext'),
     require('postcss-nested'),

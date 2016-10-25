@@ -1,5 +1,5 @@
 // @flow
-import { fromJS, Map } from 'immutable';
+import { fromJS } from 'immutable';
 import { RFID } from '../actions/types';
 import type { Reducer } from './types';
 

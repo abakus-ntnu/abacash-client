@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { fromJS } from 'immutable';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Style from './Setup.css';
@@ -89,7 +88,7 @@ class SetupContainer extends React.Component {
             valueLabel='comName'
             value={this.state.rfid}
             options={this.props.devices.toJS()}
-            onChange={value => this.handleChange('rfid', value)}
+            onChange={(value) => this.handleChange('rfid', value)}
           />
         </div>
 
@@ -99,7 +98,7 @@ class SetupContainer extends React.Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   token: store.auth.get('token'),
   devices: store.rfid.get('devices')
 });
