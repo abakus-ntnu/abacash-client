@@ -131,8 +131,7 @@ class Sidebar extends React.Component {
               )}
             >
               {!this.props.processing ?
-                <i className='fa fa-credit-card' /> :
-                <i className='fa fa-spin fa-circle-o-notch' />
+                <i className='fa fa-credit-card' /> : <i className='fa fa-spin fa-circle-o-notch' />
               }
               {!this.props.processing ?
                 <span>
@@ -141,7 +140,7 @@ class Sidebar extends React.Component {
                   } kr
                 </span>
                 :
-                <span>Belaster kortet</span>
+                  <span>Belaster kortet</span>
               }
             </div>) : null
           }

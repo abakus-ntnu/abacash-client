@@ -35,6 +35,7 @@ type Props = {
   addProduct: () => void,
   addNotification: () => void,
   clearCustomer: () => void,
+  fetchCustomer: () => void,
 };
 
 class SalesContainer extends Component {

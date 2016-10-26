@@ -19,6 +19,7 @@ type State = {
 
 type Props = {
   customer: Object,
+  clearCustomer: () => Promise<*>,
   fetchCustomer: () => Promise<*>,
   push: () => void,
 };
@@ -87,14 +88,6 @@ const mapDispatchToProps = {
   clearCustomer,
   fetchCustomer,
   push
-};
-
-NewCardContainer.propTypes = {
-  customer: PropTypes.object.isRequired,
-  clearCustomer: PropTypes.func.isRequired,
-  fetchCustomer: PropTypes.func.isRequired,
-  push: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewCardContainer);
