@@ -4,7 +4,7 @@ import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Style from './Setup.css';
-import Button from '../../components/Button';
+import Button, { Buttons } from '../../components/Button';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 import { setDevice, listDevices } from '../../actions/rfid';
@@ -92,8 +92,10 @@ class SetupContainer extends React.Component {
             onChange={(item) => (this.setState({ rfid: item.get('comName') }))}
           />
         </div>
-
-        <Button loading={this.state.loading} confirm onClick={() => this.onSave()} label='Lagre' />
+        <Buttons>
+          <Button onClick={() => this.props.listDevices()} label='Reload Devices' />
+          <Button loading={this.state.loading} confirm onClick={() => this.onSave()} label='Save' />
+        </Buttons>
       </div>
     );
   }
