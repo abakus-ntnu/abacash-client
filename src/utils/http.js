@@ -100,6 +100,7 @@ export default function fetchJSON(path: string, options: Options = { method: 'GE
       }
 
       const error = new HTTPError(`${response.status} ${response.statusText}`);
+      error.status = response.status;
       error.response = response;
       error.json = json;
       error.text = text;

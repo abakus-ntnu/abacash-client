@@ -6,12 +6,14 @@ import { push } from 'react-router-redux';
 import { Map } from 'immutable';
 import TabMenu, { TabItem } from '../../components/TabMenu';
 import Product, { Products } from '../../components/Product';
+import Rfid from '../../components/Rfid';
 import SearchModal from '../../components/SearchModal';
 import Sidebar from '../../components/Sidebar';
-import { clearCustomer } from '../../actions/customer';
+import { clearCustomer, fetchCustomer } from '../../actions/customer';
 import { fetchProducts } from '../../actions/product';
 import { fetchSystem } from '../../actions/system';
 import { addProduct } from '../../actions/cart';
+import { addNotification } from '../../actions/notification';
 import Style from './Sales.css';
 
 type State = {
@@ -20,17 +22,20 @@ type State = {
 };
 
 type Props = {
-  customer?: Object,
+  customer?: object,
+  currentRfid: string,
   error: string,
-  products: Object,
-  productTypes: Object,
+  products: object,
   processing: boolean,
+  productTypes: object,
   fetchSystem: () => Promise<*>,
   push: () => void,
   fetchProducts: () => void,
   cartItems: Map<number, number>,
   addProduct: () => void,
+  addNotification: () => void,
   clearCustomer: () => void,
+  fetchCustomer: () => void,
 };
 
 class SalesContainer extends Component {
@@ -93,6 +98,21 @@ class SalesContainer extends Component {
   render() {
     return (
       <div>
+        <Rfid
+          currentRfid={this.props.currentRfid}
+          fetchCustomer={this.props.fetchCustomer}
+          onFetchFailure={(error) => {
+            if (error.status === 404) {
+              this.props.push('/new-card');
+            } else {
+              this.props.addNotification({
+                title: 'Uventet feil oppstod.',
+                level: 'error',
+                message: error.text
+              });
+            }
+          }}
+        />
         {this.state.search ? <SearchModal
           onDismiss={() => { this.setState({ search: false }); }}
           onSuccess={() => { this.setState({ search: false }); }}
@@ -151,16 +171,19 @@ const mapStateToProps = (state) => ({
   customer: state.customer.get('customer'),
   processing: state.transaction.get('processing'),
   error: state.transaction.get('error'),
+  currentRfid: state.rfid.get('currentRfid'),
   productTypes: state.system.get('system').get('productTypes'),
   cartItems: state.cart
 });
 
 const mapDispatchToProps = {
   clearCustomer,
+  fetchCustomer,
   fetchProducts,
   fetchSystem,
   push,
-  addProduct
+  addProduct,
+  addNotification
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SalesContainer);

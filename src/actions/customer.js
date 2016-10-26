@@ -3,6 +3,7 @@ import { Map } from 'immutable';
 import callAPI from './callAPI';
 import { CUSTOMER } from './types';
 import { clearCart } from './cart';
+import { clearRfid } from './rfid';
 import type { Thunk } from './types';
 
 export function fetchCustomer(param: string, lookupParam: string = 'rfid'): Thunk {
@@ -41,6 +42,7 @@ export function createCustomer(): Thunk {
 export function clearCustomer(): Thunk {
   return (dispatch) => {
     dispatch(clearCart());
+    dispatch(clearRfid());
     return dispatch({
       type: CUSTOMER.CLEAR_CUSTOMER,
     });

@@ -10,3 +10,18 @@ export function setDevice(device: string): Action {
     }
   };
 }
+
+export function cardScanned(rfid) {
+  return {
+    type: RFID.CARD_SCANNED,
+    payload: {
+      rfid
+    }
+  };
+}
+
+export function clearRfid() {
+  return {
+    type: RFID.CLEAR_RFID,
+  };
+}

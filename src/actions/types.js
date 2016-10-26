@@ -29,6 +29,8 @@ export const AUTH = {
 
 export const RFID = {
   SET_DEVICE: 'RFID/SET_DEVICE',
+  CARD_SCANNED: 'RFID/CARD_SCANNED',
+  CLEAR_RFID: 'RFID/CLEAR_RFID',
 };
 
 export const SYSTEM = {

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { fetchCustomer } from '../../actions/customer';
+import { clearCustomer, fetchCustomer } from '../../actions/customer';
 import Style from './NewCard.css';
 import TabMenu, { TabItem } from '../../components/TabMenu';
 import Button, { Buttons } from '../../components/Button';
@@ -19,6 +19,7 @@ type State = {
 
 type Props = {
   customer: Object,
+  clearCustomer: () => Promise<*>,
   fetchCustomer: () => Promise<*>,
   push: () => void,
 };
@@ -46,6 +47,7 @@ class NewCardContainer extends React.Component {
   }
 
   handleCancel() {
+    this.props.clearCustomer();
     this.props.push('/sales');
   }
 
@@ -83,6 +85,7 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = {
+  clearCustomer,
   fetchCustomer,
   push
 };
