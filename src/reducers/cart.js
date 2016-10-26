@@ -1,9 +1,11 @@
+// @flow
 import { fromJS } from 'immutable';
 import { CART } from '../actions/types';
+import type { Reducer } from './types';
 
 const initialState = fromJS({});
 
-export default function cart(state = initialState, action) {
+const cart: Reducer = (state = initialState, action) => {
   /*
    * The productID shoult always be a string.
    */
@@ -35,4 +37,6 @@ export default function cart(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default cart;

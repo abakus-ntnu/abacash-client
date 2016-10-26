@@ -1,7 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+import React from 'react';
 import Style from './NewCard.css';
 
-class ReviewComponent extends Component {
+type Props = {
+  customer: Object,
+  nerd: Object
+};
+
+class ReviewComponent extends React.Component {
+
+  props: Props;
+
   render() {
     return (
       <div>
@@ -35,11 +44,5 @@ class ReviewComponent extends Component {
     );
   }
 }
-
-ReviewComponent.propTypes = {
-  user: PropTypes.object,
-  customer: PropTypes.object,
-  nerd: PropTypes.object
-};
 
 export default ReviewComponent;

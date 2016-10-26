@@ -1,5 +1,7 @@
+// @flow
 import React from 'react';
 import Style from './TabMenu.css';
+import TabItem from './TabItem';
 
 type Props = {
   children?: Object
@@ -12,4 +14,4 @@ const TabMenu = (props: Props) => (
 );
 
 export default TabMenu;
-export TabItem from './TabItem';
+export { TabItem };

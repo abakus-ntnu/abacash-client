@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -9,18 +10,18 @@ import { clearCustomer } from '../../actions/customer';
 import { addNotification } from '../../actions/notification';
 import { createTransaction } from '../../actions/transaction';
 
-type Props ={
-  customer?: Object,
-  processing: Boolean,
-  error: String,
-  createTransaction: () => void,
+type Props = {
+  customer: Map<string, string>,
+  processing: boolean,
+  error: string,
+  createTransaction: () => Promise<*>,
   clearCustomer: () => void,
   findUser: () => void,
   addNotification: () => void,
   clearCart: () => void,
   removeProduct: () => void,
-  cartItems: Map,
-  products: Map,
+  cartItems: Map<number, number>,
+  products: Map<number, Object>,
   totalPrice: number
 };
 

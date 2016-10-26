@@ -1,3 +1,6 @@
-export const hasAuthentication = (state) => !!state.get('token');
+// @flow
+import { Map } from 'immutable';
 
-export const getToken = (state) => state.get('token');
+export const hasAuthentication: (state: Map<string, string>) => boolean = (state) => !!state.get('token');
+
+export const getToken: (state: Map<string, string>) => ?string = (state) => state.get('token');

@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -15,18 +16,22 @@ import { addProduct } from '../../actions/cart';
 import { addNotification } from '../../actions/notification';
 import Style from './Sales.css';
 
+type State = {
+  search: boolean,
+  type: string
+};
+
 type Props = {
-  customer?: Object,
-  error: String,
-  currentRfid: String,
-  products: Object,
-  productTypes: Object,
-  processing: Boolean,
-  fetchCustomer: () => void,
-  fetchSystem: () => void,
+  customer?: object,
+  currentRfid: string,
+  error: string,
+  products: object,
+  processing: boolean,
+  productTypes: object,
+  fetchSystem: () => Promise<*>,
   push: () => void,
   fetchProducts: () => void,
-  cartItems: Map,
+  cartItems: Map<number, number>,
   addProduct: () => void,
   addNotification: () => void,
   clearCustomer: () => void,
@@ -34,7 +39,7 @@ type Props = {
 
 class SalesContainer extends Component {
 
-  state = {
+  state: State = {
     search: false,
     type: this.props.productTypes.first()
   };
@@ -55,6 +60,9 @@ class SalesContainer extends Component {
   componentWillUnmount() {
     clearInterval(this.updateInterval);
   }
+
+  inactiveTimeout: any = undefined;
+  updateInterval: any = undefined;
 
   updateData() {
     this.props.fetchSystem()
@@ -123,20 +131,20 @@ class SalesContainer extends Component {
             </TabMenu>
 
             <Products>
-                {this.props.products.size ?
-                  this.props.products
-                    .filter(product => product.get('type') === this.state.type)
-                    .map((product, productID) => (
-                      <Product
-                        product={{
-                          id: productID,
-                          ...product.toJS()
-                        }}
-                        select={item => { this.props.addProduct(item.id); }}
-                      />
-                    )
-                  ) : null
-                }
+              {this.props.products.size ?
+                this.props.products
+                  .filter((product) => product.get('type') === this.state.type)
+                  .map((product, productID) => (
+                    <Product
+                      product={{
+                        id: productID,
+                        ...product.toJS()
+                      }}
+                      select={(item) => { this.props.addProduct(item.id); }}
+                    />
+                  )
+                ) : null
+              }
             </Products>
 
           </div>
@@ -157,7 +165,7 @@ class SalesContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   products: state.product.get('products'),
   customer: state.customer.get('customer'),
   processing: state.transaction.get('processing'),

@@ -1,23 +1,36 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+import React from 'react';
 import { connect } from 'react-redux';
 import { queryNerd } from '../../actions/nerd';
 import { debounce } from '../../utils/debounce';
 import Input from '../../components/Input';
 import Style from './NewCard.css';
 
-class SearchComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.queryNerd = debounce(this.props.queryNerd, 300);
-    this.state = {
-      firstname: '',
-      surname: ''
-    };
+type State = {
+  firstName: string,
+  lastName: string
+};
+
+type Props = {
+  users: Array<Map<string, string>>,
+  queryNerd: () => void,
+  handleSelect: () => void
+};
+
+class SearchComponent extends React.Component {
+
+  state: State = {
+    firstName: '',
+    lastName: ''
+  };
+
+  onChange(field, value) {
+    this.setState({ [field]: value }, () => this.queryNerd(this.state));
   }
 
-  onChange(field, event) {
-    this.setState({ [field]: event.target.value }, () => this.queryNerd(this.state));
-  }
+  queryNerd = () => debounce(this.props.queryNerd, 300)
+
+  props: Props;
 
   render() {
     return (
@@ -26,26 +39,24 @@ class SearchComponent extends Component {
           <div className={Style.SearchComponent}>
             <Input
               placeholder='Fornavn'
-              onChange={e => this.onChange('firstname', e)}
-              value={this.state.firstname}
+              onChange={(value) => this.onChange('firstName', value)}
             />
           </div>
           <div className={Style.SearchComponent}>
             <Input
               placeholder='Etternavn'
-              onChange={e => this.onChange('surname', e)}
-              value={this.state.surname}
+              onChange={(value) => this.onChange('lastName', value)}
             />
           </div>
         </div>
         <ul className={Style.usersList} >
-          {this.props.users.map(user => (
+          {this.props.users.map((user, index) => (
             <li
               className={Style.usersRow}
-              key={user.id}
+              key={index}
               onClick={() => this.props.handleSelect(user)}
             >
-              {`${user.get('name')} ${user.get('surname')}`}
+              {`${user.get('firstName')} ${user.get('lastName')}`}
             </li>)
           )}
         </ul>
@@ -54,18 +65,12 @@ class SearchComponent extends Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   users: store.nerd.get('users')
 });
 
 const mapDispatchToProps = {
   queryNerd
-};
-
-SearchComponent.propTypes = {
-  users: PropTypes.array.isRequired,
-  queryNerd: PropTypes.func.isRequired,
-  handleSelect: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchComponent);

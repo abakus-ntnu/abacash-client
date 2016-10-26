@@ -1,0 +1,26 @@
+machine:
+  node:
+    version: 6.7.0
+
+dependencies:
+  pre:
+    - npm install -g yarnpkg
+  override:
+    - yarn
+
+test:
+  override:
+    - yarn run lint
+    - yarn run flow || true
+
+deployment:
+  release:
+    branch: release
+    commands:
+      - go get github.com/aktau/github-release
+      - yarn run package-all
+      - "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') github-release release --tag $PACKAGE_VERSION"
+      - zip -r release/abacash-v$PACKAGE_VERSION-darwin-x64 .zip release/darwin-x64
+      - "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') github-release upload --tag $PACKAGE_VERSION --file release/abacash-v$PACKAGE_VERSION-darwin-x64 --name abacash-v$PACKAGE_VERSION-darwin-x64"
+      - zip -r release/abacash-v$PACKAGE_VERSION-linux-x64 .zip release/linux-x64
+      - "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') github-release upload --tag $PACKAGE_VERSION --file release/abacash-v$PACKAGE_VERSION-linux-x64 --name abacash-v$PACKAGE_VERSION-linux-x64"

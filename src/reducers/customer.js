@@ -1,9 +1,11 @@
+// @flow
 import { Map } from 'immutable';
 import { CUSTOMER } from '../actions/types';
+import type { Reducer } from './types';
 
 const initialState = Map({});
 
-export default function auth(state = initialState, action) {
+const customer: Reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case CUSTOMER.FETCH_CUSTOMER_SUCCESS: {
@@ -20,4 +22,6 @@ export default function auth(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default customer;

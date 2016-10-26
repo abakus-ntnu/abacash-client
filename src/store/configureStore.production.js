@@ -1,3 +1,4 @@
+// @flow
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import RavenMiddleware from 'redux-raven-middleware';
@@ -13,7 +14,7 @@ const PERSISTENCE_ENABLED = process.env.PERSISTENCE_ENABLED;
 const router = routerMiddleware(hashHistory);
 
 const enhancer = compose(
-  PERSISTENCE_ENABLED ? autoRehydrate() : f => f,
+  PERSISTENCE_ENABLED ? autoRehydrate() : (f) => f,
   applyMiddleware(
     RavenMiddleware(process.env.RAVEN_DSN),
     router,
@@ -22,7 +23,7 @@ const enhancer = compose(
   )
 );
 
-export default function configureStore(initialState, onComplete) {
+export function configureStore(initialState: ?Object, onComplete: ?() => void) {
   const store = createStore(rootReducer, initialState, enhancer);
 
   if (PERSISTENCE_ENABLED) {

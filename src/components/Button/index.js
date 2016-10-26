@@ -1,8 +1,19 @@
-import React, { PropTypes } from 'react';
+// @flow
+import React from 'react';
 import classNames from 'classnames';
 import Style from './Button.css';
+import Buttons from './Buttons';
 
-const Button = (props) => (
+type Props = {
+  label: string,
+  onClick: () => any,
+  disabled?: boolean,
+  loading?: boolean,
+  confirm?: boolean,
+  cancel?: boolean
+};
+
+const Button = (props: Props) => (
   <button
     className={classNames({
       [Style.buttonConfirm]: props.confirm,
@@ -16,14 +27,5 @@ const Button = (props) => (
   </button>
 );
 
-Button.propTypes = {
-  label: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-  disabled: PropTypes.bool,
-  loading: PropTypes.bool,
-  confirm: PropTypes.bool,
-  cancel: PropTypes.bool
-};
-
 export default Button;
-export Buttons from './Buttons';
+export { Buttons };

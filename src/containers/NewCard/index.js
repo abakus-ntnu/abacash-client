@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { clearCustomer, fetchCustomer } from '../../actions/customer';
@@ -8,21 +9,35 @@ import Button, { Buttons } from '../../components/Button';
 import SearchComponent from './SearchComponent';
 import ReviewComponent from './ReviewComponent';
 
-class NewCardContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      step: 'SEARCH',
-      rfid: '3ijd3ijkd3'
-    };
-  }
+type State = {
+  step: string,
+  rfid: string,
+  nerd: Map<string, string>,
+  customer: Map<string, string>,
+  user: Map<string, string>
+};
+
+type Props = {
+  customer: Object,
+  fetchCustomer: () => Promise<*>,
+  push: () => void,
+};
+
+class NewCardContainer extends React.Component {
+
+  state: State = {
+    step: 'SEARCH',
+    rfid: ''
+  };
+
+  props: Props;
 
   handleSelect(user) {
     this.setState({
       nerd: user
     }, () => this.props.fetchCustomer(user.get('username'), 'username')
       .then(() => this.setState({ customer: this.props.customer, step: 'REVIEW' }))
-      .catch(err => {
+      .catch((err) => {
         if (err.response.status === 404) {
           this.setState({ step: 'REVIEW' });
         }
@@ -45,7 +60,7 @@ class NewCardContainer extends Component {
 
         {this.state.step === 'SEARCH' &&
           <SearchComponent
-            handleSelect={user => this.handleSelect(user)}
+            handleSelect={(user) => this.handleSelect(user)}
           />
         }
         {this.state.step === 'REVIEW' &&
@@ -57,14 +72,14 @@ class NewCardContainer extends Component {
         }
         <Buttons>
           <Button onClick={() => this.handleCancel()} cancel label='Avbryt' />
-          <Button confirm disabled={this.state.step !== 'REVIEW'} label='OK' />
+          <Button onClick={() => null} confirm disabled={this.state.step !== 'REVIEW'} label='OK' />
         </Buttons>
       </div>
     );
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   customer: store.customer.get('customer')
 });
 

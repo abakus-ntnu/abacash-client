@@ -1,12 +1,14 @@
+// @flow
 import { Map } from 'immutable';
 import { TRANSACTION } from '../actions/types';
+import type { Reducer } from './types';
 
 const initialState = Map({
   processing: false,
   error: ''
 });
 
-export default function auth(state = initialState, action) {
+const transaction: Reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case TRANSACTION.CREATE_TRANSACTION_PENDING: {
@@ -29,4 +31,6 @@ export default function auth(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default transaction;

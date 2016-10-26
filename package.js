@@ -1,4 +1,5 @@
 /* eslint strict: 0, no-shadow: 0, no-unused-vars: 0, no-console: 0 */
+
 'use strict';
 
 require('babel-polyfill');
@@ -28,10 +29,10 @@ const DEFAULT_OPTS = {
     '^/test($|/)',
     '^/release($|/)',
     '^/main.development.js'
-  ].concat(devDeps.map(name => `/node_modules/${name}($|/)`))
+  ].concat(devDeps.map((name) => `/node_modules/${name}($|/)`))
   .concat(
-    deps.filter(name => !electronCfg.externals.includes(name))
-      .map(name => `/node_modules/${name}($|/)`)
+    deps.filter((name) => !electronCfg.externals.includes(name))
+      .map((name) => `/node_modules/${name}($|/)`)
   )
 };
 
@@ -78,8 +79,7 @@ async function startPack() {
     const paths = await del('release');
 
     if (shouldBuildAll) {
-      // build for all platforms
-      const archs = ['ia32', 'x64'];
+      const archs = ['x64'];
       const platforms = ['linux', 'darwin'];
 
       platforms.forEach((plat) => {

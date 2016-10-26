@@ -1,11 +1,18 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { fetchSystem } from '../../actions/system';
 import Style from './Launch.css';
 import Button, { Buttons } from '../../components/Button';
 
-class LaunchContainer extends Component {
+type Props = {
+  system: Object,
+  push: () => void,
+  fetchSystem: () => void
+};
+
+class LaunchContainer extends React.Component {
 
   componentDidMount() {
     if (!this.props.system) {
@@ -15,6 +22,8 @@ class LaunchContainer extends Component {
         });
     }
   }
+
+  props: Props;
 
   handleStart() {
     this.props.push('/sales');
@@ -35,19 +44,13 @@ class LaunchContainer extends Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   system: store.system.get('system')
 });
 
 const mapDispatchToProps = {
   fetchSystem,
   push
-};
-
-LaunchContainer.propTypes = {
-  system: PropTypes.object,
-  push: PropTypes.func.isRequired,
-  fetchSystem: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LaunchContainer);

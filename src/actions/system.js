@@ -1,7 +1,9 @@
+// @flow
 import callAPI from './callAPI';
 import { SYSTEM } from './types';
+import type { Thunk } from './types';
 
-export function fetchSystem() {
+export function fetchSystem(): Thunk {
   return (dispatch, getState) => {
     const token = getState().auth.get('token');
 

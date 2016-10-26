@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NotificationSystem from 'react-notification-system';
@@ -15,14 +16,18 @@ class Notifications extends Component {
 
   props: Props;
 
+  notificationSystem = null;
+
   addNotification = (event) => {
-    this.notificationSystem.addNotification(event);
+    if (this.notificationSystem) {
+      this.notificationSystem.addNotification(event);
+    }
   }
 
   render() {
     return (
       <NotificationSystem
-        ref={ref => (this.notificationSystem = ref)}
+        ref={(ref) => (this.notificationSystem = ref)}
         style={style}
       />
     );

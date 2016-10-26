@@ -1,8 +1,10 @@
+// @flow
 import callAPI from './callAPI';
 import { TRANSACTION } from './types';
 import { mapCartToTransaction } from '../selectors/cart';
+import type { Thunk } from './types';
 
-export function createTransaction() {
+export function createTransaction(): Thunk {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
     const customer = getState().customer.get('customer');
@@ -14,7 +16,7 @@ export function createTransaction() {
         products: mapCartToTransaction(cart),
         customerId: customer.get('id')
       },
-      method: 'post',
+      method: 'POST',
       endpoint: `${system.get('id')}/transactions`
     }));
   };

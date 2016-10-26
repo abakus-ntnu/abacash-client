@@ -1,9 +1,17 @@
-import React, { PropTypes } from 'react';
+// @flow
+import React from 'react';
 import { IndexLink } from 'react-router';
 import classNames from 'classnames';
 import Style from './TabMenu.css';
 
-const TabItem = (props) => (
+type Props = {
+  name: string,
+  uri?: string,
+  active?: boolean,
+  onClick?: () => void
+};
+
+const TabItem = (props: Props) => (
   <div>
 
     {!props.uri &&
@@ -22,19 +30,11 @@ const TabItem = (props) => (
         activeClassName={Style.tabBarItemActive}
         className={Style.tabBarItem}
       >
-      {props.name}
+        {props.name}
       </IndexLink>
     }
 
   </div>
 );
-
-TabItem.propTypes = {
-  children: PropTypes.object,
-  name: PropTypes.string.isRequired,
-  uri: PropTypes.string,
-  active: PropTypes.bool,
-  onClick: PropTypes.func
-};
 
 export default TabItem;

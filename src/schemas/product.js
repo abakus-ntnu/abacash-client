@@ -1,4 +1,5 @@
+// @flow
 import { Schema } from 'normalizr';
 
 
-export const products = new Schema('products', { idAttribute: 'id' });
+export const products: Schema = new Schema('products', { idAttribute: 'id' });

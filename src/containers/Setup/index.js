@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+import React from 'react';
+import { fromJS } from 'immutable';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Style from './Setup.css';
@@ -10,12 +12,28 @@ import { login } from '../../actions/auth';
 import { fetchSystem } from '../../actions/system';
 import { addNotification } from '../../actions/notification';
 
-class SetupContainer extends Component {
+type State = {
+  token: string,
+  loading: boolean,
+  rfid: string
+};
 
-  state = {
-    token: this.props.token || '',
+type Props = {
+  token: string,
+  push: () => void,
+  location: Object,
+  setDevice: () => void,
+  fetchSystem: () => Promise<*>,
+  addNotification: () => void,
+  login: () => void
+};
+
+class SetupContainer extends React.Component {
+
+  state: State = {
+    token: '',
     loading: false,
-    rfid: null
+    rfid: ''
   };
 
   componentDidMount() {
@@ -43,9 +61,7 @@ class SetupContainer extends Component {
       });
   }
 
-  handleChange(field, value) {
-    this.setState({ [field]: value });
-  }
+  props: Props;
 
   render() {
     return (
@@ -56,9 +72,9 @@ class SetupContainer extends Component {
         <div className={Style.inputContainer}>
           <Input
             placeholder='API token'
-            value={this.state.token}
-            onChange={event => this.handleChange('token', event.target.value)}
             onSubmit={() => this.onSave()}
+            value={this.state.token}
+            onChange={(token) => this.setState({ token })}
           />
         </div>
 
@@ -66,9 +82,8 @@ class SetupContainer extends Component {
           <Dropdown
             placeholder='Select RFID device'
             nullValue='No RFID device'
-            value={this.state.rfid}
-            options={[]}
-            onChange={value => this.handleChange('rfid', value)}
+            options={fromJS([])}
+            onChange={(rfid) => this.setState({ rfid })}
           />
         </div>
 
@@ -78,7 +93,7 @@ class SetupContainer extends Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   token: store.auth.get('token')
 });
 
@@ -88,16 +103,6 @@ const mapDispatchToProps = {
   setDevice,
   addNotification,
   push
-};
-
-SetupContainer.propTypes = {
-  token: PropTypes.string,
-  push: PropTypes.func.isRequired,
-  location: PropTypes.object,
-  setDevice: PropTypes.func.isRequired,
-  fetchSystem: PropTypes.func.isRequired,
-  addNotification: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupContainer);
