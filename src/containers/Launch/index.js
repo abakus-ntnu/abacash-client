@@ -5,11 +5,13 @@ import { push } from 'react-router-redux';
 import { fetchSystem } from '../../actions/system';
 import Style from './Launch.css';
 import Button, { Buttons } from '../../components/Button';
+import { addNotification } from '../../actions/notification';
 
 type Props = {
   system: Object,
   push: () => void,
-  fetchSystem: () => void
+  fetchSystem: () => void,
+  addNotification: () => void
 };
 
 class LaunchContainer extends React.Component {
@@ -26,7 +28,18 @@ class LaunchContainer extends React.Component {
   props: Props;
 
   handleStart() {
-    this.props.push('/sales');
+    const needSeller = this.props.system.get('needSeller');
+    if (needSeller) {
+      this.props.addNotification({
+        title: 'Du må være en selger!',
+        level: 'info',
+        message: 'Du må være en registrert selger. Koble til RFID-leser og skann kortet ditt.',
+        autoDismiss: 0,
+        uid: 'not_seller'
+      });
+    } else {
+      this.props.push('/sales');
+    }
   }
 
   render() {
@@ -50,7 +63,8 @@ const mapStateToProps = (store) => ({
 
 const mapDispatchToProps = {
   fetchSystem,
-  push
+  push,
+  addNotification
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LaunchContainer);
