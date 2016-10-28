@@ -48,16 +48,7 @@ if (version) {
   DEFAULT_OPTS.version = version;
   startPack();
 } else {
-  // use the same version as the currently-installed electron-prebuilt
-  exec('npm list electron --dev', (err, stdout) => {
-    if (err) {
-      DEFAULT_OPTS.version = '1.2.0';
-    } else {
-      DEFAULT_OPTS.version = stdout.split('electron@')[1].replace(/\s/g, '');
-    }
-
-    startPack();
-  });
+  throw new Error('Could not detect installed electron version!');
 }
 
 

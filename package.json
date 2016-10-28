@@ -17,7 +17,7 @@
     "package-all": "npm run package -- --all",
     "postinstall": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "dev": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\"",
-    "rebuild": "electron-rebuild"
+    "rebuild": "rm node_modules/serialport/build/Release/serialport.node && electron-rebuild"
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"

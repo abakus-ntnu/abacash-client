@@ -8,6 +8,7 @@ import TabMenu, { TabItem } from '../../components/TabMenu';
 import Product, { Products } from '../../components/Product';
 import SearchModal from '../../components/SearchModal';
 import Sidebar from '../../components/Sidebar';
+import RFID from '../../components/RFID';
 import { clearCustomer } from '../../actions/customer';
 import { fetchProducts } from '../../actions/product';
 import { fetchSystem } from '../../actions/system';
@@ -31,6 +32,7 @@ type Props = {
   cartItems: Map<number, number>,
   addProduct: () => void,
   clearCustomer: () => void,
+  rfidDevice: ?string
 };
 
 class SalesContainer extends Component {
@@ -141,6 +143,10 @@ class SalesContainer extends Component {
             totalPrice={this.cartPrice()}
           />
         </div>
+        <RFID
+          device={this.props.rfidDevice}
+          action={() => null}
+        />
       </div>
     );
   }
@@ -152,6 +158,7 @@ const mapStateToProps = (state) => ({
   processing: state.transaction.get('processing'),
   error: state.transaction.get('error'),
   productTypes: state.system.get('system').get('productTypes'),
+  rfidDevice: state.rfid.get('device'),
   cartItems: state.cart
 });
 
@@ -160,7 +167,7 @@ const mapDispatchToProps = {
   fetchProducts,
   fetchSystem,
   push,
-  addProduct
+  addProduct,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SalesContainer);
