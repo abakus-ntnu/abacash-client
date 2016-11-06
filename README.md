@@ -4,7 +4,7 @@
 
 ## Getting started
 ```bash
-$ npm install -g yarnpkg
+$ npm install -g yarn
 $ yarn
 $ yarn run dev
 ```

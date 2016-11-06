@@ -2,7 +2,7 @@
   "name": "abacash-client",
   "productName": "AbaCash Client",
   "description": "AbaCash Client",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "main": "main.js",
   "scripts": {
     "lint": "eslint . --ignore-path .gitignore",
@@ -17,7 +17,7 @@
     "package-all": "npm run package -- --all",
     "postinstall": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "dev": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\"",
-    "rebuild": "rm node_modules/serialport/build/Release/serialport.node && electron-rebuild"
+    "rebuild": "electron-rebuild"
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"
