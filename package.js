@@ -48,7 +48,15 @@ if (version) {
   DEFAULT_OPTS.version = version;
   startPack();
 } else {
-  throw new Error('Could not detect installed electron version!');
+  // use the same version as the currently-installed electron-prebuilt
+  exec('yarn ls | grep \'├─ electron@\'', (err, stdout) => {
+    if (err) {
+      throw new Error('Could not retrieve electron version');
+    } else {
+      DEFAULT_OPTS.version = stdout.split('├─ electron@')[1].replace(/\s/g, '');
+    }
+    startPack();
+  });
 }
 
 
