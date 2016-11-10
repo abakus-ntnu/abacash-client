@@ -4,16 +4,14 @@
   "env": {
     "production": {
       "presets": ["react-optimize"],
-      "plugins": [
-        "babel-plugin-dev-expression"
-      ]
+      "plugins": ["babel-plugin-dev-expression"]
     },
     "development": {
       "presets": ["react-hmre"]
     },
     "test": {
       "plugins": [
-        ["webpack-loaders", { "config": "./webpack/webpack.config.node.js", "verbose": false }]
+        ["webpack-loaders", { "config": "webpack.config.test.js", "verbose": false }]
       ]
     }
   }
