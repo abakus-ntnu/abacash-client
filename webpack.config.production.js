@@ -21,7 +21,7 @@ const config = validate(merge(baseConfig, {
 
   output: {
     path: path.join(__dirname, 'app/dist'),
-    publicPath: '../dist/'
+    publicPath: './dist/'
   },
 
   module: {
