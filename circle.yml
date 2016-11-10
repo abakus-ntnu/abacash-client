@@ -2,19 +2,6 @@ machine:
   node:
     version: 6.7.0
 
-dependencies:
-  pre:
-    - npm install -g yarn
-  override:
-    - yarn
-
 test:
   override:
-    - yarn run lint
-    - yarn run flow || true
-
-deployment:
-  release:
-    branch: feature/aba-28
-    commands:
-      - sh ./release.sh
+    - npm run lint

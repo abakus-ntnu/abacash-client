@@ -2,8 +2,7 @@ go get github.com/aktau/github-release
 
 PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')
 
-yarn run rebuild
-yarn run package-all
+npm run package-all
 
 github-release release --tag $PACKAGE_VERSION
 

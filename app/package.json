@@ -1,0 +1,17 @@
+{
+  "name": "AbaCash",
+  "productName": "AbaCash",
+  "version": "1.0.0",
+  "description": "AbaCash Client",
+  "main": "./main.js",
+  "author": {
+    "name": "Abakus Backup",
+    "email": "backup@abakus.no",
+    "url": "https://github.com/abakusbackup"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "source-map-support": "0.4.3",
+    "serialport": "4.0.1"
+  }
+}
