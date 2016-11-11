@@ -1,0 +1,8 @@
+pipeline:
+  tests:
+    image: node:6
+    when:
+      event: push
+    commands:
+      - npm install
+      - npm run lint
