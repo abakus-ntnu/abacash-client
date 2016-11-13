@@ -1,10 +1,11 @@
 // @flow
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 import { SYSTEM } from '../actions/types';
 import type { Reducer } from './types';
 
-const initialState = Map({
-  system: null,
+const initialState = fromJS({
+  system: {},
+  seller: {}
 });
 
 const system: Reducer = (state = initialState, action) => {
@@ -13,6 +14,12 @@ const system: Reducer = (state = initialState, action) => {
     case SYSTEM.FETCH_SYSTEM_SUCCESS: {
       return state.merge({
         system: action.payload.json
+      });
+    }
+
+    case SYSTEM.SET_SELLER: {
+      return state.merge({
+        seller: action.payload.json
       });
     }
 

@@ -21,8 +21,18 @@ button &:disabled {
   color: #e74c3c;
 }
 
+.buttonDisabled {
+  color: #bbb !important;
+}
+
 .buttonConfirm {
   color: #2ecc71;
+}
+
+.buttonNotification {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .buttonLoading {

@@ -86,13 +86,13 @@ class Sidebar extends React.Component {
             </div>
           </div>
         :
-        <div
-          className={classNames(Style.sidebarRow, Style.sidebarBox, Style.hoverable)}
-          onClick={this.props.findUser}
-        >
-          <i className='fa fa-user' />
-          <h3>Finn bruker</h3>
-        </div>
+          <div
+            className={classNames(Style.sidebarRow, Style.sidebarBox, Style.hoverable)}
+            onClick={this.props.findUser}
+          >
+            <i className='fa fa-user' />
+            <h3>Finn bruker</h3>
+          </div>
         }
 
         <div className={classNames(Style.transactions, { [Style.empty]: emptyCart })}>
@@ -133,7 +133,7 @@ class Sidebar extends React.Component {
             >
               {!this.props.processing ?
                 <i className='fa fa-credit-card' /> :
-                <i className='fa fa-spin fa-circle-o-notch' />
+                  <i className='fa fa-spin fa-circle-o-notch' />
               }
               {!this.props.processing ?
                 <span>
@@ -142,7 +142,7 @@ class Sidebar extends React.Component {
                   } kr
                 </span>
                 :
-                <span>Belaster kortet</span>
+                  <span>Belaster kortet</span>
               }
             </div>) : null
           }

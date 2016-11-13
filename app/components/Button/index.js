@@ -8,6 +8,7 @@ type Props = {
   label: string,
   onClick: () => any,
   disabled?: boolean,
+  notification?: boolean,
   loading?: boolean,
   confirm?: boolean,
   cancel?: boolean
@@ -17,7 +18,9 @@ const Button = (props: Props) => (
   <button
     className={classNames({
       [Style.buttonConfirm]: props.confirm,
+      [Style.buttonDisabled]: props.disabled,
       [Style.buttonCancel]: props.cancel,
+      [Style.buttonNotification]: props.notification,
       [Style.buttonLoading]: props.loading
     })}
     disabled={props.disabled}

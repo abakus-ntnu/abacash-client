@@ -11,7 +11,7 @@ const nerd: Reducer = (state = initialState, action) => {
   switch (action.type) {
     case NERD.QUERY_NERD_SUCCESS: {
       return state.merge({
-        users: action.payload.json
+        users: action.payload.json.map((user) => ({ username: user.username, displayName: `${user.name} ${user.surname}` }))
       });
     }
 

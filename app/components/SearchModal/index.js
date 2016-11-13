@@ -1,15 +1,25 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import Style from './SearchModal.css';
 import Button, { Buttons } from '../Button';
 import Input from '../Input';
-import { fetchCustomer } from '../../actions/customer';
-import { addNotification } from '../../actions/notification';
 
-class SearchModal extends Component {
+type State = {
+  loading: boolean,
+  search: string
+};
 
-  state = {
+type Props = {
+  push: () => void,
+  onDismiss: () => void,
+  onSuccess: () => void,
+  fetchCustomer: () => Promise<*>,
+  addNotification: () => void
+};
+
+export default class SearchModal extends Component {
+
+  state: State = {
     search: '',
     loading: false
   };
@@ -19,6 +29,13 @@ class SearchModal extends Component {
   }
 
   onFetch() {
+    const newButton = (
+      <Button
+        notification
+        onClick={() => this.props.push(`new?username=${this.state.search}`)}
+        label='Create new user'
+      />
+    );
     this.setState({ loading: true });
     this.props.fetchCustomer(this.state.search, 'username') // lookupParam should be prop on system
       .then(() => this.props.onSuccess())
@@ -27,12 +44,16 @@ class SearchModal extends Component {
         this.props.addNotification({
           title: 'Not found!',
           level: 'warning',
+          children: newButton,
+          uid: 'user_not_found',
           message: 'Could not find the specified user'
         });
       });
   }
 
-  handleChange(value) {
+  props: Props;
+
+  handleChange(value: string) {
     this.setState({ search: value });
   }
 
@@ -45,6 +66,7 @@ class SearchModal extends Component {
             placeholder='brukernavn' // This identifier should be set in the system object
             autoFocus
             onChange={(search) => this.setState({ search })}
+            onCancel={() => this.onDismiss()}
             onSubmit={() => {
               if (!disabled) {
                 this.onFetch();
@@ -65,17 +87,3 @@ class SearchModal extends Component {
     );
   }
 }
-
-const mapDispatchToProps = {
-  fetchCustomer,
-  addNotification
-};
-
-SearchModal.propTypes = {
-  onDismiss: PropTypes.func.isRequired,
-  onSuccess: PropTypes.func.isRequired,
-  fetchCustomer: PropTypes.func.isRequired,
-  addNotification: PropTypes.func.isRequired
-};
-
-export default connect(null, mapDispatchToProps)(SearchModal);
