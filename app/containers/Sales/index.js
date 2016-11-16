@@ -8,10 +8,12 @@ import TabMenu, { TabItem } from '../../components/TabMenu';
 import Product, { Products } from '../../components/Product';
 import SearchModal from '../../components/SearchModal';
 import Sidebar from '../../components/Sidebar';
+import Button from '../../components/Button';
 import RFID from '../../components/RFID';
-import { clearCustomer } from '../../actions/customer';
+import { clearCustomer, fetchCustomer } from '../../actions/customer';
 import { fetchProducts } from '../../actions/product';
 import { fetchSystem } from '../../actions/system';
+import { addNotification } from '../../actions/notification';
 import { addProduct } from '../../actions/cart';
 import Style from './Sales.css';
 
@@ -26,8 +28,11 @@ type Props = {
   products: Object,
   productTypes: Object,
   processing: boolean,
+  customerLoading: boolean,
   fetchSystem: () => Promise<*>,
   push: () => void,
+  fetchCustomer: () => Promise<*>,
+  addNotification: () => void,
   fetchProducts: () => void,
   cartItems: Map<number, number>,
   addProduct: () => void,
@@ -90,8 +95,26 @@ class SalesContainer extends Component {
     return productPrices.reduce((previous, current) => (previous + current), 0);
   }
 
-  cardScan = () => {
-
+  cardScan = (rfid: string) => {
+    const newButton = (
+      <Button
+        notification
+        onClick={() => this.props.push(`new?rfid=${rfid}`)}
+        label='Create new user'
+      />
+    );
+    if (!this.props.customer && !this.props.customerLoading) {
+      this.props.fetchCustomer(rfid) // lookupParam should be prop on system
+        .catch(() => {
+          this.props.addNotification({
+            title: 'Not found!',
+            level: 'warning',
+            children: newButton,
+            message: 'Could not find the specified user',
+            uid: 'user_not_found'
+          });
+        });
+    }
   }
 
   props: Props;
@@ -100,6 +123,9 @@ class SalesContainer extends Component {
     return (
       <div>
         {this.state.search ? <SearchModal
+          push={this.props.push}
+          fetchCustomer={this.props.fetchCustomer}
+          addNotification={this.props.addNotification}
           onDismiss={() => { this.setState({ search: false }); }}
           onSuccess={() => { this.setState({ search: false }); }}
         /> : null }
@@ -149,7 +175,7 @@ class SalesContainer extends Component {
         </div>
         <RFID
           device={this.props.rfidDevice}
-          action={(card) => this.cardScan(card)}
+          action={this.cardScan}
         />
       </div>
     );
@@ -158,6 +184,7 @@ class SalesContainer extends Component {
 
 const mapStateToProps = (state) => ({
   products: state.product.get('products'),
+  loadingCustomer: state.customer.get('loading'),
   customer: state.customer.get('customer'),
   processing: state.transaction.get('processing'),
   error: state.transaction.get('error'),
@@ -169,9 +196,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   clearCustomer,
   fetchProducts,
+  fetchCustomer,
+  addNotification,
   fetchSystem,
   push,
-  addProduct,
+  addProduct
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SalesContainer);

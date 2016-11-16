@@ -11,7 +11,8 @@ class Notifications extends Component {
 
   componentWillReceiveProps = (nextProps) => {
     const { notification } = nextProps;
-    if (notification) this.addNotification(notification.toJS());
+    if (notification && notification.get('clear')) this.removeNotification(notification.toJS());
+    if (notification && !notification.get('clear')) this.addNotification(notification.toJS());
   }
 
   props: Props;
@@ -21,6 +22,12 @@ class Notifications extends Component {
   addNotification = (event) => {
     if (this.notificationSystem) {
       this.notificationSystem.addNotification(event);
+    }
+  }
+
+  removeNotification = (event) => {
+    if (this.notificationSystem) {
+      this.notificationSystem.removeNotification(event.uid);
     }
   }
 

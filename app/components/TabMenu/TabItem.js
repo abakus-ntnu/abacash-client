@@ -8,6 +8,7 @@ type Props = {
   name: string,
   uri?: string,
   active?: boolean,
+  disabled?: boolean,
   onClick?: () => void
 };
 
@@ -28,7 +29,7 @@ const TabItem = (props: Props) => (
         key={props.name}
         to={props.uri}
         activeClassName={Style.tabBarItemActive}
-        className={Style.tabBarItem}
+        className={classNames(Style.tabBarItem, { [Style.tabBarItemDisabled]: props.disabled })}
       >
         {props.name}
       </IndexLink>

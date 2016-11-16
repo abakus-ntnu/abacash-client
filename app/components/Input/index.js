@@ -11,7 +11,8 @@ type Props = {
   placeholder?: string;
   autoFocus?: boolean;
   value?: string;
-  onChange?: () => void;
+  onChange?: () => string;
+  onCancel?: () => void;
   onSubmit?: () => void;
 };
 
@@ -25,6 +26,7 @@ class Input extends Component {
 
   handleKeyPress(event: Object) {
     if (event.key === 'Enter' && this.props.onSubmit) this.props.onSubmit();
+    if (event.key === 'Escape' && this.props.onCancel) this.props.onCancel();
   }
 
   render() {
@@ -35,13 +37,13 @@ class Input extends Component {
       placeholder={this.props.placeholder}
       value={this.state.value}
       onChange={(event) => {
-        const value = event.target.value;
+        const value: string = event.target.value;
         this.setState({ value });
         if (this.props.onChange) {
           this.props.onChange(value);
         }
       }}
-      onKeyPress={(event) => this.handleKeyPress(event)}
+      onKeyDown={(event) => this.handleKeyPress(event)}
     />);
   }
 }

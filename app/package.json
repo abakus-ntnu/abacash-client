@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "source-map-support": "0.4.3",
-    "serialport": "4.0.1",
+    "serialport": "5.0.0-beta2",
     "font-awesome": "4.7.0",
     "npm-font-open-sans": "0.0.3"
   }

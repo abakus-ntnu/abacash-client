@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
-import { connect, mifareUID } from '../../utils/rfid';
+import { connect } from '../../utils/rfid';
 
 type State = {
-  connected: boolean
+  deviceInstance: ?Object
 }
 
 type Props = {
@@ -14,11 +14,18 @@ type Props = {
 class RFID extends React.Component {
 
   state: State = {
-    connected: false
+    deviceInstance: null
   }
 
   componentDidMount() {
     this.connect();
+  }
+
+  componentWillUnmount() {
+    const { deviceInstance } = this.state;
+    if (deviceInstance) {
+      deviceInstance.close();
+    }
   }
 
   props: Props;
@@ -26,13 +33,16 @@ class RFID extends React.Component {
   connect = () => {
     const { device } = this.props;
     if (device) {
-      return connect(device).then(() => this.setState({ connected: true }));
+      return connect(device).then((deviceInstance) => this.setState(
+        { deviceInstance },
+        this.scan
+      ));
     }
   }
 
   scan = () => {
-    if (this.state.connected) {
-      return mifareUID().then((result) => this.props.action(result));
+    if (this.state.deviceInstance) {
+      this.state.deviceInstance.on('rfid', (rfid: string) => this.props.action(rfid));
     }
   }
 

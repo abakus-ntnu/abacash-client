@@ -16,24 +16,28 @@ export function fetchCustomer(param: string, lookupParam: string = 'rfid'): Thun
   };
 }
 
-export function updateCustomer(customer: Map<string, string>): Thunk {
+export function updateCustomer(body: Object): Thunk {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
 
     return dispatch(callAPI({
       type: CUSTOMER.UPDATE_CUSTOMER,
-      endpoint: `${system.get('id')}/customers/${customer.get('id')}`,
+      method: 'PUT',
+      body,
+      endpoint: `${system.get('id')}/customers/${body.id}`
     }));
   };
 }
 
-export function createCustomer(): Thunk {
+export function createCustomer(body: Object): Thunk {
   return (dispatch, getState) => {
     const system = getState().system.get('system');
 
     return dispatch(callAPI({
       type: CUSTOMER.CREATE_CUSTOMER,
-      endpoint: `${system.get('id')}/customers`,
+      method: 'POST',
+      body,
+      endpoint: `${system.get('id')}/customers`
     }));
   };
 }

@@ -29,3 +29,8 @@
 .tabBarItemActive {
     color: #EC7171;
 }
+
+.tabBarItemDisabled {
+    pointer-events: none;
+    cursor: default;
+}
