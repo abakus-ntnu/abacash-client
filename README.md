@@ -1,4 +1,4 @@
-# AbaCash Client [![CircleCI](https://circleci.com/gh/abakusbackup/abacash-client.svg?style=svg&circle-token=809d350562eff94f9ebe5a690cc86e17d30112be)](https://circleci.com/gh/abakusbackup/abacash-client)
+# AbaCash Client [![Build Status](https://ci.abakus.no/api/badges/abakusbackup/abacash-client/status.svg)](https://ci.abakus.no/abakusbackup/abacash-client)
 
 > React frontend for AbaCash
 
