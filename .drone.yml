@@ -1,8 +1,27 @@
 pipeline:
-  tests:
+  build:
     image: node:6
     when:
       event: push
     commands:
-      - npm install
+      - npm install --silent
       - npm run lint
+      - npm run package-linux
+
+  release:
+    image: node:6
+    when:
+      event: push
+      branch: release
+    commands:
+      - wget -q https://github.com/aktau/github-release/releases/download/v0.6.2/linux-amd64-github-release.tar.bz2
+      - tar -xvjf linux-amd64-github-release.tar.bz2
+      - cp bin/linux/amd64/github-release /usr/local/bin
+
+      - "export PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+
+      - npm install --silent
+      - npm run package-linux
+
+      - github-release release --tag $PACKAGE_VERSION
+      - github-release upload --tag $PACKAGE_VERSION --file release/AbaCash-$PACKAGE_VERSION-amd64.deb --name AbaCash-$PACKAGE_VERSION-amd64.deb
