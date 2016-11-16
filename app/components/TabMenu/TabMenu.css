@@ -1,0 +1,36 @@
+.tabBar {
+    display: flex;
+    flex-direction: row;
+    height: 85px;
+    border-bottom: 1px solid #ddd;
+    justify-content: space-around;
+}
+
+.tabBarItem {
+    width: 100%;
+    font-weight: 500;
+    min-width: 100px;
+    text-align: center;
+    padding: 30px 0px;
+    font-size: 20px;
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    color: #535358;
+}
+
+.tabBarItem:hover {
+    color: black;
+    cursor: pointer;
+}
+
+
+.tabBarItemActive {
+    color: #EC7171;
+}
+
+.tabBarItemDisabled {
+    pointer-events: none;
+    cursor: default;
+}

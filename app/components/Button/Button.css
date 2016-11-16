@@ -1,0 +1,45 @@
+button {
+  width: 220px;
+  outline: 0;
+  cursor: pointer;
+  height: 50px;
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.7);
+  margin: 20px 20px;
+  background-color: transparent;
+  text-transform: uppercase;
+  border: 2px solid #bbb;
+}
+
+button &:disabled {
+  color: #bbb;
+}
+
+
+.buttonCancel {
+  color: #e74c3c;
+}
+
+.buttonDisabled {
+  color: #bbb !important;
+}
+
+.buttonConfirm {
+  color: #2ecc71;
+}
+
+.buttonNotification {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.buttonLoading {
+  color: #bbb;
+  font-size: 26px;
+}
+
+.buttonGroup {
+  display: flex;
+}
