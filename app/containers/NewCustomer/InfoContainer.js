@@ -14,7 +14,7 @@ type Props = {
   externalUser: Map<string, string>,
   externalUsers: Array<Map<string, string>>,
   push: () => void,
-  queryExternalAPI: () => void,
+  queryNerd: () => void,
   selectExternalUser: () => void
 };
 
@@ -28,7 +28,7 @@ export default class SearchComponent extends React.Component {
   onChange(field: string, value: string) {
     this.setState(
       { [field]: value },
-      () => this.props.queryExternalAPI(this.state)
+      () => this.props.queryNerd(this.state)
     );
   }
 
