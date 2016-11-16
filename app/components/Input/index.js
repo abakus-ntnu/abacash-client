@@ -11,12 +11,12 @@ type Props = {
   placeholder?: string;
   autoFocus?: boolean;
   value?: string;
-  onChange?: () => string;
+  onChange?: () => void;
   onCancel?: () => void;
   onSubmit?: () => void;
 };
 
-class Input extends Component {
+export default class Input extends Component {
 
   state: State = {
     value: this.props.value || ''
@@ -47,5 +47,3 @@ class Input extends Component {
     />);
   }
 }
-
-export default Input;

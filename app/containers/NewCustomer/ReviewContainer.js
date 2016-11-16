@@ -34,12 +34,8 @@ export default class ReviewComponent extends React.Component {
 
   onConfirm = () => {
     this.state.action(this.state.customer)
-      .then(() => {
-        return this.props.fetchCustomer(this.state.customer.rfid);
-      })
-      .then(() => {
-        this.props.push('sales');
-      })
+      .then(() => this.props.fetchCustomer(this.state.customer.rfid))
+      .then(() => this.props.push('sales'))
       .catch(() => {
         this.props.push('sales');
       });

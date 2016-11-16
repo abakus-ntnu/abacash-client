@@ -1,5 +1,4 @@
 // @flow
-import { Map } from 'immutable';
 import callAPI from './callAPI';
 import { CUSTOMER } from './types';
 import { clearCart } from './cart';
