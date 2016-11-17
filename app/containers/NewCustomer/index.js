@@ -50,7 +50,7 @@ class NewCardContainer extends React.Component {
           <TabItem disabled uri='/new/info' name='Search' />
           <TabItem disabled uri='/new/review' name='Review' />
         </TabMenu>
-        {React.cloneElement(this.props.children, {
+        {React.cloneElement(this.props.children, { // eslint-disable-line
           system: this.props.system,
           customer: this.props.customer,
           newCustomer: this.state.customer,
