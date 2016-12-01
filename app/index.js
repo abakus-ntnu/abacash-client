@@ -4,9 +4,14 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import Raven from 'raven-js';
 import routes from './routes';
 import configureStore from './store/configureStore';
 import './app.global.css';
+
+Raven
+  .config(process.env.RAVEN_DSN)
+  .install();
 
 type AppState = {
   loading: boolean,
@@ -34,6 +39,7 @@ class App extends React.Component {
   }
 
 }
+
 render(
   <App />,
   document.getElementById('root')

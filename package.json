@@ -149,6 +149,7 @@
     "immutable": "3.8.1",
     "normalizr": "2.2.1",
     "npm-font-open-sans": "0.0.3",
+    "raven-js": "3.8.1",
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "react-notification-system": "0.2.10",

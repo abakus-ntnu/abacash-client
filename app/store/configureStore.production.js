@@ -6,6 +6,7 @@ import { routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
+import ravenMiddleware from 'redux-raven-middleware';
 import rootReducer from '../reducers';
 
 const PERSISTENCE_ENABLED = process.env.PERSISTENCE_ENABLED;
@@ -15,6 +16,7 @@ const router = routerMiddleware(hashHistory);
 const enhancer = compose(
   PERSISTENCE_ENABLED ? autoRehydrate() : (f) => f,
   applyMiddleware(
+    ravenMiddleware(),
     thunk,
     router,
     promiseMiddleware({ promiseTypeSuffixes: ['PENDING', 'SUCCESS', 'FAILURE'] })
