@@ -188,7 +188,7 @@ const mapStateToProps = (state) => ({
   customer: state.customer.get('customer'),
   processing: state.transaction.get('processing'),
   error: state.transaction.get('error'),
-  productTypes: state.system.get('system').get('productTypes'),
+  productTypes: state.system.getIn(['system', 'productTypes']),
   rfidDevice: state.rfid.get('device'),
   cartItems: state.cart
 });

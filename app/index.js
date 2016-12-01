@@ -8,12 +8,33 @@ import routes from './routes';
 import configureStore from './store/configureStore';
 import './app.global.css';
 
-const store = configureStore();
-const history = syncHistoryWithStore(hashHistory, store);
+type AppState = {
+  loading: boolean,
+  store: Object
+}
 
+class App extends React.Component {
+
+  state: AppState = {
+    loading: true,
+    store: configureStore({}, () => this.setState({ loading: false })),
+  }
+
+  render() {
+    if (this.state.loading) {
+      return null;
+    }
+
+    const history = syncHistoryWithStore(hashHistory, this.state.store);
+    return (
+      <Provider store={this.state.store}>
+        <Router history={history} routes={routes} />
+      </Provider>
+    );
+  }
+
+}
 render(
-  <Provider store={store}>
-    <Router history={history} routes={routes} />
-  </Provider>,
+  <App />,
   document.getElementById('root')
 );
