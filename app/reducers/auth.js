@@ -5,6 +5,7 @@ import type { Reducer } from './types';
 
 const initialState = fromJS({
   token: '',
+  apiURL: '',
 });
 
 const auth: Reducer = (state = initialState, action) => {
@@ -12,7 +13,8 @@ const auth: Reducer = (state = initialState, action) => {
 
     case AUTH.LOGIN: {
       return state.merge({
-        token: action.payload.token
+        token: action.payload.token,
+        apiURL: action.payload.apiURL,
       });
     }
 

@@ -16,7 +16,7 @@ const router = routerMiddleware(hashHistory);
 const enhancer = compose(
   PERSISTENCE_ENABLED ? autoRehydrate() : (f) => f,
   applyMiddleware(
-    ravenMiddleware(),
+    ravenMiddleware(process.env.RAVEN_DSN),
     thunk,
     router,
     promiseMiddleware({ promiseTypeSuffixes: ['PENDING', 'SUCCESS', 'FAILURE'] })
