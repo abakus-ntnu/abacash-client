@@ -4,8 +4,6 @@ import fetchJSON from '../utils/http';
 import { getToken } from '../selectors/auth';
 import type { Thunk, PromisedAction } from './types';
 
-const API_URL = process.env.API_URL || 'http://127.0.0.1:9000';
-
 const normalizePayload: (payload: Object, schema: Schema) => Object = (payload, schema) => {
   if (!schema) return payload;
   return normalize(payload, schema);
@@ -76,7 +74,8 @@ export default function callAPI({
     }
 
     const fullUrl = (~endpoint.indexOf('https://') || ~endpoint.indexOf('http://'));
-    const apiUrl = fullUrl ? endpoint : `${API_URL}/${endpoint}`;
+    const apiURL = getState().auth.get('apiURL');
+    const apiUrl = fullUrl ? endpoint : `${apiURL}/${endpoint}`;
 
     const promiseAction: PromisedAction = {
       type,

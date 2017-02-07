@@ -55,7 +55,7 @@ class LaunchContainer extends React.Component {
       <div className={Style.launchContainer}>
         <h1 className={Style.header}>AbaCash</h1>
         {this.props.system && <h6 className={Style.subHeader}>{this.props.system.get('name')}</h6>}
-        {this.props.system.get('needSeller') &&
+        {this.props.system && this.props.seller && this.props.system.get('needSeller') &&
           <h6 className={Style.subHeader}>
             Seller: {this.props.seller.get('displayName') || '- Scan card -'}
           </h6>
@@ -63,7 +63,7 @@ class LaunchContainer extends React.Component {
 
         <Buttons>
           <Button cancel onClick={() => { this.props.push('/?presist=true'); }} label='Tilbake' />
-          <Button confirm onClick={this.handleStart} label='Start' />
+          {this.props.system && <Button confirm onClick={this.handleStart} label='Start' />}
         </Buttons>
 
         <RFID

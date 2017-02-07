@@ -4,8 +4,8 @@ import { SYSTEM } from '../actions/types';
 import type { Reducer } from './types';
 
 const initialState = fromJS({
-  system: {},
-  seller: {}
+  system: null,
+  seller: null
 });
 
 const system: Reducer = (state = initialState, action) => {
