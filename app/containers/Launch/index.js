@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { fetchSystem, fetchSeller } from '../../actions/system';
+import { fetchSeller } from '../../actions/system';
 import Style from './Launch.css';
 import RFID from '../../components/RFID';
 import Button, { Buttons } from '../../components/Button';
@@ -20,13 +20,8 @@ type Props = {
 
 class LaunchContainer extends React.Component {
 
-  componentDidMount() {
-    if (!this.props.system) {
-      this.props.fetchSystem()
-        .catch(() => {
-          this.props.push('/');
-        });
-    }
+  setSeller = (card) => {
+    this.props.fetchSeller(card);
   }
 
   onScan = (card) => {
@@ -84,12 +79,10 @@ class LaunchContainer extends React.Component {
 
 const mapStateToProps = (store) => ({
   seller: store.system.get('seller'),
-  system: store.system.get('system'),
   rfidDevice: store.rfid.get('device')
 });
 
 const mapDispatchToProps = {
-  fetchSystem,
   fetchSeller,
   push,
   addNotification

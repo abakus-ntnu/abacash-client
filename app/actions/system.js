@@ -6,7 +6,7 @@ import { addNotification } from './notification';
 
 export function fetchSystem(): Thunk {
   return (dispatch, getState) => {
-    const token = getState().auth.get('token');
+    const token = getState().config.get('token');
 
     return dispatch(callAPI({
       type: SYSTEM.FETCH_SYSTEM,

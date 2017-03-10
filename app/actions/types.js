@@ -21,12 +21,6 @@ export type Thunk = (dispatch: (dispatch: Dispatch) => any, getState: () => Obje
  => ?DispatchCall | Promise<*>;
 export type Dispatch = Action | Thunk | PromisedAction | ActionWithoutPayload;
 
-
-export const AUTH = {
-  LOGIN: 'AUTH/LOGIN',
-  LOGOUT: 'AUTH/LOGOUT'
-};
-
 export const RFID = {
   SET_DEVICE: 'RFID/SET_DEVICE',
   LIST_DEVICES: 'RFID/LIST_DEVICES',
@@ -81,4 +75,11 @@ export const CART = {
   ADD_PRODUCT: 'CART/ADD_PRODUCT',
   REMOVE_PRODUCT: 'CART/REMOVE_PRODUCT',
   CLEAR_CART: 'CART/CLEAR_CART'
+};
+
+export const CONFIG = {
+  LOAD_CONFIG: 'CONFIG/LOAD_CONFIG',
+  LOAD_CONFIG_SUCCESS: 'CONFIG/LOAD_CONFIG_SUCCESS',
+  LOAD_CONFIG_FAILURE: 'CONFIG/LOAD_CONFIG_FAILURE',
+  LOAD_CONFIG_PENDING: 'CONFIG/LOAD_CONFIG_PENDING',
 };
