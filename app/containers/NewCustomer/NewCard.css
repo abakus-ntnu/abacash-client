@@ -13,11 +13,24 @@
 .centerContainer {
   height: inherit;
   display: flex;
-  max-width: 600px;
+  width: 600px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 10px auto;
+  margin-bottom: 110px;
+}
+
+.footer {
+  width: 100%;
+  position: absolute;
+  margin: 10px 0;
+  text-align: center;
+  border: 0;
+  justify-content: center;
+  bottom: 0;
+  border-top: 1px solid #ddd;
+  display: flex;
 }
 
 .searchForm {
@@ -74,11 +87,11 @@
 }
 
 .usersList::-webkit-scrollbar {
-    width: 10px;
+    width: 3px;
 }
 
 .usersList::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.0);
+    -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.0);
     border-radius: 0px;
 }
 
@@ -97,6 +110,13 @@
   transition: background-color .3s;
 }
 
+.inputForm {
+  width: 100%;
+}
+
+.SearchComponent{
+  width: calc(100% / 2);
+}
 .usersRow:hover{
    cursor: pointer;
    background-color: #bbb;

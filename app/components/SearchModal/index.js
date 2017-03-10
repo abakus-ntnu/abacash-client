@@ -75,14 +75,16 @@ export default class SearchModal extends Component {
           />
         </div>
 
-        <Buttons>
-          <Button cancel onClick={() => this.onDismiss()} label='Tilbake' />
-          <Button
-            confirm loading={this.state.loading}
-            onClick={() => this.onFetch()} label='Ok'
-            disabled={disabled}
-          />
-        </Buttons>
+        <div className={Style.footer}>
+          <Buttons>
+            <Button cancel onClick={() => this.onDismiss()} label='Cancel' />
+            <Button
+              confirm loading={this.state.loading}
+              onClick={() => this.onFetch()} label='Submit'
+              disabled={disabled}
+            />
+          </Buttons>
+        </div>
       </div>
     );
   }

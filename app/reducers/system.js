@@ -23,6 +23,12 @@ const system: Reducer = (state = initialState, action) => {
       });
     }
 
+    case SYSTEM.CLEAR_SELLER: {
+      return state.merge({
+        seller: null
+      });
+    }
+
     default:
       return state;
   }

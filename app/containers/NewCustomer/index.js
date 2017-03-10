@@ -8,8 +8,7 @@ import TabMenu, { TabItem } from '../../components/TabMenu';
 import { queryNerd } from '../../actions/nerd';
 
 type State = {
-  externalUser: ?Object,
-  customer: Object,
+  newCustomer: Object,
 };
 
 type Props = {
@@ -29,34 +28,32 @@ type Props = {
 class NewCardContainer extends React.Component {
 
   state: State = {
-    customer: {
+    newCustomer: {
       username: this.props.location.query.username,
       rfid: this.props.location.query.rfid
-    },
-    externalUser: null
+    }
   };
 
   props: Props;
 
-  selectExternalUser = (externalUser) => {
-    this.setState({ externalUser });
+  submitNewCustomerInfo = (info) => {
+    this.setState({ newCustomer: { ...this.state.newCustomer, ...info } });
   }
 
   render() {
     return (
       <div className={Style.newCardContainer}>
         <TabMenu>
-          <TabItem disabled uri='/new' name='Type' />
-          <TabItem disabled uri='/new/info' name='Search' />
-          <TabItem disabled uri='/new/review' name='Review' />
+          <TabItem disabled uri='/new' name='Customer Type' />
+          <TabItem disabled uri='/new/info' name='Customer Info' />
+          <TabItem disabled uri='/new/review' name='Customer Review' />
         </TabMenu>
         {React.cloneElement(this.props.children, { // eslint-disable-line
           system: this.props.system,
           customer: this.props.customer,
-          newCustomer: this.state.customer,
-          externalUser: this.state.externalUser,
+          newCustomer: this.state.newCustomer,
           externalUsers: this.props.externalUsers,
-          selectExternalUser: this.selectExternalUser,
+          submitNewCustomerInfo: this.submitNewCustomerInfo,
           push: this.props.push,
           loading: this.props.loading,
           fetchCustomer: this.props.fetchCustomer,

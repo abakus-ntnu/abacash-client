@@ -1,7 +1,7 @@
 // @flow
 import callAPI from './callAPI';
 import { SYSTEM } from './types';
-import type { Thunk } from './types';
+import type { Thunk, Dispatch } from './types';
 import { addNotification } from './notification';
 
 export function fetchSystem(): Thunk {
@@ -12,6 +12,12 @@ export function fetchSystem(): Thunk {
       type: SYSTEM.FETCH_SYSTEM,
       endpoint: `systems/${token}?lookupParam=apiToken`,
     }));
+  };
+}
+
+export function clearSeller(): Dispatch {
+  return {
+    type: SYSTEM.CLEAR_SELLER
   };
 }
 
@@ -41,7 +47,7 @@ export function fetchSeller(param: string, lookupParam: string = 'rfid'): Thunk 
       return dispatch(addNotification({
         title: 'Ikke en gyldig selger!',
         level: 'warning',
-        message: 'Du må være en registrert selger. Koble til RFID-leser og skann kortet ditt.',
+        message: 'Brukeren må være en registrert selger.',
         autoDismiss: 0,
         uid: 'not_seller'
       }));
