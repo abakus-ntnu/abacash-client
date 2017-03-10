@@ -1,17 +1,17 @@
 // @flow
 import { fromJS } from 'immutable';
-import { AUTH } from '../actions/types';
+import { CONFIG } from '../actions/types';
 import type { Reducer } from './types';
 
 const initialState = fromJS({
-  token: '',
-  apiURL: '',
+  token: null,
+  apiURL: null,
 });
 
-const auth: Reducer = (state = initialState, action) => {
+const config: Reducer = (state = initialState, action) => {
   switch (action.type) {
 
-    case AUTH.LOGIN: {
+    case CONFIG.LOAD_CONFIG_SUCCESS: {
       return state.merge({
         token: action.payload.token,
         apiURL: action.payload.apiURL,
@@ -23,4 +23,4 @@ const auth: Reducer = (state = initialState, action) => {
   }
 };
 
-export default auth;
+export default config;

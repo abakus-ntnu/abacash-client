@@ -58,7 +58,6 @@ const config = validate(merge(baseConfig, {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
-      'process.env.PERSISTENCE_ENABLED': true,
       'process.env.APPLICATION_VERSION': JSON.stringify(packageJSON.version),
       'process.env.RAVEN_DSN': JSON.stringify(process.env.RAVEN_DSN),
     }),

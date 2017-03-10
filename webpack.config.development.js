@@ -63,7 +63,6 @@ export default validate(merge(baseConfig, {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
-      'process.env.PERSISTENCE_ENABLED': true,
       'process.env.APPLICATION_VERSION': JSON.stringify(packageJSON.version),
     })
   ],

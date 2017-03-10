@@ -43,7 +43,7 @@ export default function callAPI({
       return Promise.resolve();
     }
 
-    const authToken = token || getToken(getState().auth);
+    const authToken = token || getToken(getState().config);
     if (requiresAuthentication && authToken) {
       headers.Authorization = `Token ${authToken}`;
     }
@@ -74,7 +74,7 @@ export default function callAPI({
     }
 
     const fullUrl = (~endpoint.indexOf('https://') || ~endpoint.indexOf('http://'));
-    const apiURL = getState().auth.get('apiURL');
+    const apiURL = getState().config.get('apiURL');
     const apiUrl = fullUrl ? endpoint : `${apiURL}/${endpoint}`;
 
     const promiseAction: PromisedAction = {
