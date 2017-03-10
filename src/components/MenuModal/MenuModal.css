@@ -13,23 +13,23 @@
   display: flex;
 }
 
-.modalContainer > * {
-  margin: 10px 0;
+.menuContainer {
+  width: 640px;
 }
 
-.inputContainer{
-  width: 480px;
-  margin-bottom: 110px;
+.brand {
+    text-align: center;
 }
 
-.footer {
-  width: 100%;
-  position: absolute;
-  margin: 10px 0;
+.brand > img {
+    max-width: 70%;
+}
+
+hr {
+  width: 100px;
+  border: 1px solid #bbb;
+}
+
+h1, h2 {
   text-align: center;
-  border: 0;
-  justify-content: center;
-  bottom: 0;
-  border-top: 1px solid #ddd;
-  display: flex;
 }

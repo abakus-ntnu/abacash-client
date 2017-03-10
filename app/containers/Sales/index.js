@@ -7,18 +7,20 @@ import { Map } from 'immutable';
 import TabMenu, { TabItem } from '../../components/TabMenu';
 import Product, { Products } from '../../components/Product';
 import SearchModal from '../../components/SearchModal';
+import MenuModal from '../../components/MenuModal';
 import Sidebar from '../../components/Sidebar';
 import Button from '../../components/Button';
 import RFID from '../../components/RFID';
 import { clearCustomer, fetchCustomer } from '../../actions/customer';
 import { fetchProducts, fetchProductGroups } from '../../actions/product';
-import { fetchSystem } from '../../actions/system';
+import { fetchSystem, clearSeller } from '../../actions/system';
 import { addNotification } from '../../actions/notification';
 import { addProduct } from '../../actions/cart';
 import Style from './Sales.css';
 
 type State = {
   search: boolean,
+  menu: boolean,
   productGroupId: ?number
 };
 
@@ -26,12 +28,14 @@ type Props = {
   customer?: Object,
   error: string,
   products: Object,
+  system: Object,
   productGroups: Object,
   processing: boolean,
   customerLoading: boolean,
   fetchSystem: () => Promise<*>,
   push: () => void,
   fetchCustomer: () => Promise<*>,
+  clearSeller: () => Promise<*>,
   addNotification: () => void,
   fetchProducts: () => void,
   fetchProductGroups: () => void,
@@ -45,6 +49,7 @@ class SalesContainer extends Component {
 
   state: State = {
     search: false,
+    menu: false,
     productGroupId: null
   };
 
@@ -63,25 +68,37 @@ class SalesContainer extends Component {
 
   componentWillUnmount() {
     clearInterval(this.updateInterval);
+    this.userInactive();
   }
 
   inactiveTimeout: any = undefined;
   updateInterval: any = undefined;
 
+  logout = () => {
+    clearInterval(this.updateInterval);
+    clearTimeout(this.inactiveTimeout);
+    this.props.clearCustomer();
+    this.props.clearSeller();
+    this.props.push('launch');
+  }
+
   updateData() {
     this.props.fetchSystem()
       .then(() => this.props.fetchProductGroups())
       .then(() => this.props.fetchProducts())
-      .catch(() => {
-        this.props.push('launch');
-      });
+      .catch(this.logout);
   }
 
   userInactive = () => {
     this.props.clearCustomer();
+    clearTimeout(this.inactiveTimeout);
   }
 
-  userInteracted = () => {
+  showMenu = () => {
+    this.setState({ menu: true });
+  }
+
+  userInteracted = (e) => { // eslint-disable-line
     if (this.props.customer) {
       clearTimeout(this.inactiveTimeout);
       this.inactiveTimeout = setTimeout(() => this.userInactive(), 20000);
@@ -124,6 +141,16 @@ class SalesContainer extends Component {
   render() {
     return (
       <div>
+
+        {this.state.menu ?
+          <MenuModal
+            onDismiss={() => { this.setState({ menu: false }); }}
+            system={this.props.system}
+            push={this.props.push}
+            logout={this.logout}
+          /> : null
+        }
+
         {this.state.search ? <SearchModal
           push={this.props.push}
           fetchCustomer={this.props.fetchCustomer}
@@ -131,8 +158,14 @@ class SalesContainer extends Component {
           onDismiss={() => { this.setState({ search: false }); }}
           onSuccess={() => { this.setState({ search: false }); }}
         /> : null }
-        <div className={classNames(Style.salesContainer, { [Style.blur]: this.state.search })}>
-          <div className={Style.main} onClick={this.userInteracted}>
+
+        <div
+          onClick={this.userInteracted}
+          className={classNames(Style.salesContainer, {
+            [Style.blur]: this.state.search || this.state.menu
+          })}
+        >
+          <div className={Style.main}>
 
             <TabMenu>
               {this.props.productGroups.map((productGroup, index) => (
@@ -170,6 +203,7 @@ class SalesContainer extends Component {
             })}
             cartItems={this.props.cartItems}
             error={this.props.error}
+            showMenu={this.showMenu}
             products={this.props.products}
             processing={this.props.processing}
             totalPrice={this.cartPrice()}
@@ -185,6 +219,7 @@ class SalesContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  system: state.system.get('system'),
   products: state.product.get('products'),
   loadingCustomer: state.customer.get('loading'),
   customer: state.customer.get('customer'),
@@ -200,6 +235,7 @@ const mapDispatchToProps = {
   fetchProducts,
   fetchProductGroups,
   fetchCustomer,
+  clearSeller,
   addNotification,
   fetchSystem,
   push,

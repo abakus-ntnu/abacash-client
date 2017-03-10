@@ -17,6 +17,7 @@ type Props = {
   createTransaction: () => Promise<*>,
   clearCustomer: () => void,
   findUser: () => void,
+  showMenu: () => void,
   addNotification: () => void,
   clearCart: () => void,
   removeProduct: () => void,
@@ -63,7 +64,10 @@ class Sidebar extends React.Component {
     return (
       <div className={Style.sidebar}>
 
-        <div className={`${Style.sidebarRow} ${Style.sidebarBox} ${Style.brand}`}>
+        <div
+          onClick={this.props.showMenu}
+          className={`${Style.sidebarRow} ${Style.sidebarBox} ${Style.brand}`}
+        >
           <img src={AbakusLogo} alt='logo' />
         </div>
 
