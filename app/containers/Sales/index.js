@@ -12,29 +12,33 @@ import Sidebar from '../../components/Sidebar';
 import Button from '../../components/Button';
 import RFID from '../../components/RFID';
 import { clearCustomer, fetchCustomer } from '../../actions/customer';
-import { fetchProducts } from '../../actions/product';
-import { fetchSystem } from '../../actions/system';
+import { fetchProducts, fetchProductGroups } from '../../actions/product';
+import { fetchSystem, clearSeller } from '../../actions/system';
 import { addNotification } from '../../actions/notification';
 import { addProduct } from '../../actions/cart';
 import Style from './Sales.css';
 
 type State = {
   search: boolean,
-  type: string
+  menu: boolean,
+  productGroupId: ?number
 };
 
 type Props = {
   customer?: Object,
   error: string,
   products: Object,
-  productTypes: Object,
+  system: Object,
+  productGroups: Object,
   processing: boolean,
   customerLoading: boolean,
   fetchSystem: () => Promise<*>,
   push: () => void,
   fetchCustomer: () => Promise<*>,
+  clearSeller: () => Promise<*>,
   addNotification: () => void,
   fetchProducts: () => void,
+  fetchProductGroups: () => void,
   cartItems: Map<number, number>,
   addProduct: () => void,
   clearCustomer: () => void,
@@ -46,11 +50,11 @@ class SalesContainer extends Component {
   state: State = {
     search: false,
     menu: false,
-    type: this.props.productTypes.first()
+    productGroupId: null
   };
 
   componentDidMount() {
-    this.props.fetchProducts();
+    this.updateData();
     this.updateInterval = setInterval(() => this.updateData(), 30000);
   }
 
@@ -64,28 +68,37 @@ class SalesContainer extends Component {
 
   componentWillUnmount() {
     clearInterval(this.updateInterval);
+    this.userInactive();
   }
 
   inactiveTimeout: any = undefined;
   updateInterval: any = undefined;
 
+  logout = () => {
+    clearInterval(this.updateInterval);
+    clearTimeout(this.inactiveTimeout);
+    this.props.clearCustomer();
+    this.props.clearSeller();
+    this.props.push('launch');
+  }
+
   updateData() {
     this.props.fetchSystem()
+      .then(() => this.props.fetchProductGroups())
       .then(() => this.props.fetchProducts())
-      .catch(() => {
-        this.props.push('launch');
-      });
+      .catch(this.logout);
   }
 
   userInactive = () => {
     this.props.clearCustomer();
+    clearTimeout(this.inactiveTimeout);
   }
 
   showMenu = () => {
     this.setState({ menu: true });
   }
 
-  userInteracted = () => {
+  userInteracted = (e) => { // eslint-disable-line
     if (this.props.customer) {
       clearTimeout(this.inactiveTimeout);
       this.inactiveTimeout = setTimeout(() => this.userInactive(), 20000);
@@ -129,9 +142,14 @@ class SalesContainer extends Component {
     return (
       <div>
 
-        {this.state.menu ? <MenuModal
-          onDismiss={() => { this.setState({ menu: false }); }}
-        /> : null }
+        {this.state.menu ?
+          <MenuModal
+            onDismiss={() => { this.setState({ menu: false }); }}
+            system={this.props.system}
+            push={this.props.push}
+            logout={this.logout}
+          /> : null
+        }
 
         {this.state.search ? <SearchModal
           push={this.props.push}
@@ -142,18 +160,19 @@ class SalesContainer extends Component {
         /> : null }
 
         <div
+          onClick={this.userInteracted}
           className={classNames(Style.salesContainer, {
             [Style.blur]: this.state.search || this.state.menu
           })}
         >
-          <div className={Style.main} onClick={this.userInteracted}>
+          <div className={Style.main}>
 
             <TabMenu>
-              {this.props.productTypes.valueSeq().map((type, index) => (
+              {this.props.productGroups.map((productGroup, index) => (
                 <TabItem
-                  onClick={() => { this.setState({ type }); }}
-                  active={this.state.type === type}
-                  name={type}
+                  onClick={() => { this.setState({ productGroupId: productGroup.get('id') }); }}
+                  active={this.state.productGroupId === productGroup.get('id')}
+                  name={productGroup.get('name')}
                   key={index}
                 />
               ))}
@@ -162,7 +181,7 @@ class SalesContainer extends Component {
             <Products>
               {this.props.products.size ?
                 this.props.products
-                  .filter((product) => product.get('type') === this.state.type)
+                  .filter((product) => product.get('productGroupId') === this.state.productGroupId)
                   .map((product, productID) => (
                     <Product
                       product={{
@@ -200,12 +219,13 @@ class SalesContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  system: state.system.get('system'),
   products: state.product.get('products'),
   loadingCustomer: state.customer.get('loading'),
   customer: state.customer.get('customer'),
   processing: state.transaction.get('processing'),
   error: state.transaction.get('error'),
-  productTypes: state.system.get('system').get('productTypes'),
+  productGroups: state.product.get('groups'),
   rfidDevice: state.rfid.get('device'),
   cartItems: state.cart
 });
@@ -213,7 +233,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   clearCustomer,
   fetchProducts,
+  fetchProductGroups,
   fetchCustomer,
+  clearSeller,
   addNotification,
   fetchSystem,
   push,

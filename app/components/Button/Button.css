@@ -16,6 +16,9 @@ button &:disabled {
   color: #bbb;
 }
 
+button i {
+  margin-right: 8px;
+}
 
 .buttonCancel {
   color: #e74c3c;
@@ -33,6 +36,19 @@ button &:disabled {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+
+.buttonSquare {
+  width: 200px;
+  height: 200px;
+}
+
+.buttonSquare i {
+  display: block;
+  margin-right: 0px;
+  margin-bottom: 20px;
+  font-size: 64px;
 }
 
 .buttonLoading {

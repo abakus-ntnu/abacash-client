@@ -6,15 +6,16 @@ import Button, { Buttons } from '../../components/Button';
 import Style from './NewCard.css';
 
 type State = {
-  customer: Object,
-  action: () => Promise<*>
+  action: () => Promise<*>,
+  customerType: string,
+  newCustomer: Object
 };
 
 type Props = {
   loading: boolean,
-  customer: Object,
+  system: Object,
+  location: Object,
   newCustomer: Object,
-  externalUser: Object,
   push: () => void,
   fetchCustomer: () => Promise<*>,
   createCustomer: () => Promise<*>,
@@ -24,17 +25,18 @@ type Props = {
 export default class ReviewComponent extends React.Component {
 
   state: State = {
-    customer: {},
-    action: this.props.createCustomer
+    newCustomer: this.props.newCustomer,
+    action: this.props.createCustomer,
+    customerType: this.props.location.query.customerType
   };
 
   componentDidMount = () => {
-    this.fetchCustomer();
+    if (this.state.customerType === 'internal') this.fetchCustomer();
   }
 
   onConfirm = () => {
-    this.state.action(this.state.customer)
-      .then(() => this.props.fetchCustomer(this.state.customer.rfid))
+    this.state.action(this.state.newCustomer)
+      .then(() => this.props.fetchCustomer(this.state.newCustomer.rfid))
       .then(() => this.props.push('sales'))
       .catch(() => {
         this.props.push('sales');
@@ -42,38 +44,26 @@ export default class ReviewComponent extends React.Component {
   }
 
   fetchCustomer = () => {
-    if (this.props.externalUser) {
-      this.props.fetchCustomer(this.props.externalUser.toJS().username, 'username')
-        .then(() => this.setState({
+    this.props.fetchCustomer(this.state.newCustomer.username, 'username')
+        .then((response) => this.setState({
           action: this.props.updateCustomer,
-          customer: {
-            ...this.props.customer.toJS(),
-            rfid: this.props.newCustomer.rfid
+          newCustomer: {
+            ...response.value.json,
+            ...this.state.newCustomer
           }
         }))
         .catch(() => {
           this.setState({
-            action: this.props.createCustomer,
-            customer: {
-              ...this.props.externalUser.toJS(),
-              rfid: this.props.newCustomer.rfid
-            }
+            action: this.props.createCustomer
           });
         });
-    } else {
-      this.setState({
-        action: this.props.createCustomer,
-        customer: {
-          ...this.props.newCustomer.toJS()
-        }
-      });
-    }
   }
 
   props: Props;
 
   render() {
     const { loading, push } = this.props;
+    const additionalFields = this.state.action === this.props.createCustomer ? [] : ['balance', 'customerRole'];
 
     if (loading) {
       return <Loader />;
@@ -82,22 +72,50 @@ export default class ReviewComponent extends React.Component {
     return (
       <div className={Style.centerContainer}>
         {
-          Object.keys(this.state.customer).map((field) => {
-            if (!isObject(this.state.customer[field])) {
+          ['displayName', 'rfid', 'username', ...additionalFields].map((field) => {
+            if (!isObject(this.state.newCustomer[field])) {
               return (
                 <div key={field} className={Style.infoContainer}>
                   <span className={Style.infoLabel}>{field}</span>
-                  <span>{this.state.customer[field]}</span>
+                  <span>{this.state.newCustomer[field]}</span>
                 </div>
               );
             }
-            return null;
+            return (
+              <div key={field} className={Style.infoContainer}>
+                <span className={Style.infoLabel}>{field}</span>
+                <span>{this.state.newCustomer[field].role}</span>
+              </div>
+            );
           })
         }
-        <Buttons>
-          <Button cancel onClick={() => { push('sales'); }} label='Avbryt' />
-          <Button confirm loading={loading} onClick={this.onConfirm} label='OK' />
-        </Buttons>
+
+        {this.state.action === this.props.createCustomer &&
+          <div key='balance' className={Style.infoContainer}>
+            <span className={Style.infoLabel}>Balance</span>
+            <span>0 kr</span>
+          </div>
+        }
+
+        {this.state.action === this.props.createCustomer &&
+          <div key='customerRole' className={Style.infoContainer}>
+            <span className={Style.infoLabel}>Customer Role</span>
+            <span>{this.props.system.get('defaultCustomerRole').get('role')}</span>
+          </div>
+        }
+
+        <div className={Style.footer} >
+          <Buttons>
+            <Button onClick={() => { this.props.push(`new/info?customerType=${this.state.customerType}`); }} label='Back' />
+            <Button cancel onClick={() => { push('sales'); }} label='Cancel' />
+            <Button
+              confirm
+              loading={loading}
+              onClick={this.onConfirm}
+              label={this.state.action === this.props.createCustomer ? 'Create' : 'Update'}
+            />
+          </Buttons>
+        </div>
       </div>
     );
   }

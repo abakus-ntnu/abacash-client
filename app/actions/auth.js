@@ -2,11 +2,12 @@
 import { AUTH } from './types';
 import type { Dispatch } from './types';
 
-export function login(token: string): Dispatch {
+export function login(token: string, apiURL: string): Dispatch {
   return {
     type: AUTH.LOGIN,
     payload: {
       token,
+      apiURL
     }
   };
 }

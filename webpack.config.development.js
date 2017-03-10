@@ -65,7 +65,6 @@ export default validate(merge(baseConfig, {
       'process.env.NODE_ENV': JSON.stringify('development'),
       'process.env.PERSISTENCE_ENABLED': true,
       'process.env.APPLICATION_VERSION': JSON.stringify(packageJSON.version),
-      'process.env.API_URL': JSON.stringify('http://127.0.0.1:9000')
     })
   ],
 

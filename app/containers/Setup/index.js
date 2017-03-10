@@ -14,6 +14,7 @@ import { addNotification } from '../../actions/notification';
 
 type State = {
   token: string,
+  apiURL: string,
   loading: boolean,
   rfid: ?string
 };
@@ -35,6 +36,7 @@ class SetupContainer extends React.Component {
 
   state: State = {
     token: '',
+    apiURL: '',
     loading: false,
     rfid: null
   };
@@ -49,7 +51,7 @@ class SetupContainer extends React.Component {
   onSave() {
     this.setState({ loading: true });
     this.props.setDevice(this.state.rfid);
-    this.props.login(this.state.token);
+    this.props.login(this.state.token, this.state.apiURL);
     this.props.fetchSystem()
       .then(() => {
         this.props.push('/launch');
@@ -73,6 +75,14 @@ class SetupContainer extends React.Component {
       <div className={Style.setupContainer}>
         <h1 className={Style.header}>AbaCash</h1>
         <h6 className={Style.subHeader}>setup</h6>
+
+        <div className={Style.inputContainer}>
+          <Input
+            placeholder='API URL'
+            value={this.state.apiURL}
+            onChange={(apiURL) => this.setState({ apiURL })}
+          />
+        </div>
 
         <div className={Style.inputContainer}>
           <Input

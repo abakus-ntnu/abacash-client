@@ -4,8 +4,8 @@ import { SYSTEM } from '../actions/types';
 import type { Reducer } from './types';
 
 const initialState = fromJS({
-  system: {},
-  seller: {}
+  system: null,
+  seller: null
 });
 
 const system: Reducer = (state = initialState, action) => {
@@ -20,6 +20,12 @@ const system: Reducer = (state = initialState, action) => {
     case SYSTEM.SET_SELLER: {
       return state.merge({
         seller: action.payload.json
+      });
+    }
+
+    case SYSTEM.CLEAR_SELLER: {
+      return state.merge({
+        seller: null
       });
     }
 

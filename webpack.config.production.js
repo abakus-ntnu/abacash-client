@@ -61,7 +61,6 @@ const config = validate(merge(baseConfig, {
       'process.env.PERSISTENCE_ENABLED': true,
       'process.env.APPLICATION_VERSION': JSON.stringify(packageJSON.version),
       'process.env.RAVEN_DSN': JSON.stringify(process.env.RAVEN_DSN),
-      'process.env.API_URL': JSON.stringify(process.env.API_URL)
     }),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {

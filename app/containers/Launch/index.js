@@ -13,9 +13,9 @@ type Props = {
   seller: Object,
   rfidDevice: string,
   push: () => void,
-  fetchSystem: () => void,
-  fetchSeller: () => void,
-  addNotification: () => void
+  fetchSystem: () => Promise<*>,
+  fetchSeller: () => Promise<*>,
+  addNotification: () => Promise<*>
 };
 
 class LaunchContainer extends React.Component {
@@ -29,15 +29,22 @@ class LaunchContainer extends React.Component {
     }
   }
 
-  setSeller = (card) => {
-    this.props.fetchSeller(card);
+  onScan = (card) => {
+    this.props.fetchSeller(card)
+      .catch(() => {
+        this.props.addNotification({
+          title: 'Not found!',
+          level: 'warning',
+          message: 'Could not find the specified user',
+          uid: 'user_not_found'
+        });
+      });
   }
 
   handleStart = () => {
-    const needSeller = this.props.system.get('needSeller');
-    if (needSeller && !this.props.seller.get('rfid')) {
+    if (this.props.system.get('needSeller') && !this.props.seller) {
       this.props.addNotification({
-        title: 'Du må være en selger!',
+        title: 'Du må registrer en selger!',
         level: 'info',
         message: 'Du må være en registrert selger. Koble til RFID-leser og skann kortet ditt.',
         autoDismiss: 0,
@@ -55,7 +62,7 @@ class LaunchContainer extends React.Component {
       <div className={Style.launchContainer}>
         <h1 className={Style.header}>AbaCash</h1>
         {this.props.system && <h6 className={Style.subHeader}>{this.props.system.get('name')}</h6>}
-        {this.props.system.get('needSeller') &&
+        {this.props.system && this.props.seller && this.props.system.get('needSeller') &&
           <h6 className={Style.subHeader}>
             Seller: {this.props.seller.get('displayName') || '- Scan card -'}
           </h6>
@@ -63,12 +70,12 @@ class LaunchContainer extends React.Component {
 
         <Buttons>
           <Button cancel onClick={() => { this.props.push('/?presist=true'); }} label='Tilbake' />
-          <Button confirm onClick={this.handleStart} label='Start' />
+          {this.props.system && <Button confirm onClick={this.handleStart} label='Start' />}
         </Buttons>
 
         <RFID
           device={this.props.rfidDevice}
-          action={this.setSeller}
+          action={this.onScan}
         />
       </div>
     );
