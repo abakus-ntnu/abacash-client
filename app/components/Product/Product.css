@@ -5,7 +5,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--abacash-whitesmoke);
+    background-color: white;
+    border: 1px solid var(--abacash-border);
     border-radius: 5%;
     border-top: 5px solid var(--abacash-orange);
     margin: 15px;
